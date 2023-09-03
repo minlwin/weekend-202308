@@ -1,0 +1,60 @@
+============================
+Student Management System
+============================
+
+Menu
+1. Search Student
+2. Add New Student
+3. Show Student Details
+
+Menu ID : 1
+
+1. Search Student
+
+Search Name : N
+
+ID		Name     			Phone				Email
+3		Naing Naing			09181818111			naing@gmail.com
+
+Menu
+1. Search Student
+2. Add New Student
+3. Show Student Details
+
+Menu ID : 2
+
+2. Add New Student
+Student Name  : 
+Phone Number  :
+Email Address : 
+
+Student has been created with id 5.
+
+Menu
+1. Search Student
+2. Add New Student
+3. Show Student Details
+
+Menu ID : 3
+
+3. Show Student Details
+Student ID : 5
+Student Name  : 
+Phone Number  :
+Email Address : 
+
+Menu
+1. Search Student
+2. Add New Student
+3. Show Student Details
+
+Menu ID : 4
+
+============================
+Thank you
+============================
+
+
+
+
+
