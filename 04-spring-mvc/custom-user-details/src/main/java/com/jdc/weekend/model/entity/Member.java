@@ -21,6 +21,11 @@ public class Member extends AbstractEntity{
 	private String email;
 	@Column(nullable = false)
 	private String name;
+	
+	private String phone;
+	private String profileImage;
+	private String greeting;
+	
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
