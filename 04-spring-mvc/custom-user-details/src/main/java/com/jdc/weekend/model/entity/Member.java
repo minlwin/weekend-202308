@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 public class Member extends AbstractEntity{
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "member_seq")
 	private int id;
 	@Column(nullable = false, unique = true)
 	private String email;

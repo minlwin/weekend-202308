@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<nav data-th-fragment="navBar" class="navbar navbar-expand navbar-dark bg-primary" >
+		<div class="container">
+			<a data-th-href="@{/public/posts}" class="navbar-brand">My Gallery</a>
+			
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a data-th-href="@{/}" class="nav-link">Home</a>
+				</li>
+				
+				<li sec:authorize="hasAuthority('Admin')" class="nav-item">
+					<a data-th-href="@{/admin/category}" class="nav-link">Categories</a>
+				</li>
+
+				<li sec:authorize="hasAuthority('Admin')" class="nav-item">
+					<a data-th-href="@{/admin/members}" class="nav-link">Members</a>
+				</li>
+				
+				<li sec:authorize="!hasAuthority('Admin')" class="nav-item">
+					<a data-th-href="@{/member/post}" class="nav-link">Add New Post</a>
+				</li>
+				
+				<li sec:authorize="isAnonymous()" class="nav-item">
+					<a data-th-href="@{/login}" class="nav-link">Sign In</a>
+				</li>
+				<li sec:authorize="isAuthenticated()" class="nav-item">
+					<a id="signOutMenu" class="nav-link">Sign Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+</body>
+</html>

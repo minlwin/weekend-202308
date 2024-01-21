@@ -2,28 +2,36 @@ package com.jdc.weekend.controller;
 
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jdc.weekend.model.entity.Member.Role;
 
 @Controller
-@RequestMapping("public/posts")
+@RequestMapping("/")
 public class PublicHomeController {
 
 	@GetMapping
-	String search(
-			@RequestParam Optional<String> keyword,
-			@RequestParam(required = false, defaultValue = "0") int page, 
-			@RequestParam(required = false, defaultValue = "9") int size,
-			ModelMap model) {
-		return "post-list";
-	}
-	
-	@GetMapping("{id}")
-	String findById(@PathVariable int id, ModelMap model) {
-		return "post-details";
+	String index() {
+		
+		var authentication = Optional.ofNullable(SecurityContextHolder.getContext())
+				.map(context -> context.getAuthentication());
+
+		if(authentication.isPresent()) {
+			var authorities = authentication.get().getAuthorities()
+					.stream().map(a -> a.getAuthority()).toList();
+			
+			if(authorities.contains(Role.Admin.name())) {
+				return "redirect:/admin/home";
+			}
+			
+			if(authorities.contains(Role.Member.name())) {
+				return "redirect:/member/home";
+			}
+		}
+		
+		return "redirect:/public/posts";
 	}
 }
