@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html data-th-replace="~{/layout/main :: layout('Sign In', ~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Hello Thymeleaf</title>
+
+</head>
+<body>
+
+	<main>
+		<h3>Sign In</h3>
+		
+		<div class="w-25">
+			<form data-th-action="@{/public/signup}" data-th-object="${signUpForm}" method="post">
+				
+				<div class="mb-3">
+					<label class="form-label">Name</label>
+					<input data-th-field="*{name}" type="text" class="form-control" placeholder="Enter Name" />
+					<span data-th-errors="*{name}" class="text-secondary"></span>
+				</div>
+				
+				<div class="mb-3">
+					<label class="form-label">Email</label>
+					<input data-th-field="*{email}" type="text" class="form-control" placeholder="Enter Email" />
+					<span data-th-errors="*{email}" class="text-secondary"></span>
+				</div>
+				
+				<div class="mb-3">
+					<label class="form-label">Password</label>
+					<input data-th-field="*{password}" type="password" class="form-control" placeholder="Enter password" />
+					<span data-th-errors="*{password}" class="text-secondary"></span>
+				</div>
+				
+				<div>
+					<button type="submit" class="btn btn-primary">Sign Up</button>
+					<a data-th-href="@{/login}" class="btn btn-primary">Sign In</a>
+				</div>
+
+			</form>
+		</div>
+	</main>
+
+</body>
+</html>
