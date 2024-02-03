@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html data-th-replace="~{/layout/main :: layout('Member Management', ~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Hello Thymeleaf</title>
+
+</head>
+<body>
+
+	<main>
+	
+		<h3>Member Management</h3>
+		
+		<div class="row">
+			<div class="col">
+				<!-- Member List -->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Role</th>
+							<th>Status</th>
+							<th>Phone</th>
+							<th>Email</th>
+							<th>Create At</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr data-th-each="item : ${result.content}" data-th-object="${item}">
+							<td data-th-text="*{name}">Thidar</td>
+							<td data-th-text="*{role}">Member</td>
+							<td data-th-text="*{deleted ? 'Deleted' : 'Active'}"></td>
+							<td data-th-text="*{phone}">09171717171</td>
+							<td data-th-text="*{email}">thidar@gmail.com</td>
+							<td data-th-text="*{@dateTimes.format(createAt)}">2023-01-10 10:00</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<!-- Pagination -->
+			</div>
+			
+			<div class="col-3">
+				<!-- Search bar -->
+				<div class="card">
+					<div class="card-body">
+						<form >
+							<!-- Role -->
+							<div class="mb-3">
+								<label for="role" class="form-label">Role</label>
+								<select name="role" id="role" class="form-select">
+									<option value="">All Role</option>
+									<option value="Admin" data-th-selected="${#strings.equals(param.role, 'Admin')}">Admin</option>
+									<option value="Member" data-th-selected="${#strings.equals(param.role, 'Member')}">Member</option>
+								</select>
+							</div>
+							
+							<!-- Status -->
+							<div class="mb-3">
+								<label for="status" class="form-label">Status</label>
+								<select name="status" id="status" class="form-select">
+									<option value="">All Status</option>
+									<option value="false" data-th-selected="${#strings.equals(param.status, 'false')}">Active</option>
+									<option value="true" data-th-selected="${#strings.equals(param.status, 'true')}">Deleted</option>
+								</select>
+							</div>
+							
+							<!-- Name -->
+							<div class="mb-3">
+								<label for="name" class="form-label">Name</label>
+								<input data-th-value="${param.name}" name="name" type="text" class="form-control" id="name" placeholder="Search Name" />
+							</div>
+							
+							<!-- Phone -->
+							<div class="mb-3">
+								<label for="phone" class="form-label">Phone</label>
+								<input data-th-value="${param.phone}" name="phone" type="tel" class="form-control" id="phone" placeholder="Search Phone" />
+							</div>
+							
+							<!-- Email -->
+							<div class="mb-3">
+								<label for="email" class="form-label">Email</label>
+								<input data-th-value="${param.email}" name="email" type="email" class="form-control" id="email" placeholder="Search Email" />
+							</div>
+							
+							<button type="submit" class="btn btn-outline-primary d-block w-100">Search</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>		
+
+	</main>
+
+</body>
+</html>

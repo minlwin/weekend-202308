@@ -20,10 +20,6 @@ public class PublicPostController {
 			@RequestParam(required = false, defaultValue = "9") int size,
 			ModelMap model) {
 		
-		model.put("data", """
-				<h2>This is Data</h2>
-				""");
-		
 		return "post-list";
 	}
 	

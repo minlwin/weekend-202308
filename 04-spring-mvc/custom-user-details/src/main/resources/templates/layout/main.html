@@ -12,9 +12,10 @@
 
 	<div data-th-replace="~{/layout/components :: navBar}"></div>
 
-	<div class="container mt-3" data-th-insert="${content}"></div>
+	<div class="container-fluid mt-3" data-th-insert="${content}"></div>
 	
 	<form id="signOutForm" sec:authorize="isAuthenticated()" data-th-action="@{/logout}" method="post" class="d-none"></form>
+	
 	<script type="text/javascript" data-th-src="@{/js/common.js}"></script>
 </body>
 </html>
