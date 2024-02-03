@@ -23,22 +23,46 @@
 							<th>Phone</th>
 							<th>Email</th>
 							<th>Create At</th>
+							<th></th>
 						</tr>
 					</thead>
 					
 					<tbody>
-						<tr data-th-each="item : ${result.content}" data-th-object="${item}">
+						<tr data-th-each="item : ${list}" data-th-object="${item}">
 							<td data-th-text="*{name}">Thidar</td>
 							<td data-th-text="*{role}">Member</td>
 							<td data-th-text="*{deleted ? 'Deleted' : 'Active'}"></td>
 							<td data-th-text="*{phone}">09171717171</td>
 							<td data-th-text="*{email}">thidar@gmail.com</td>
 							<td data-th-text="*{@dateTimes.format(createAt)}">2023-01-10 10:00</td>
+							<td>
+								<a data-th-href="@{|/admin/members/*{id}|}">
+									<i class="bi-send"></i>
+								</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			
 				<!-- Pagination -->
+				<div class="d-flex" data-th-object="${pager}">
+					<div class="me-2">
+						<select class="form-control" id="">
+							<option value="10">10</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+						</select>
+					</div>
+					<button href="#" class="btn btn-outline-primary me-1">
+						<i class="bi-arrow-bar-left"></i>
+					</button>
+					<button href="#" class="btn btn-outline-primary me-1">1</button>
+					<button href="#" class="btn btn-outline-primary me-2">
+						<i class="bi-arrow-bar-right"></i>
+					</button>
+					
+					
+				</div>
 			</div>
 			
 			<div class="col-3">

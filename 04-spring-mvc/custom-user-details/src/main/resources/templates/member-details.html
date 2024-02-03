@@ -10,16 +10,71 @@
 	<main>
 	
 		<h3>Member Details</h3>
-		
+				
 		<div class="row">
-			<div class="col-3">
+			<div class="col-3 d-flex flex-column align-items-center">
 				<!-- Profile Image -->
+				<div class="my-3">
+					<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/profile.png}">
+				</div>	
+				<h4 data-th-text="${dto.name}">User Name</h4>
+				<p data-th-text="${dto.role}">Role</p>			
 			</div>
 			
 			<div class="col">
 				<!-- Personal Information -->
+				<div class="mb-3">
+					<div>Phone Number</div>
+					<h4 data-th-text="${#strings.isEmpty(dto.phone) ? 'No Phone Number' : dto.phone}">0987778888</h4>
+				</div>
+				<div class="mb-3">
+					<div>Email Address</div>
+					<h4 data-th-text="${dto.email}">0987778888</h4>
+				</div>
+				<div class="mb-3">
+					<div>Create At</div>
+					<h4 data-th-text="${@dateTimes.format(dto.createAt)}">2023-01-01 10:00</h4>
+				</div>
+				<div class="mb-3">
+					<div>Status</div>
+					<h4 data-th-text="${dto.deleted ? 'Deleted' : 'Active'}">Active</h4>
+				</div>
+				<div class="mb-3" data-th-if="${dto.updateAt != null}">
+					<div>Update At</div>
+					<h4 data-th-text="${@dateTimes.format(dto.updateAt)}">2023-01-01 10:00</h4>
+				</div>
+				<div class="mb-3" data-th-unless="${#strings.isEmpty(dto.updateBy)}">
+					<div>Update By</div>
+					<h4 data-th-text="${dto.updateBy}">Admin User</h4>
+				</div>
+				
+				<div data-th-unless="${hideAction}">
+					<button id="changeMemberStatusBtn" class="btn btn-outline-danger">
+						<i data-th-class="${dto.deleted} ? 'bi-check' : 'bi-trash'"></i> 
+						<span data-th-text="${dto.deleted ? 'Activate' : 'Delete'}">Delete</span>
+					</button>
+					<button id="changeMemberRoleBtn" class="btn btn-outline-danger">
+						<i class="bi-shield"></i> 
+						<span data-th-text="${#strings.equals(dto.role.name(), 'Member') ? 'Make Admin' : 'Make Member'}">Make Admin</span>
+					</button>
+				</div>
 			</div>
 		</div>
+		
+		
+		<div data-th-unless="${hideAction}">
+			<form data-th-action="@{|/admin/members/${dto.id}/status|}" 
+				id="changeMemberStatusForm" method="post" class="d-none">
+				<input type="hidden" name="deleted" data-th-value="${!dto.deleted}" />
+			</form>
+			
+			<form data-th-action="@{|/admin/members/${dto.id}/role|}"
+				id="changeMemberRoleForm" method="post" class="d-none">
+				<input type="hidden" name="role" data-th-value="${#strings.equals(dto.role.name(), 'Member') ? 'Admin' : 'Member'}" />
+			</form>
+		</div>
+		
+		<script type="text/javascript" data-th-src="@{/js/member-management.js}"></script>
 
 	</main>
 
