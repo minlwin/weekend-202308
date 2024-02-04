@@ -1,5 +1,7 @@
 package com.jdc.weekend.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +34,7 @@ public class AdminCategoryController {
 		
 		if(result.hasErrors()) {
 			model.put("error", true);
+			model.put("list", List.of());
 			return "category-list";
 		}
 		

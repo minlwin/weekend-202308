@@ -14,7 +14,7 @@
 		<div class="row">
 			<div class="col">
 			
-				<table class="table table-striped">
+				<table data-th-if="${list.size() > 0}" class="table table-striped">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -29,14 +29,14 @@
 					</thead>
 					
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Name</td>
-							<td>3</td>
-							<td>Description</td>
-							<td>Active</td>
-							<td>Feb 4, 2024</td>
-							<td>Admin User</td>
+						<tr data-th-each="item : ${list}" data-th-object="${item}">
+							<td data-th-text="*{id}">1</td>
+							<td data-th-text="*{name}">Name</td>
+							<td data-th-text="*{posts}">3</td>
+							<td data-th-text="*{description}">Description</td>
+							<td data-th-text="*{deleted} ? 'Deleted' : 'Active'">Active</td>
+							<td data-th-text="*{@dateTimes.format(createAt)}">Feb 4, 2024</td>
+							<td data-th-text="*{createBy}">Admin User</td>
 							<td>
 								<a href="#">
 									<i class="bi-pencil"></i>
@@ -45,6 +45,10 @@
 						</tr>
 					</tbody>
 				</table>
+				
+				<div data-th-unless="${list.size() > 0}">
+					<div data-th-replace="~{/layout/components :: noData('Category')}"></div>				
+				</div>
 			
 			</div>
 			
@@ -70,7 +74,7 @@
 							
 							<div>
 								<button type="submit" class="btn btn-outline-primary d-block w-100 mb-2">Search</button>
-								<button type="button" class="btn btn-outline-danger d-block w-100">Add New</button>
+								<button id="addNewButton" type="button" class="btn btn-outline-danger d-block w-100">Add New</button>
 							</div>
 							
 						</form>
@@ -78,6 +82,8 @@
 				</div>
 			</div>
 		</div>
+		
+		<div data-th-replace="~{/components/category-edit :: dialog}"></div>
 
 	</main>
 

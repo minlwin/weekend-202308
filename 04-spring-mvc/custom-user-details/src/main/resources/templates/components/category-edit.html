@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div data-th-fragment="dialog" id="categoryEditDialog" class="modal fade">
+		<div class="modal-dialog">
+			<form data-th-action="@{/admin/category}" method="post" class="modal-content">
+				
+				<div class="modal-header">
+					<h5>Edit Category</h5>
+				</div>
+				
+				<div class="modal-body">
+				
+					<!-- Name -->
+					<div class="mb-3">
+						<label for="name" class="form-label">Name</label>
+						<input name="name" type="text" class="form-control" id="name" placeholder="Enter Category Name" />
+					</div>
+
+					<div class="mb-3">
+						<label for="description" class="form-label">Description</label>
+						<textarea name="description" rows="3" cols="20" class="form-control" placeholder="Enter Description"></textarea>
+					</div>
+
+					<!-- Status -->
+					<div class="mb-3">
+						<label for="deleted" class="form-label">Status</label>
+						<select name="deleted" id="deleted" class="form-select">
+							<option value="false" data-th-selected="${#strings.equals(param.deleted, 'false')}">Active</option>
+							<option value="true" data-th-selected="${#strings.equals(param.deleted, 'true')}">Deleted</option>
+						</select>
+					</div>
+				
+				</div>
+				
+				<div class="modal-footer">
+					<button id="closeButton" type="button" class="btn btn-outline-primary">
+						<i class="bi-x"></i> Close
+					</button>
+					
+					<button class="btn btn-outline-danger">
+						<i class="bi-save"></i> Save
+					</button>
+				</div>
+			</form>
+		</div>
+		
+		<script data-th-src="@{/js/category-edit.js}"></script>
+	</div>
+
+</body>
+</html>

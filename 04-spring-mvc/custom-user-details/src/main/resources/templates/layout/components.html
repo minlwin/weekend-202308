@@ -61,6 +61,11 @@
 		<script data-th-src="@{/js/pagination.js}"></script>
 	</div>
 	
+	<!-- No Data -->
+	<div data-th-fragment="noData(name)" class="alert alert-info">
+		There is no <span data-th-text="${name}">data</span>.
+	</div>
+	
 
 </body>
 </html>
