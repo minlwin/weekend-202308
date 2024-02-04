@@ -10,6 +10,74 @@
 	<main>
 	
 		<h3>Category Management</h3>
+		
+		<div class="row">
+			<div class="col">
+			
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Posts</th>
+							<th>Description</th>
+							<th>Status</th>
+							<th>Create At</th>
+							<th>Create By</th>
+							<th></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Name</td>
+							<td>3</td>
+							<td>Description</td>
+							<td>Active</td>
+							<td>Feb 4, 2024</td>
+							<td>Admin User</td>
+							<td>
+								<a href="#">
+									<i class="bi-pencil"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+			</div>
+			
+			<div class="col-3">
+				<div class="card">
+					<div class="card-body">
+						<form id="searchForm">
+							<!-- Status -->
+							<div class="mb-3">
+								<label for="deleted" class="form-label">Status</label>
+								<select name="deleted" id="deleted" class="form-select">
+									<option value="">All Status</option>
+									<option value="false" data-th-selected="${#strings.equals(param.deleted, 'false')}">Active</option>
+									<option value="true" data-th-selected="${#strings.equals(param.deleted, 'true')}">Deleted</option>
+								</select>
+							</div>
+							
+							<!-- Name -->
+							<div class="mb-3">
+								<label for="keyword" class="form-label">Keyword</label>
+								<input data-th-value="${param.keyword}" name="keyword" type="text" class="form-control" id="keyword" placeholder="Search Keyword" />
+							</div>
+							
+							<div>
+								<button type="submit" class="btn btn-outline-primary d-block w-100 mb-2">Search</button>
+								<button type="button" class="btn btn-outline-danger d-block w-100">Add New</button>
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</main>
 

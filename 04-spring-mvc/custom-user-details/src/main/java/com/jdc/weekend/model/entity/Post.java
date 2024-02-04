@@ -25,6 +25,9 @@ public class Post extends AbstractEntity{
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Member owner;
 	
+	@ManyToOne(optional = false)
+	private Category category;
+	
 	@Column(nullable = false)
 	private String title;
 	

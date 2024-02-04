@@ -1,9 +1,12 @@
 package com.jdc.weekend.model.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,4 +24,7 @@ public class Category extends AbstractEntity{
 	@Column(nullable = false, unique = true)
 	private String name;
 	private String description;
+	
+	@OneToMany(mappedBy = "category")
+	private List<Post> posts;
 }
