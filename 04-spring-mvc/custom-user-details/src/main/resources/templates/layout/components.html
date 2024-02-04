@@ -39,7 +39,7 @@
 	
 	
 	<!-- Pagination -->
-	<div data-th-fragment="pagination(pager)" id="pagination" class="d-flex" data-th-object="${pager}">
+	<div data-th-fragment="pagination(pager)" data-th-object="${pager}" data-th-if="${pager.pageCount} > 1" id="pagination" class="d-flex" >
 		<div class="me-2">
 			<select id="pageSizeSelect" class="form-control">
 				<option value="10" data-th-selected="10 == *{pageSize}">10</option>
