@@ -45,31 +45,19 @@
 				</table>
 			
 				<!-- Pagination -->
-				<div class="d-flex" data-th-object="${pager}">
-					<div class="me-2">
-						<select class="form-control" id="">
-							<option value="10">10</option>
-							<option value="25">25</option>
-							<option value="50">50</option>
-						</select>
-					</div>
-					<button href="#" class="btn btn-outline-primary me-1">
-						<i class="bi-arrow-bar-left"></i>
-					</button>
-					<button href="#" class="btn btn-outline-primary me-1">1</button>
-					<button href="#" class="btn btn-outline-primary me-2">
-						<i class="bi-arrow-bar-right"></i>
-					</button>
-					
-					
-				</div>
+				<div data-th-replace="~{/layout/components :: pagination(${pager})}"></div>
+				
 			</div>
 			
 			<div class="col-3">
 				<!-- Search bar -->
 				<div class="card">
 					<div class="card-body">
-						<form >
+						<form id="searchForm">
+							
+							<input id="pageParam" type="hidden" name="page" data-th-value="${pager.current} - 1" />
+							<input id="sizeParam" type="hidden" name="size" data-th-value="${pager.pageSize}" />
+						
 							<!-- Role -->
 							<div class="mb-3">
 								<label for="role" class="form-label">Role</label>

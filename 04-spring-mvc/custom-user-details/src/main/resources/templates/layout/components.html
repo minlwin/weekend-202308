@@ -36,6 +36,31 @@
 			</ul>
 		</div>
 	</nav>
+	
+	
+	<!-- Pagination -->
+	<div data-th-fragment="pagination(pager)" id="pagination" class="d-flex" data-th-object="${pager}">
+		<div class="me-2">
+			<select id="pageSizeSelect" class="form-control">
+				<option value="10" data-th-selected="10 == *{pageSize}">10</option>
+				<option value="25" data-th-selected="25 == *{pageSize}">25</option>
+				<option value="50" data-th-selected="50 == *{pageSize}">50</option>
+			</select>
+		</div>
+		<button data-value="0" class="btn btn-outline-primary me-1">
+			<i class="bi-arrow-bar-left"></i>
+		</button>
+		<button data-th-each="page : *{pages}" 
+			data-th-text="${page}" data-th-attr="data-value=${page} - 1"
+			data-th-classappend="*{current} == ${page} ? 'btn-primary' : 'btn-outline-primary'"
+			class="btn me-1">1</button>
+		<button data-th-attr="data-value=*{pageCount} - 1" class="btn btn-outline-primary me-2">
+			<i class="bi-arrow-bar-right"></i>
+		</button>
+		
+		<script data-th-src="@{/js/pagination.js}"></script>
+	</div>
+	
 
 </body>
 </html>

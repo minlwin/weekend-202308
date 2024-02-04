@@ -62,13 +62,25 @@ public class SecurityConfiguration {
 	@Bean
 	ApplicationRunner applicationRunner(PasswordEncoder passwordEncoder) {
 		return args -> {
-			if(memberRepo.count() == 0) {
+			
+			var count = memberRepo.count();
+			
+			if(count == 0) {
 				var admin = new Member();
 				admin.setName("Admin User");
 				admin.setEmail("admin@gmail.com");
 				admin.setPassword(passwordEncoder.encode("Admin"));
 				admin.setRole(Role.Admin);
 				memberRepo.save(admin);
+			} else if(count < 60){
+				for(var i = 0; i < 60; i ++) {
+					var user = new Member();
+					user.setName("User %d".formatted(i + 1));
+					user.setEmail("user%d@gmail.com".formatted(i + 1));
+					user.setPassword(passwordEncoder.encode("user"));
+					user.setRole(Role.Member);
+					memberRepo.save(user);
+				}
 			}
 		};
 	}
