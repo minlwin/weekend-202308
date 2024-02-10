@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html data-th-replace="~{/layout/main :: layout('Edit Profile', ~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Hello Thymeleaf</title>
+
+</head>
+<body>
+
+	<main>
+		
+		<h6><i class="bi-pencil"></i> Edit Profile</h6>
+		<form data-th-action="@{/member/profile}" data-th-object="${form}" method="post">
+			
+			<input type="hidden" data-th-field="*{id}" />
+			
+			<!-- Name -->
+			<div class="mb-3">
+				<label class="form-label">Member Name</label>
+				<input data-th-field="*{name}" type="text" placeholder="Enter Member Name" class="form-control" />
+				<span data-th-errors="*{name}" class="text-secondary"></span>
+			</div>
+			
+			<div class="row mb-3">
+				<!-- Email -->
+				<div class="col">
+					<label class="form-label">Email Address</label>
+					<input data-th-field="*{email}" type="email" placeholder="Enter Email Address" class="form-control" />
+					<span data-th-errors="*{email}" class="text-secondary"></span>
+				</div>				
+				<!-- Phone -->
+				<div class="col">
+					<label class="form-label">Phone Number</label>
+					<input data-th-field="*{phone}" type="tel" placeholder="Enter Phone Number" class="form-control" />
+				</div>				
+			</div>
+			
+			<!-- Greeting -->
+			<div class="mb-3">
+				<label class="form-label">Greeting Message</label>
+				<textarea data-th-field="*{greeting}" rows="6" cols="40" placeholder="Enter Greeting Message" class="form-control"></textarea>
+			</div>
+			
+			<div>
+				<button type="button" class="btn btn-primary">
+					<i class="bi-camera"></i> Change Photo
+				</button>
+				
+				<button type="submit" class="btn btn-outline-primary">
+					<i class="bi-save"></i> Save Profile
+ 				</button>
+			</div>
+			
+		</form>		
+	</main>
+
+</body>
+</html>

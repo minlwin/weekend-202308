@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div data-th-fragment="categories">
+		<!-- Categories -->
+		<h6><i class="bi-tags"></i> Categories</h6>
+		
+		<div class="list-group">
+			<a data-th-each="item : ${categories}" data-th-text="${item.name}"  class="list-group-item">Some Category</a>
+		</div>	
+	</div>
+	
+	<div data-th-fragment="coverImage">
+		<!-- Post of Cover -->
+		<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
+	</div>
+
+</body>
+</html>

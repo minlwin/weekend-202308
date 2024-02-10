@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-th-replace="~{/layout/main :: layout('Sign In', ~{::main})}">
+<html data-th-replace="~{/layout/login :: layout('Sign In', ~{::main})}">
 <head>
 <meta charset="UTF-8">
 <title>Hello Thymeleaf</title>
@@ -9,34 +9,26 @@
 
 	<main>
 		
-		<div class="row">
-			<div class="col">
-				<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
+		<h6><i class="bi-door-open"></i> Sign In</h6>
+
+		<form data-th-action="@{/login}" method="post">
+			
+			<div class="mb-3">
+				<label class="form-label">Login Id</label>
+				<input name="loginId" type="text" class="form-control" placeholder="Enter Login Id" />
 			</div>
 			
-			<div class="col-3">
-				<h3>Sign In</h3>
-		
-				<form data-th-action="@{/login}" method="post">
-					
-					<div class="mb-3">
-						<label class="form-label">Login Id</label>
-						<input name="loginId" type="text" class="form-control" placeholder="Enter Login Id" />
-					</div>
-					
-					<div class="mb-3">
-						<label class="form-label">Password</label>
-						<input name="pass" type="password" class="form-control" placeholder="Enter password" />
-					</div>
-					
-					<div>
-						<button type="submit" class="btn btn-primary">Sign In</button>
-						<a data-th-href="@{/public/signup}" class="btn btn-primary">Sign Up</a>
-					</div>
-	
-				</form>
+			<div class="mb-3">
+				<label class="form-label">Password</label>
+				<input name="pass" type="password" class="form-control" placeholder="Enter password" />
 			</div>
-		</div>
+			
+			<div>
+				<button type="submit" class="btn btn-primary">Sign In</button>
+				<a data-th-href="@{/public/signup}" class="btn btn-primary">Sign Up</a>
+			</div>
+
+		</form>
 		
 	</main>
 

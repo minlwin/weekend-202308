@@ -8,30 +8,30 @@
 
 	<nav data-th-fragment="navBar" class="navbar navbar-expand navbar-dark bg-primary" >
 		<div class="container-fluid">
-			<a data-th-href="@{/public/posts}" class="navbar-brand">My Gallery</a>
+			<a data-th-href="@{/public/posts}" class="navbar-brand"><i class="bi-calendar2-heart"></i> My Gallery</a>
 			
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a data-th-href="@{/}" class="nav-link">Home</a>
+					<a data-th-href="@{/}" class="nav-link"><i class="bi-house"></i> Home</a>
 				</li>
 				
 				<li sec:authorize="hasAuthority('Admin')" class="nav-item">
-					<a data-th-href="@{/admin/category}" class="nav-link">Categories</a>
+					<a data-th-href="@{/admin/category}" class="nav-link"><i class="bi-tags"></i> Categories</a>
 				</li>
 
 				<li sec:authorize="hasAuthority('Admin')" class="nav-item">
-					<a data-th-href="@{/admin/members}" class="nav-link">Members</a>
+					<a data-th-href="@{/admin/members}" class="nav-link"><i class="bi-people"></i> Members</a>
 				</li>
 				
 				<li sec:authorize="!hasAuthority('Admin')" class="nav-item">
-					<a data-th-href="@{/member/post}" class="nav-link">Add New Post</a>
+					<a data-th-href="@{/member/post}" class="nav-link"><i class="bi-plus-lg"></i> Add New Post</a>
 				</li>
 				
 				<li sec:authorize="isAnonymous()" class="nav-item">
-					<a data-th-href="@{/login}" class="nav-link">Sign In</a>
+					<a data-th-href="@{/login}" class="nav-link"><i class="bi-door-closed"></i> Sign In</a>
 				</li>
 				<li sec:authorize="isAuthenticated()" class="nav-item">
-					<a id="signOutMenu" class="nav-link">Sign Out</a>
+					<a id="signOutMenu" class="nav-link"><i class="bi-door-open"></i> Sign Out</a>
 				</li>
 			</ul>
 		</div>
@@ -64,6 +64,15 @@
 	<!-- No Data -->
 	<div data-th-fragment="noData(name)" class="alert alert-info">
 		There is no <span data-th-text="${name}">data</span>.
+	</div>
+	
+	<div data-th-fragment="siteInfo">
+		<!-- About Site -->
+		<h6><i class="bi-info-circle"></i> About Us</h6>
+		
+		<p>You can save and share your memories.</p>
+		
+		<p>You can post snap shot of your moments here.</p>
 	</div>
 	
 

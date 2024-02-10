@@ -23,7 +23,7 @@ public class MemberPostController {
 	@PostMapping
 	String save(
 			@Validated @ModelAttribute(name = "form") PostForm form, BindingResult result) {
-		return "redirect:/member/post/%d".formatted(0);
+		return "redirect:/public/post/%d".formatted(0);
 	}
 	
 	@ModelAttribute

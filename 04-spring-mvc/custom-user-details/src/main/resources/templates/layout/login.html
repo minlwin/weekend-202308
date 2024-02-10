@@ -17,21 +17,19 @@
 	
 	<div class="container-fluid mt-3">
 	
-		<div sec:authorize="hasAuthority('Admin')" data-th-replace="${content}"></div>
-		
 		<div sec:authorize="isAnonymous() or hasAuthority('Member')" class="row">
 			
 			<div class="col-3">
-				<div sec:authorize="isAnonymous()" data-th-replace="~{/layout/components :: siteInfo}"></div>
-				<div sec:authorize="hasAuthority('Member')" data-th-replace="~{/components/member :: profile}"></div>			
+				<div data-th-replace="~{/layout/components :: siteInfo}"></div>			
 			</div>
 			
 			<div class="col">
-				<div data-th-replace="${content}"></div>
+				<!-- Post of Cover -->
+				<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
 			</div>
 			
 			<div class="col-3">
-				<div data-th-replace="~{/components/commons :: categories}"></div>
+				<div data-th-replace="${content}"></div>
 			</div>
 		</div>
 	</div>

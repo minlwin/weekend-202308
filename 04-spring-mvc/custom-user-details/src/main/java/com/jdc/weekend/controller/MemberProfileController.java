@@ -1,5 +1,7 @@
 package com.jdc.weekend.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -9,30 +11,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jdc.weekend.model.input.ProfileForm;
+import com.jdc.weekend.model.service.MemberProfileService;
 
 @Controller
 @RequestMapping("member/profile")
 public class MemberProfileController {
+	
+	@Autowired
+	private MemberProfileService service;
 
 	@GetMapping
-	String profile() {
-		return "member-profile";
-	}
-	
-	@GetMapping("edit")
 	String editProfile() {
 		return "member-profile-edit";
 	}
 	
-	@PostMapping("edit")
+	@PostMapping
 	String saveProfile(
 			@Validated @ModelAttribute(name = "form") ProfileForm form, BindingResult result) {
-		return "redirect:/member/profile";
+		
+		if(result.hasErrors()) {
+			return "member-profile-edit";
+		}
+		
+		service.save(form);
+		
+		return "redirect:/member/home";
 	}
 	
+	@PostAuthorize("returnObject != null && returnObject.email == authentication.principal.username")
 	@ModelAttribute(name = "form")
 	ProfileForm form() {
-		return null;
+		return service.getProfileForEdit().orElseThrow();
 	}
 
 }

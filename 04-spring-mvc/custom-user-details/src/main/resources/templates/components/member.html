@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div data-th-fragment="profile">
+		<h6><i class="bi-person-circle"></i> Member Profile</h6>
+		
+		<div class="card">
+			<img data-th-src="@{/images/profile.png}" class="card-img-top" alt="Profile Image" />
+			<div class="card-body">
+				<div class="d-flex justify-content-between">
+					<span>
+						<i class="bi-person"></i> <span data-th-text="${profile.name}"></span>
+					</span>
+					
+					<a data-th-href="@{/member/profile}" class="icon-link">
+						<i class="bi-pencil"></i>
+					</a>
+				</div>
+				<p data-th-if="${profile.greeting != null}" data-th-text="${profile.greeting}">
+					This is Greeting Message
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

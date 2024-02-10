@@ -9,32 +9,14 @@
 
 	<main>
 		
-		<div class="row">
-			<div class="col-3">
-				<!-- About Site -->
-				<h4>My Gallery</h4>
-				
-				<p>You can save and share your memories.</p>
-				
-				<p>You can post snap shot of your moments here.</p>
-			</div>
-			
-			<div class="col">
-				<!-- Post of Cover -->
-				<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
-			</div>
-			
-			<div class="col-3">
-				<!-- Categories -->
-				<h4>Categories</h4>
-				
-				<div class="list-group">
-					<a href="#" class="list-group-item">Some Category</a>
-				</div>
-			</div>
-		
+		<div data-th-if="${#lists.isEmpty(list)}">
+			<div data-th-replace="~{/components/commons :: coverImage}"></div>
 		</div>
 		
+		<div data-th-unless="${#lists.isEmpty(list)}">
+			<h3>There is Data</h3>
+		</div>
+				
 	</main>
 
 </body>

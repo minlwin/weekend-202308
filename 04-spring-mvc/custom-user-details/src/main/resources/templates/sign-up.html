@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-th-replace="~{/layout/main :: layout('Sign In', ~{::main})}">
+<html data-th-replace="~{/layout/login :: layout('Sign In', ~{::main})}">
 <head>
 <meta charset="UTF-8">
 <title>Hello Thymeleaf</title>
@@ -9,43 +9,34 @@
 
 	<main>
 		
-		<div class="row">
-			<div class="col">
-				<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
+		<h6><i class="bi-door-open"></i> Sign Up</h6>
+		
+		<form data-th-action="@{/public/signup}" data-th-object="${signUpForm}" method="post">
+			
+			<div class="mb-3">
+				<label class="form-label">Name</label>
+				<input data-th-field="*{name}" type="text" class="form-control" placeholder="Enter Name" />
+				<span data-th-errors="*{name}" class="text-secondary"></span>
 			</div>
 			
-			<div class="col-3">
-				<h3>Sign Up</h3>
-				
-				<form data-th-action="@{/public/signup}" data-th-object="${signUpForm}" method="post">
-					
-					<div class="mb-3">
-						<label class="form-label">Name</label>
-						<input data-th-field="*{name}" type="text" class="form-control" placeholder="Enter Name" />
-						<span data-th-errors="*{name}" class="text-secondary"></span>
-					</div>
-					
-					<div class="mb-3">
-						<label class="form-label">Email</label>
-						<input data-th-field="*{email}" type="text" class="form-control" placeholder="Enter Email" />
-						<span data-th-errors="*{email}" class="text-secondary"></span>
-					</div>
-					
-					<div class="mb-3">
-						<label class="form-label">Password</label>
-						<input data-th-field="*{password}" type="password" class="form-control" placeholder="Enter password" />
-						<span data-th-errors="*{password}" class="text-secondary"></span>
-					</div>
-					
-					<div>
-						<button type="submit" class="btn btn-primary">Sign Up</button>
-						<a data-th-href="@{/login}" class="btn btn-primary">Sign In</a>
-					</div>
-	
-				</form>
+			<div class="mb-3">
+				<label class="form-label">Email</label>
+				<input data-th-field="*{email}" type="text" class="form-control" placeholder="Enter Email" />
+				<span data-th-errors="*{email}" class="text-secondary"></span>
 			</div>
-		</div>
-		
+			
+			<div class="mb-3">
+				<label class="form-label">Password</label>
+				<input data-th-field="*{password}" type="password" class="form-control" placeholder="Enter password" />
+				<span data-th-errors="*{password}" class="text-secondary"></span>
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-primary">Sign Up</button>
+				<a data-th-href="@{/login}" class="btn btn-primary">Sign In</a>
+			</div>
+
+		</form>		
 	</main>
 
 </body>

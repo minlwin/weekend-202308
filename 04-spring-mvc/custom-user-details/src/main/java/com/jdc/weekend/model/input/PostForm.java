@@ -1,5 +1,8 @@
 package com.jdc.weekend.model.input;
 
-public record PostForm() {
+import lombok.Data;
+
+@Data
+public class PostForm {
 
 }
