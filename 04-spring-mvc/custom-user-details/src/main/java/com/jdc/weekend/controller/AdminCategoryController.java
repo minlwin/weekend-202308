@@ -1,7 +1,5 @@
 package com.jdc.weekend.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jdc.weekend.model.CategorySearchHolder;
 import com.jdc.weekend.model.input.CategoryForm;
 import com.jdc.weekend.model.input.CategorySearch;
 import com.jdc.weekend.model.service.CategoryManagementService;
@@ -22,9 +21,13 @@ public class AdminCategoryController {
 	
 	@Autowired
 	private CategoryManagementService service;
+	
+	@Autowired
+	private CategorySearchHolder searchHolder;
 
 	@GetMapping
 	String search(CategorySearch search, ModelMap model) {
+		searchHolder.setSearch(search);
 		model.put("list", service.search(search));
 		return "category-list";
 	}
@@ -34,7 +37,7 @@ public class AdminCategoryController {
 		
 		if(result.hasErrors()) {
 			model.put("error", true);
-			model.put("list", List.of());
+			model.put("list", service.search(searchHolder.getSearch()));
 			return "category-list";
 		}
 		

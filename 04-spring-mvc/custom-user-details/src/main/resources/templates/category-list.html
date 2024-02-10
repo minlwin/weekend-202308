@@ -38,7 +38,7 @@
 							<td data-th-text="*{@dateTimes.format(createAt)}">Feb 4, 2024</td>
 							<td data-th-text="*{createBy}">Admin User</td>
 							<td>
-								<a href="#">
+								<a href="#" class="editButton" data-th-attr="data-id=*{id},data-name=*{name},data-description=*{description},data-deleted=*{deleted},data-action=@{|/admin/category/*{id}|}">
 									<i class="bi-pencil"></i>
 								</a>
 							</td>
@@ -74,7 +74,7 @@
 							
 							<div>
 								<button type="submit" class="btn btn-outline-primary d-block w-100 mb-2">Search</button>
-								<button id="addNewButton" type="button" class="btn btn-outline-danger d-block w-100">Add New</button>
+								<button id="addNewButton" data-th-attr="data-action=@{/admin/category}" type="button" class="btn btn-outline-danger d-block w-100">Add New</button>
 							</div>
 							
 						</form>

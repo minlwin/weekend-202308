@@ -8,7 +8,7 @@
 
 	<div data-th-fragment="dialog" id="categoryEditDialog" class="modal fade">
 		<div class="modal-dialog">
-			<form data-th-action="@{/admin/category}" method="post" class="modal-content">
+			<form id="editForm" data-th-action="@{/admin/category}" method="post" class="modal-content">
 				
 				<div class="modal-header">
 					<h5>Edit Category</h5>
@@ -24,7 +24,7 @@
 
 					<div class="mb-3">
 						<label for="description" class="form-label">Description</label>
-						<textarea name="description" rows="3" cols="20" class="form-control" placeholder="Enter Description"></textarea>
+						<textarea name="description" id="description" rows="3" cols="20" class="form-control" placeholder="Enter Description"></textarea>
 					</div>
 
 					<!-- Status -->

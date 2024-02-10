@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	const addNewButton = document.getElementById('addNewButton')
 	const closeButton = document.getElementById('closeButton')
+	
 	const categoryEditDialog = document.getElementById('categoryEditDialog')
 	
 	if(addNewButton && closeButton && categoryEditDialog) {
@@ -15,4 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			modalDialog.hide()
 		})
 	}
+	
+	const editButtons = document.getElementsByClassName('editButton')
+	Array.from(editButtons).forEach(btn => btn.addEventListener('click', () => {
+		
+	}))
 })
