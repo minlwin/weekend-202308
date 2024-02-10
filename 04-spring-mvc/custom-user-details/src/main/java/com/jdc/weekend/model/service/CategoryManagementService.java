@@ -17,13 +17,12 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class CategoryManagementService {
 	
 	@Autowired
 	private CategoryRepo repo;
 
-	@Transactional(readOnly = true)
 	public List<CategoryInfoDetails> search(CategorySearch search) {
 		
 		Function<CriteriaBuilder, CriteriaQuery<CategoryInfoDetails>> queryFunc = cb -> {
@@ -38,16 +37,29 @@ public class CategoryManagementService {
 		
 		return repo.search(queryFunc);
 	}
-
-	public void save(CategoryForm form) {
-		repo.save(form.entity());
+	
+	public CategoryForm findEditFromById(int id) {
+		return repo.findById(id).map(a -> {
+			var form = new CategoryForm();
+			form.setId(a.getId());
+			form.setName(a.getName());
+			form.setDescription(a.getDescription());
+			form.setDeleted(a.isDeleted());
+			return form;
+		}).orElseThrow();
 	}
 
-	public void save(int id, CategoryForm form) {
-		var entity = repo.findById(id).orElseThrow();
-		entity.setName(form.name());
-		entity.setDescription(form.description());
-		entity.setDeleted(form.deleted());
+	@Transactional
+	public void save(CategoryForm form) {
+		if(form.getId() == 0) {
+			repo.save(form.entity());
+		} else {
+			repo.findById(form.getId()).ifPresent(entity -> {
+				entity.setName(form.getName());
+				entity.setDescription(form.getDescription());
+				entity.setDeleted(form.isDeleted());
+			});
+		}
 	}
 
 }

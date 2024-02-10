@@ -6,9 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jdc.weekend.model.CategorySearchHolder;
 import com.jdc.weekend.model.input.CategoryForm;
@@ -29,11 +30,12 @@ public class AdminCategoryController {
 	String search(CategorySearch search, ModelMap model) {
 		searchHolder.setSearch(search);
 		model.put("list", service.search(search));
+		model.put("showDialog", false);
 		return "category-list";
 	}
 	
 	@PostMapping
-	String save(@Validated CategoryForm form, BindingResult result, ModelMap model) {
+	String save(@Validated @ModelAttribute("form") CategoryForm form, BindingResult result, ModelMap model) {
 		
 		if(result.hasErrors()) {
 			model.put("error", true);
@@ -46,17 +48,12 @@ public class AdminCategoryController {
 		return "redirect:/admin/category";
 	}
 	
-	@PostMapping("{id}")
-	String update(@PathVariable int id, 
-			@Validated CategoryForm form, BindingResult result, ModelMap model) {
-		
-		if(result.hasErrors()) {
-			model.put("error", true);
-			return "category-list";
+	@ModelAttribute("form")
+	CategoryForm form(@RequestParam(required = false, defaultValue = "0") int id) {
+		if(id > 0) {
+			return service.findEditFromById(id);
 		}
-
-		service.save(id, form);
-
-		return "redirect:/admin/category";
-	}	
+		
+		return new CategoryForm();
+	}
 }

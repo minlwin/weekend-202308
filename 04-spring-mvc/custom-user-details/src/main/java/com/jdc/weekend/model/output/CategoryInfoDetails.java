@@ -47,6 +47,6 @@ public record CategoryInfoDetails(
 			root.get(Category_.createBy)
 		);
 		
-		cq.orderBy(cb.asc(root.get(Category_.name)));
+		cq.orderBy(cb.asc(root.get(Category_.id)));
 	}
 }

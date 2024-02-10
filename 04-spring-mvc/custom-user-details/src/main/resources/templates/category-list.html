@@ -38,7 +38,7 @@
 							<td data-th-text="*{@dateTimes.format(createAt)}">Feb 4, 2024</td>
 							<td data-th-text="*{createBy}">Admin User</td>
 							<td>
-								<a href="#" class="editButton" data-th-attr="data-id=*{id},data-name=*{name},data-description=*{description},data-deleted=*{deleted},data-action=@{|/admin/category/*{id}|}">
+								<a class="editButton" data-th-attr="data-id=*{id},data-name=*{name},data-description=*{description},data-deleted=*{deleted}">
 									<i class="bi-pencil"></i>
 								</a>
 							</td>
@@ -59,7 +59,7 @@
 							<!-- Status -->
 							<div class="mb-3">
 								<label for="deleted" class="form-label">Status</label>
-								<select name="deleted" id="deleted" class="form-select">
+								<select name="deleted" id="status" class="form-select">
 									<option value="">All Status</option>
 									<option value="false" data-th-selected="${#strings.equals(param.deleted, 'false')}">Active</option>
 									<option value="true" data-th-selected="${#strings.equals(param.deleted, 'true')}">Deleted</option>
