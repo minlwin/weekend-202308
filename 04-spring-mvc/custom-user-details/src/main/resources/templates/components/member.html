@@ -10,7 +10,7 @@
 		<h6><i class="bi-person-circle"></i> Member Profile</h6>
 		
 		<div class="card">
-			<img data-th-src="@{/images/profile.png}" class="card-img-top" alt="Profile Image" />
+			<img data-th-src="@{${profile.profileImage} == null ? '/images/profile.png' : |/photos/${profile.profileImage}|}" class="card-img-top" alt="Profile Image" />
 			<div class="card-body">
 				<div class="d-flex justify-content-between">
 					<span>

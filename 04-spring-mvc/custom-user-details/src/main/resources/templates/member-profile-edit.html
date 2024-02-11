@@ -42,7 +42,7 @@
 			</div>
 			
 			<div>
-				<button type="button" class="btn btn-primary">
+				<button id="photoUploadBtn" type="button" class="btn btn-primary">
 					<i class="bi-camera"></i> Change Photo
 				</button>
 				
@@ -52,6 +52,14 @@
 			</div>
 			
 		</form>		
+		
+		<form id="photoUploadForm" 
+			data-th-action="@{/member/profile/image}" 
+			enctype="multipart/form-data" method="post" class="d-none" >
+			<input id="photoUploadInput" type="file" name="file"/>
+		</form>
+		
+		<script data-th-src="@{/js/profile-edit.js}"></script>
 	</main>
 
 </body>
