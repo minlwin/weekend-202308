@@ -6,7 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.weekend.model.entity.Post;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -16,6 +18,10 @@ public class PostForm {
 	
 	@NotBlank(message = "Please enter title.")
 	private String title;
+	
+	@Min(value = 1, message = "Please select category.")
+	@NotNull(message = "Please select category.")
+	private Integer categoryId;
 	
 	@NotBlank(message = "Please enter description.")
 	private String description;

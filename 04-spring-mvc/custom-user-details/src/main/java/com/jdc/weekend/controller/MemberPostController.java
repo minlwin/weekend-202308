@@ -46,7 +46,7 @@ public class MemberPostController {
 		return "redirect:/public/post/%d".formatted(id);
 	}
 	
-	@ModelAttribute
+	@ModelAttribute(name = "form")
 	PostForm form(@RequestParam(required = false, defaultValue = "0") int id) {
 		
 		if(id == 0) {

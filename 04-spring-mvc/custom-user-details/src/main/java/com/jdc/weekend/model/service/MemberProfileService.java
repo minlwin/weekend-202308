@@ -16,7 +16,6 @@ import com.jdc.weekend.model.service.ImageStorageService.ImageType;
 
 @Service
 @Transactional(readOnly = true)
-@PreAuthorize("hasAuthority('Member')")
 public class MemberProfileService {
 
 	@Autowired
@@ -38,6 +37,7 @@ public class MemberProfileService {
 		return Optional.empty();
 	}
 	
+	@PreAuthorize("hasAuthority('Member')")
 	public Optional<ProfileForm> getProfileForEdit() {
 		var authentication = SecurityContextHolder.getContext().getAuthentication();
 		return repo.findOneByEmail(authentication.getName())
@@ -45,6 +45,7 @@ public class MemberProfileService {
 	}
 
 	@Transactional
+	@PreAuthorize("hasAuthority('Member')")
 	public void save(ProfileForm form) {
 		repo.findById(form.getId()).ifPresent(entity -> {
 			entity.setName(form.getName());
@@ -55,6 +56,7 @@ public class MemberProfileService {
 	}
 
 	@Transactional
+	@PreAuthorize("hasAuthority('Member')")
 	public void uploadPhoto(MultipartFile file) {
 		
 		var profileImage = storageService.save(file, ImageType.Profile,1);

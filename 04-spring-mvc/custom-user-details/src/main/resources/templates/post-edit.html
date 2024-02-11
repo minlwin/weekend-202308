@@ -11,20 +11,35 @@
 	
 		<h6><i class="bi-calendar2-heart"></i> Create Memories</h6>
 		
-		<form action="#" enctype="multipart/form-data" method="post">
+		<form data-th-action="@{/member/post}" data-th-object="${form}" enctype="multipart/form-data" method="post">
+			
+			<input type="hidden" data-th-field="*{id}" />
+			
+			<!-- Category -->
+			<div class="mb-3">
+				<label class="form-label">Category</label>
+				<select data-th-field="*{categoryId}" class="form-select">
+					<option value="0">Select Category</option>
+					<option data-th-each="item : ${categories}" data-th-value="${item.id}" data-th-text="${item.name}"></option>
+				</select>
+			</div>
+			
 			<!-- Title -->
 			<div class="mb-3">
 				<label class="form-label">Title</label>
-				<input type="text" placeholder="Enter Title" class="form-control" />
+				<input data-th-field="*{title}" type="text" placeholder="Enter Title" class="form-control" />
+				<span data-th-errors="*{title}"></span>
 			</div>
 			
 			<!-- Description -->
 			<div class="mb-3">
 				<label class="form-label">Description</label>
-				<textarea rows="4" cols="30" class="form-control" placeholder="Enter Description"></textarea>
+				<textarea data-th-field="*{description}" rows="4" cols="30" class="form-control" placeholder="Enter Description"></textarea>
+				<span data-th-errors="*{description}"></span>
 			</div>
 			
-			<input id="photosInput" multiple="multiple" name="photos" type="file" class="d-none" />
+			<input data-th-field="*{files}" id="photosInput" multiple="multiple" name="photos" type="file" class="d-none" />
+			<span data-th-errors="*{files}"></span>
 
 			<!-- Image Display -->
 			<div id="display"></div>
@@ -35,7 +50,7 @@
 					<i class="bi-camera"></i> Photos
 				</button>
 				
-				<button class="btn btn-primary">
+				<button type="submit" class="btn btn-primary">
 					<i class="bi-save"></i> Save
 				</button>
 			</div>			

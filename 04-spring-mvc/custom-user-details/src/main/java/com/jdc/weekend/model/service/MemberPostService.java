@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdc.weekend.model.AppBusinessException;
 import com.jdc.weekend.model.entity.Post;
 import com.jdc.weekend.model.input.PostForm;
+import com.jdc.weekend.model.repo.CategoryRepo;
 import com.jdc.weekend.model.repo.MemberRepo;
 import com.jdc.weekend.model.repo.PostRepo;
 
@@ -25,6 +26,9 @@ public class MemberPostService {
 	
 	@Autowired
 	private ImageStorageService storageService;
+	
+	@Autowired
+	private CategoryRepo categoryRepo;
 
 	@PreAuthorize("hasAuthority('Member')")
 	@Transactional(rollbackFor = AppBusinessException.class)
@@ -38,6 +42,9 @@ public class MemberPostService {
 		postRepo.findById(form.getId()).ifPresent(entity -> {
 			entity.setTitle(form.getTitle());
 			entity.setDescription(form.getDescription());
+			
+			var category = categoryRepo.findById(form.getCategoryId()).orElseThrow();
+			entity.setCategory(category);
 			
 			if(form.getFiles() != null && !form.getFiles().isEmpty()) {
 				// Delete previous photos
@@ -56,7 +63,9 @@ public class MemberPostService {
 
 	private int create(PostForm form) {
 		
-		if(form.getFiles() == null || form.getFiles().isEmpty()) {
+		var files = form.getFiles().stream().filter(a -> !a.isEmpty()).toList();
+		
+		if(files.isEmpty()) {
 			throw new AppBusinessException("Please select photos.");
 		}
 		
@@ -64,6 +73,10 @@ public class MemberPostService {
 		entity.setTitle(form.getTitle());
 		entity.setDescription(form.getDescription());
 		entity.setPostAt(LocalDateTime.now());
+		
+		// Set Category
+		var category = categoryRepo.findById(form.getCategoryId()).orElseThrow();
+		entity.setCategory(category);
 		
 		// set owner
 		var username = SecurityContextHolder.getContext().getAuthentication().getName();
