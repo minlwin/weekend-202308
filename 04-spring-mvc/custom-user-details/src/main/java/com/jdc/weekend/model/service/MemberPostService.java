@@ -1,6 +1,8 @@
 package com.jdc.weekend.model.service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,13 +50,13 @@ public class MemberPostService {
 			
 			if(form.getFiles() != null && !form.getFiles().isEmpty()) {
 				// Delete previous photos
-				storageService.delete(entity.getImages());
-				entity.getImages().clear();
+				var previousImages = entity.getImages().split(",");
+				storageService.delete(Arrays.asList(previousImages));
 				postRepo.saveAndFlush(entity);
 				
 				// Upload New Photos
 				var images = storageService.saveAll(form.getFiles());
-				entity.getImages().addAll(images);
+				entity.setImages(images.stream().collect(Collectors.joining(",")));
 			}
 		});
 		
@@ -85,7 +87,7 @@ public class MemberPostService {
 		
 		// Upload New Photos
 		var images = storageService.saveAll(form.getFiles());
-		entity.getImages().addAll(images);
+		entity.setImages(images.stream().collect(Collectors.joining(",")));
 
 		return postRepo.save(entity).getId();
 	}

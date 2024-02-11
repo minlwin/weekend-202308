@@ -1,5 +1,6 @@
 package com.jdc.weekend.model.input;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,7 @@ public class PostForm {
 		form.setId(entity.getId());
 		form.setTitle(entity.getTitle());
 		form.setDescription(entity.getDescription());
-		form.setPhotoLinks(entity.getImages());
+		form.setPhotoLinks(Arrays.asList(entity.getImages().split(",")));
 		return form;
 	}
 }

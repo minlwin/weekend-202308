@@ -44,7 +44,7 @@ public class ImageStorageService {
 		var extension = getExtension(fileName);
 		var userName = SecurityContextHolder.getContext().getAuthentication().getName().trim();
 		var timeStamp = LocalDateTime.now().format(DF);
-		return "%s_%s_%s_%s.%s".formatted(type, userName, timeStamp, extension, imageNumber);
+		return "%s_%s_%s_%s.%s".formatted(type, userName, timeStamp, imageNumber, extension);
 	}
 
 	private String getExtension(String fileName) {

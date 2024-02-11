@@ -1,17 +1,15 @@
 package com.jdc.weekend.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,14 +33,16 @@ public class Post extends AbstractEntity{
 	@Column(nullable = false)
 	private String title;
 	
-	@ElementCollection
-	@CollectionTable(name = "POST_IMAGES")
-	private List<String> images = new ArrayList<>();
+	@Column(nullable = false)
+	private String images;
 	
 	@Column(nullable = false)
 	private String description;
 	
 	@Column(nullable = false)
 	private LocalDateTime postAt;
+	
+	@OneToMany(mappedBy = "post")
+	private List<Review> reviews;
 
 }

@@ -1,7 +1,5 @@
 package com.jdc.weekend.model.entity;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -27,7 +25,7 @@ public class Review extends AbstractEntity{
 	private Member reviewer;
 	
 	@Column(nullable = false)
-	private BigDecimal rate;
+	private int rate;
 	@Column(nullable = false)
 	private String message;
 }
