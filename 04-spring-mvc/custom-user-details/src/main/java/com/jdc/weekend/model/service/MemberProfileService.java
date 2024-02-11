@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jdc.weekend.model.input.ProfileForm;
 import com.jdc.weekend.model.output.MemberProfile;
 import com.jdc.weekend.model.repo.MemberRepo;
+import com.jdc.weekend.model.service.ImageStorageService.ImageType;
 
 @Service
 @Transactional(readOnly = true)
@@ -56,7 +57,7 @@ public class MemberProfileService {
 	@Transactional
 	public void uploadPhoto(MultipartFile file) {
 		
-		var profileImage = storageService.save(file);
+		var profileImage = storageService.save(file, ImageType.Profile,1);
 		
 		var authentication = SecurityContextHolder.getContext().getAuthentication();
 		repo.findOneByEmail(authentication.getName()).ifPresent(entity -> {

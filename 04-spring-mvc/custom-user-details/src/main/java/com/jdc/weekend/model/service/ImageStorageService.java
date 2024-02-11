@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,9 +25,9 @@ public class ImageStorageService {
 		Profile, Post
 	}
 
-	public String save(MultipartFile file) {
+	public String save(MultipartFile file, ImageType type, int imageNumber) {
 		
-		var fileName = getFileName(ImageType.Profile, file.getOriginalFilename());
+		var fileName = getFileName(ImageType.Profile, file.getOriginalFilename(), imageNumber);
 		var target = imageFolder.resolve(fileName);
 		
 		try {
@@ -37,12 +39,12 @@ public class ImageStorageService {
 		return fileName;
 	}
 
-	// type_trim(username)_yyyyMMddHHmmssSSS.extension
-	private String getFileName(ImageType type, String fileName) {
+	// type_trim(username)_yyyyMMddHHmmssSSS_imageNumber.extension
+	private String getFileName(ImageType type, String fileName, int imageNumber) {
 		var extension = getExtension(fileName);
 		var userName = SecurityContextHolder.getContext().getAuthentication().getName().trim();
 		var timeStamp = LocalDateTime.now().format(DF);
-		return "%s_%s_%s.%s".formatted(type, userName, timeStamp, extension);
+		return "%s_%s_%s_%s.%s".formatted(type, userName, timeStamp, extension, imageNumber);
 	}
 
 	private String getExtension(String fileName) {
@@ -53,5 +55,28 @@ public class ImageStorageService {
 		}
 		
 		return "";
+	}
+
+	public void delete(List<String> images) {
+		images.forEach(image -> {
+			try {
+				var path = imageFolder.resolve(image);
+				Files.delete(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	public List<String> saveAll(List<MultipartFile> files) {
+		
+		var list = new ArrayList<String>();
+		
+		for(var i = 0; i < files.size(); i ++) {
+			var fileName = save(files.get(i), ImageType.Post,i + 1);
+			list.add(fileName);
+		}
+		
+		return list;
 	}
 }

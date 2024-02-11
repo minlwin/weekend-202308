@@ -1,8 +1,12 @@
 package com.jdc.weekend.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,8 +35,9 @@ public class Post extends AbstractEntity{
 	@Column(nullable = false)
 	private String title;
 	
-	@Column(nullable = false)
-	private String image;
+	@ElementCollection
+	@CollectionTable(name = "POST_IMAGES")
+	private List<String> images = new ArrayList<>();
 	
 	@Column(nullable = false)
 	private String description;

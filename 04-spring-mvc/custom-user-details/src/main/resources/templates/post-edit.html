@@ -8,16 +8,41 @@
 <body>
 
 	<main>
-		<form action="#">
+	
+		<h6><i class="bi-calendar2-heart"></i> Create Memories</h6>
+		
+		<form action="#" enctype="multipart/form-data" method="post">
 			<!-- Title -->
+			<div class="mb-3">
+				<label class="form-label">Title</label>
+				<input type="text" placeholder="Enter Title" class="form-control" />
+			</div>
 			
 			<!-- Description -->
+			<div class="mb-3">
+				<label class="form-label">Description</label>
+				<textarea rows="4" cols="30" class="form-control" placeholder="Enter Description"></textarea>
+			</div>
 			
-			<!-- Buttons -->
+			<input id="photosInput" multiple="multiple" name="photos" type="file" class="d-none" />
 
 			<!-- Image Display -->
+			<div id="display"></div>
+					
+			<!-- Buttons -->
+			<div class="mt-3">
+				<button id="photosUploadBtn" type="button" class="btn btn-outline-primary me-2">
+					<i class="bi-camera"></i> Photos
+				</button>
+				
+				<button class="btn btn-primary">
+					<i class="bi-save"></i> Save
+				</button>
+			</div>			
+		</form>	
+		
+		<script data-th-src="@{/js/post-edit.js}"></script>
 			
-		</form>		
 	</main>
 
 </body>
