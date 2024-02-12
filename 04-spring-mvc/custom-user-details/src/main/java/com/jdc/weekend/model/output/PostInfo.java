@@ -32,6 +32,10 @@ public record PostInfo(
 	public List<String> getPhotos() {
 		return Arrays.asList(images.split(","));
 	}
+	
+	public int getRatingPoints() {
+		return 0;
+	}
 
 	public static void select(CriteriaBuilder cb, CriteriaQuery<PostInfo> cq, Root<Post> root) {
 		

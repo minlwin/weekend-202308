@@ -11,13 +11,165 @@
 		<h6><i class="bi-tags"></i> Categories</h6>
 		
 		<div class="list-group">
-			<a data-th-each="item : ${categories}" data-th-text="${item.name}"  class="list-group-item">Some Category</a>
+			<a data-th-each="item : ${categories}"
+				data-th-href="@{/public/posts(category=${item.id})}" 
+				data-th-text="${item.name}"  
+				class="list-group-item">Some Category</a>
 		</div>	
 	</div>
 	
 	<div data-th-fragment="coverImage">
 		<!-- Post of Cover -->
 		<img class="img img-fluid" alt="Profile Image" data-th-src="@{/images/cover.png}">
+	</div>
+	
+	<div data-th-fragment="postItem(item)" >
+		
+		<div class="card">
+			<div class="card-body">
+				<h5 data-th-text="${item.title}">Title</h5>
+				<div class="d-flex text-secondary">
+					<div class="me-2">
+						<i class="bi-calendar"></i>
+						<span data-th-text="${@dateTimes.format(item.createAt)}">Owner</span>
+					</div>
+					<div class="me-2">
+						<i class="bi-tag"></i> <span data-th-text="${item.categoryName}">Category</span>
+					</div>
+					<div>
+						<i class="bi-person"></i>
+						<span data-th-text="${item.memberName}">Owner</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="card-image bg-light" data-th-include="~{:: photos(${item.photos})}"></div>
+			
+			<div class="card-body">
+				<p data-th-text="${item.description}">Description</p>
+				<div class="d-flex justify-content-between align-items-center">
+					<div data-th-include="~{::rating(${item.ratingPoints})}"></div>
+					<a href="#" class="btn btn-primary">
+						<i class="bi-pencil"></i> Write Review
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div data-th-fragment="photos(list)" >
+		<div data-th-switch="${list.size()}">
+			<div data-th-case="1">
+				<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-large" />
+			</div>
+			<div data-th-case="2" class="row">
+				<div class="col">
+					<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-large" />
+				</div>
+				<div class="col">
+					<img data-th-src="@{|/photos/${list[1]}|}" class="img-post img-post-large" />
+				</div>
+			</div>
+			<div data-th-case="3">
+				<div class="row mb-4">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[1]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[2]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+			</div>
+			<div data-th-case="4">
+				<div class="row mb-4">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[1]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[2]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[3]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+			</div>
+			<div data-th-case="5">
+				<div class="row mb-4">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[1]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[2]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[3]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[4]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+			</div>
+			<div data-th-case="*">
+				<div class="row mb-4">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[0]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[1]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[2]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[3]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[4]}|}" class="img-post img-post-small" />
+					</div>
+					<div class="col">
+						<img data-th-src="@{|/photos/${list[5]}|}" class="img-post img-post-small" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div data-th-fragment="rating(rating)">
+		<div class="d-flex">
+			<span class="me-1">
+				<i class="bi-star"></i>
+			</span>
+			<span class="me-1">
+				<i class="bi-star"></i>
+			</span>
+			<span class="me-1">
+				<i class="bi-star"></i>
+			</span>
+			<span class="me-1">
+				<i class="bi-star"></i>
+			</span>
+			<span class="me-1">
+				<i class="bi-star"></i>
+			</span>
+		</div>
 	</div>
 
 </body>

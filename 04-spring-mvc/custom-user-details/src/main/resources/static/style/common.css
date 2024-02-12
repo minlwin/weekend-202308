@@ -21,3 +21,16 @@
 	width: 100%;
 	object-fit: cover;
 }
+
+.img-post {
+	width: 100%;
+	object-fit: cover;
+}
+
+.img-post-large {
+	 height: 480px;
+}
+
+.img-post-small {
+	height: 235px;
+}

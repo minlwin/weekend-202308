@@ -14,7 +14,29 @@
 		</div>
 		
 		<div data-th-unless="${#lists.isEmpty(list)}">
-			<h3>There is Data</h3>
+			<!-- Search Bar -->
+			<div class="card mb-3">
+				<div class="card-body">
+					<form data-th-action="@{/public/posts}" class="row">
+						<div class="col">
+							<input type="text" class="form-control" placeholder="Search Keyword" />
+						</div>	
+						<div class="col-auto">
+							<button class="btn btn-outline-primary">
+								<i class="bi-search"></i> Search
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<!-- Result List -->
+			<div data-th-each="item : ${list}">
+				<div data-th-include="~{/components/commons :: postItem(${item})}" class="mb-3"></div>
+			</div>
+			
+			<!-- Pagination -->
+			<div data-th-replace="~{/layout/components :: pagination(${pager})}"></div>
 		</div>
 				
 	</main>
