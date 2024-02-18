@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.jdc.weekend.model.entity.Category_;
+import com.jdc.weekend.model.entity.Member_;
 import com.jdc.weekend.model.entity.Post;
 import com.jdc.weekend.model.entity.Post_;
 import com.jdc.weekend.model.output.PostInfo;
@@ -24,18 +25,22 @@ import jakarta.persistence.criteria.Root;
 
 @Service
 @Transactional(readOnly = true)
-public class PublicPostService {
+public class PostReferenceService {
 	
 	@Autowired
 	private PostRepo postRepo;
 	
-	public Page<PostInfo> search(Optional<Integer> category, Optional<String> keyword, int page, int size) {
+	public Page<PostInfo> search(
+			Optional<String> username,
+			Optional<Integer> category, 
+			Optional<String> keyword, 
+			int page, int size) {
 		
 		Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc = cb -> {
 			var cq = cb.createQuery(Long.class);
 			var root = cq.from(Post.class);
 			cq.select(cb.count(root.get(Post_.id)));
-			cq.where(where(cb, root, category, keyword));
+			cq.where(where(cb, root, username, category, keyword));
 			return cq;
 		};
 		
@@ -43,7 +48,7 @@ public class PublicPostService {
 			var cq = cb.createQuery(PostInfo.class);
 			var root = cq.from(Post.class);
 			PostInfo.select(cb, cq, root);
-			cq.where(where(cb, root, category, keyword));
+			cq.where(where(cb, root, username, category, keyword));
 			cq.orderBy(cb.desc(root.get(Post_.postAt)));
 			return cq;
 		};
@@ -55,8 +60,12 @@ public class PublicPostService {
 		return postRepo.findById(id).map(PostInfoDetails::from).orElseThrow();
 	}
 	
-	private Predicate[] where(CriteriaBuilder cb, Root<Post> root, Optional<Integer> category, Optional<String> keyword) {
+	private Predicate[] where(CriteriaBuilder cb, Root<Post> root, Optional<String> username, Optional<Integer> category, Optional<String> keyword) {
 		var list = new ArrayList<Predicate>();
+		
+		username.filter(StringUtils::hasLength).ifPresent(param -> {
+			list.add(cb.equal(root.get(Post_.owner).get(Member_.email), username));
+		});
 		
 		category.filter(param -> param > 0).ifPresent(param -> {
 			list.add(cb.equal(root.get(Post_.category).get(Category_.id), param));

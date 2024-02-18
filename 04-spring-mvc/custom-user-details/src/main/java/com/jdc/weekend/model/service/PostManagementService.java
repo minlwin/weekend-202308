@@ -18,7 +18,7 @@ import com.jdc.weekend.model.repo.MemberRepo;
 import com.jdc.weekend.model.repo.PostRepo;
 
 @Service
-public class MemberPostService {
+public class PostManagementService {
 	
 	@Autowired
 	private PostRepo postRepo;

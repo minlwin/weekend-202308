@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jdc.weekend.model.AppBusinessException;
 import com.jdc.weekend.model.input.PostForm;
-import com.jdc.weekend.model.service.MemberPostService;
+import com.jdc.weekend.model.service.PostManagementService;
 
 @Controller
 @RequestMapping("member/post")
 public class MemberPostController {
 	
 	@Autowired
-	private MemberPostService service;
+	private PostManagementService service;
 
 	@GetMapping
 	String edit(@RequestParam(required = false, defaultValue = "0") int id) {
