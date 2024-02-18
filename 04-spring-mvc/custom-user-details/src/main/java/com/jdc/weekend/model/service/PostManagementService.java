@@ -48,7 +48,7 @@ public class PostManagementService {
 			var category = categoryRepo.findById(form.getCategoryId()).orElseThrow();
 			entity.setCategory(category);
 			
-			if(form.getFiles() != null && !form.getFiles().isEmpty()) {
+			if(form.getFiles() != null && form.getFiles().stream().filter(a -> !a.isEmpty()).count() > 0) {
 				// Delete previous photos
 				var previousImages = entity.getImages().split(",");
 				storageService.delete(Arrays.asList(previousImages));

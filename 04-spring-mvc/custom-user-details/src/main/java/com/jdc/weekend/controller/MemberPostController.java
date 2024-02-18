@@ -43,7 +43,7 @@ public class MemberPostController {
 			return "post-edit";
 		}
 		
-		return "redirect:/public/post/%d".formatted(id);
+		return "redirect:/public/posts/%d".formatted(id);
 	}
 	
 	@ModelAttribute(name = "form")

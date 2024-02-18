@@ -11,6 +11,10 @@ public record PostReviewInfo(
 		int rating,
 		String message
 		) {
+	
+	public String[] getStars() {
+		return Star.getStars(rating);
+	}
 
 	public static PostReviewInfo from(Review entity) {
 		return new PostReviewInfo(

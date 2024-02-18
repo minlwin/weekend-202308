@@ -3,14 +3,21 @@ package com.jdc.weekend.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jdc.weekend.model.input.ReviewForm;
 import com.jdc.weekend.model.output.Pager;
+import com.jdc.weekend.model.service.MemberReviewService;
 import com.jdc.weekend.model.service.PostReferenceService;
 
 @Controller
@@ -19,6 +26,9 @@ public class PublicPostController {
 	
 	@Autowired
 	private PostReferenceService service;
+	
+	@Autowired
+	private MemberReviewService reviewService;
 
 	@GetMapping
 	String search(
@@ -41,4 +51,26 @@ public class PublicPostController {
 		model.put("dto", service.findById(id));
 		return "post-details";
 	}
+	
+	@PostMapping("{id}/review")
+	@PreAuthorize("hasAuthority('Member')")
+	String addReview(@PathVariable int id, 
+			ModelMap model,
+			@ModelAttribute("reviewForm") @Validated ReviewForm form, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			model.put("dto", service.findById(id));
+			return "post-details";
+		}
+		
+		reviewService.save(id, form);
+		
+		return "redirect:/public/posts/%d".formatted(id);
+	}
+	
+	@ModelAttribute("reviewForm")
+	ReviewForm reviewForm() {
+		return new ReviewForm();
+	}
+	
 }

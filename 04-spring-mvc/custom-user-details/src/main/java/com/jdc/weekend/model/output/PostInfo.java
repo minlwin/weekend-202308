@@ -33,8 +33,15 @@ public record PostInfo(
 		return Arrays.asList(images.split(","));
 	}
 	
-	public int getRatingPoints() {
-		return 0;
+	public String[] getStars() {
+		
+		if(ratingCount == 0) {
+			return Star.getStars(0);
+		}
+		
+		var averageRating = rating / ratingCount.intValue();
+		
+		return Star.getStars(averageRating);
 	}
 
 	public static void select(CriteriaBuilder cb, CriteriaQuery<PostInfo> cq, Root<Post> root) {

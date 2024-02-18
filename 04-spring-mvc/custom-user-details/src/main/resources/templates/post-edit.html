@@ -20,7 +20,7 @@
 				<label class="form-label">Category</label>
 				<select data-th-field="*{categoryId}" class="form-select">
 					<option value="0">Select Category</option>
-					<option data-th-each="item : ${categories}" data-th-value="${item.id}" data-th-text="${item.name}"></option>
+					<option data-th-each="item : ${categories}" data-th-value="${item.id}" data-th-text="${item.name}" ></option>
 				</select>
 			</div>
 			
@@ -42,7 +42,15 @@
 			<span data-th-errors="*{files}"></span>
 
 			<!-- Image Display -->
-			<div id="display"></div>
+			<div id="display">
+				<div data-th-if="${!#lists.isEmpty(form.photoLinks)}" class="row g-3" 
+					data-th-classappend="${form.photoLinks.size() == 1 ? 'row-cols-1' : 'row-cols-2'}"
+					data-th-with="photoCss=${form.photoLinks.size() == 1 ? 'img-single' : 'img-grid'}">
+					<div class="col" data-th-each="photo : ${form.photoLinks}">
+						<img data-th-class="${photoCss}" data-th-src="@{|/photos/${photo}|}" alt="Original Photos" />
+					</div>
+				</div>
+			</div>
 					
 			<!-- Buttons -->
 			<div class="mt-3">

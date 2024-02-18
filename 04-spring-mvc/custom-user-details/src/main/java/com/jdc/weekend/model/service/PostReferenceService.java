@@ -64,7 +64,7 @@ public class PostReferenceService {
 		var list = new ArrayList<Predicate>();
 		
 		username.filter(StringUtils::hasLength).ifPresent(param -> {
-			list.add(cb.equal(root.get(Post_.owner).get(Member_.email), username));
+			list.add(cb.equal(root.get(Post_.owner).get(Member_.email), username.get()));
 		});
 		
 		category.filter(param -> param > 0).ifPresent(param -> {

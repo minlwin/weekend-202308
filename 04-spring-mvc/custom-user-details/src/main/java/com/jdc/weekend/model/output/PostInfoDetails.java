@@ -1,7 +1,6 @@
 package com.jdc.weekend.model.output;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import com.jdc.weekend.model.entity.Post;
@@ -13,6 +12,7 @@ public record PostInfoDetails(
 		String categoryName,
 		int memberId,
 		String memberName,
+		String memberEmail,
 		String description,
 		LocalDateTime createAt,
 		String images,
@@ -20,7 +20,20 @@ public record PostInfoDetails(
 		) {
 	
 	public List<String> getPhotos() {
-		return Arrays.asList(images.split(","));
+		return List.of(images.split(","));
+	}
+	
+	public String[] getStars() {
+		
+		if(reviews.isEmpty()) {
+			return Star.getStars(0);
+		}
+		
+		var totalRating = reviews.stream().mapToInt(a -> a.rating())
+				.sum();
+		var average = totalRating / reviews.size();
+		
+		return Star.getStars(average);
 	}
 
 	public static PostInfoDetails from(Post entity) {
@@ -31,6 +44,7 @@ public record PostInfoDetails(
 				entity.getCategory().getName(), 
 				entity.getOwner().getId(), 
 				entity.getOwner().getName(), 
+				entity.getOwner().getEmail(),
 				entity.getDescription(), 
 				entity.getPostAt(), 
 				entity.getImages(), 

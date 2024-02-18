@@ -35,6 +35,7 @@ public class PostForm {
 		var form = new PostForm();
 		form.setId(entity.getId());
 		form.setTitle(entity.getTitle());
+		form.setCategoryId(entity.getCategory().getId());
 		form.setDescription(entity.getDescription());
 		form.setPhotoLinks(Arrays.asList(entity.getImages().split(",")));
 		return form;

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html data-th-replace="~{/layout/main :: layout('Post Details', ~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Hello Thymeleaf</title>
+
+</head>
+<body>
+
+	<main>
+		
+		<!-- Post Information -->
+		<div data-th-insert="~{/components/commons :: postSummary(${dto})}" class="mb-3"></div>
+		
+		<!-- Image Gallery -->
+		<div data-th-insert="~{:: gallary(${dto.photos})}"></div>
+		
+		<!-- Review  -->
+		<div data-th-insert="~{:: review(${dto.reviews})}" class="mt-4">
+		</div>
+		
+		<script type="text/javascript" data-th-src="@{/js/post-details.js}"></script>	
+	</main>
+	
+	<div data-th-fragment="review(reviews)">
+		<h5><i class="bi-award"></i> Reviews</h5>
+		<!-- Review Form -->
+		<div class="my-3" sec:authorize="isAuthenticated()">
+			<form data-th-unless="${#authentication.name == dto.memberEmail}" 
+				data-th-action="@{|/public/posts/${dto.id}/review|}" data-th-object="${reviewForm}" method="post">
+				
+				<input type="hidden" id="ratingInput" data-th-field="*{rating}">
+				
+				<div class="mb-3">
+					<label class="form-label">Review Message</label>
+					<textarea data-th-field="*{message}" rows="3" cols="30" class="form-control"></textarea>
+					<span data-th-errors="*{message}" class="text-secondary"></span>
+				</div>
+									
+				<div class="d-flex justify-content-between align-items-center">
+					
+					<div>
+						<div class="d-flex">
+							<span data-value="1" class="star-link me-1" >
+								<i data-th-class="${ reviewForm.rating >= 1 ? 'bi-star-fill' : 'bi-star'}"></i>
+							</span>
+							<span data-value="2" class="star-link me-1">
+								<i data-th-class="${ reviewForm.rating >= 2 ? 'bi-star-fill' : 'bi-star'}"></i>
+							</span>
+							<span data-value="3" class="star-link me-1">
+								<i data-th-class="${ reviewForm.rating >= 3 ? 'bi-star-fill' : 'bi-star'}"></i>
+							</span>
+							<span data-value="4" class="star-link me-1">
+								<i data-th-class="${ reviewForm.rating >= 4 ? 'bi-star-fill' : 'bi-star'}"></i>
+							</span>
+							<span data-value="5" class="star-link me-1">
+								<i data-th-class="${ reviewForm.rating >= 5 ? 'bi-star-fill' : 'bi-star'}"></i>
+							</span>
+						</div>
+						<span data-th-errors="*{rating}" class="text-secondary"></span>
+					</div>
+					
+					<button type="submit" class="btn btn-primary">
+						<i class="bi-save"></i> Add Review
+					</button>
+				</div>
+			</form>
+		</div>
+		
+		<!-- Review List -->
+		<div class="mb-4">
+			<div data-th-unless="${#lists.isEmpty(reviews)}" class="list-group">
+				<div data-th-each="review : ${reviews}" class="list-group-item">
+					<!-- Rating -->
+					<div data-th-insert="~{/components/commons :: rating(${review.stars})}"></div>
+					<!-- Review Comment -->
+					<div data-th-text="${review.message}">Review Comment</div>
+					
+					<div class="d-flex justify-content-between">
+						<!-- Reviewer -->
+						<small>
+							<i class="bi-person"></i> <span data-th-text="${review.reviewerName}">Reviewer</span>
+						</small>
+						
+						<!-- Review At -->
+						<small>
+							<i class="bi-calendar"></i> <span data-th-text="${@dateTimes.format(review.reviewAt)}">Reviewer</span>
+						</small>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div data-th-if="${#lists.isEmpty(reviews)}" class="alert alert-info">
+				<i class="bi-info-circle"></i> There is no reviews.
+			</div>
+		
+		</div>		
+		
+	</div>
+	
+	<div data-th-fragment="gallary(images)">
+		<!-- Display Images -->
+		<div class="mb-3">
+			<img id="imageDisplay" data-th-src="@{|/photos/${images[0]}|}" class="img-display" alt="Display Image" />
+		</div>
+		
+		<!-- Image Controls -->
+		<div class="d-flex">
+			<div data-th-each="image :${images}" class="me-2">
+				<img data-th-src="@{|/photos/${image}|}" class="img-control" alt="Control Image" />
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

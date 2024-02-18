@@ -49,8 +49,8 @@
 			<div class="card-body">
 				<p data-th-text="${item.description}">Description</p>
 				<div class="d-flex justify-content-between align-items-center">
-					<div data-th-include="~{::rating(${item.ratingPoints})}"></div>
-					<a href="#" class="btn btn-primary">
+					<div data-th-insert="~{::rating(${item.stars})}"></div>
+					<a data-th-href="@{|/public/posts/${item.id}|}" class="btn btn-primary">
 						<i class="bi-send"></i> Show Details
 					</a>
 				</div>
@@ -153,23 +153,50 @@
 		</div>
 	</div>
 	
-	<div data-th-fragment="rating(rating)">
+	<div data-th-fragment="rating(stars)">
 		<div class="d-flex">
-			<span class="me-1">
-				<i class="bi-star"></i>
+			<span data-th-each="star : ${stars}" class="me-1">
+				<i data-th-class="${star}"></i>
 			</span>
-			<span class="me-1">
-				<i class="bi-star"></i>
-			</span>
-			<span class="me-1">
-				<i class="bi-star"></i>
-			</span>
-			<span class="me-1">
-				<i class="bi-star"></i>
-			</span>
-			<span class="me-1">
-				<i class="bi-star"></i>
-			</span>
+		</div>
+	</div>
+	
+	
+	<div data-th-fragment="postSummary(post)">
+		<!-- Title -->
+		<h5 data-th-text="${post.title}">Title</h5>
+		
+		<!-- Short Informations -->
+		<div class="d-flex">
+			<!-- Category -->
+			<div class="me-2">
+				<i class="bi-tag"></i> <span data-th-text="${post.categoryName}">Category Name</span>
+			</div>
+			
+			<!-- Post Date -->
+			<div class="me-2">
+				<i class="bi-calendar"></i> <span data-th-text="${@dateTimes.format(post.createAt)}">yyyy/MM/dd HH:mm</span>
+			</div>
+			
+			<!-- Owner -->
+			<div>
+				<i class="bi-person"></i> <span data-th-text="${post.memberName}">Owner Name</span>
+			</div>
+		</div>
+		
+		<!-- Description -->
+		<p data-th-text="${post.description}">This is Description Text</p>
+		
+		<!-- Rating -->
+		<div class="d-flex justify-content-between align-items-center">
+			<div data-th-insert="~{::rating(post.stars)}"></div>
+			
+			
+			<div data-th-if="${#authentication.name == post.memberEmail}">
+				<a data-th-href="@{/member/post(id=${post.id})}" class="btn btn-primary">
+					<i class="bi-pencil"></i> Edit Post
+				</a>
+			</div>
 		</div>
 	</div>
 

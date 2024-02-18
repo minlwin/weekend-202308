@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 public class Review extends AbstractEntity{
 
 	@EmbeddedId
-	private ReviewPk id;
+	private ReviewPk id = new ReviewPk();
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -28,4 +28,14 @@ public class Review extends AbstractEntity{
 	private int rate;
 	@Column(nullable = false)
 	private String message;
+	
+	public void setPost(Post post) {
+		this.post = post;
+		this.id.setPostId(post.getId());
+	}
+	
+	public void setMember(Member reviewer) {
+		this.reviewer = reviewer;
+		this.id.setReviewrId(reviewer.getId());
+	}
 }
