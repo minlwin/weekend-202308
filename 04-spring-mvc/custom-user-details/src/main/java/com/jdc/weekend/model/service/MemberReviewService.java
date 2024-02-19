@@ -46,7 +46,7 @@ public class MemberReviewService {
 					return entity;
 				});
 		
-		review.setRate(form.getRating());
+		review.setRate(form.getRating() * 2);
 		review.setMessage(form.getMessage());
 		
 		reviewRepo.save(review);

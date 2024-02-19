@@ -46,3 +46,11 @@
 	height: 100px;
 	object-fit: cover;
 }
+
+i.logo {
+	font-size: 6rem;
+}
+
+span.heading {
+	font-size: 2rem;
+}
