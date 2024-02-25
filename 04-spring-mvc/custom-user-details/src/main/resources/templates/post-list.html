@@ -31,10 +31,18 @@
 			</div>
 			
 			<!-- Result List -->
-			<div data-th-each="item : ${list}">
-				<div data-th-include="~{/components/commons :: postItem(${item})}" class="mb-3"></div>
+			<div sec:authorize="isAnonymous() or hasAuthority('Member')">
+				<div data-th-each="item : ${list}">
+					<div data-th-replace="~{/components/commons :: postItem(${item})}" class="mb-3"></div>
+				</div>
 			</div>
 			
+			<div sec:authorize="hasAuthority('Admin')" class="row row-cols-2 g-3">
+				<div data-th-each="item : ${list}" class="col">
+					<div data-th-replace="~{/components/commons :: postItem(${item})}" class="mb-3"></div>
+				</div>
+			</div>
+
 			<!-- Pagination -->
 			<div data-th-replace="~{/layout/components :: pagination(${pager})}"></div>
 		</div>
