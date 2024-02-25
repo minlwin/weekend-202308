@@ -44,6 +44,17 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 	}
 
 	@Override
+	public <R> List<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc, int limit) {
+		var criteriaQuery = queryFunc.apply(entityManager.getCriteriaBuilder());
+		
+		var query = entityManager.createQuery(criteriaQuery);
+		
+		query.setMaxResults(limit);
+		
+		return query.getResultList();
+	}
+
+	@Override
 	public <R> Page<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc,
 			Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc, int page, int size) {
 		
@@ -60,5 +71,6 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 
 		return new PageImpl<R>(content, pageable, total);
 	}
+
 
 }

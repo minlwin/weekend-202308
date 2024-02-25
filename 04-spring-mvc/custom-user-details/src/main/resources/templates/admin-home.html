@@ -10,7 +10,64 @@
 	<main>
 	
 		<h3>Admin Home</h3>
+		
+		<div class="row">
+			<div class="col-3">
+				<!-- Category -->
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title text-center">Categories</h4>
+						<canvas id="categoryChart"></canvas>
+					</div>
+				</div>
+				
+				<!-- Top Ten Member -->
+				<ul id="topTenMembers" class="list-group mt-4">
+					<li class="list-group-item">Top Users</li>
+				</ul>
+			</div>
+			
+			<div class="col">
+				<!-- Post Summary -->
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<h4 class="card-title">Posts</h4>
+							<div class="row gx-2">
+								<div class="col-auto">
+									<select id="searchType" class="form-select">
+										<option value="month">Monthly</option>
+										<option value="year">Yearly</option>
+									</select>
+								</div>
+								<div class="col-auto">
+									<select id="searchYear" class="form-select">
+										<option data-th-each="item : ${years}" 
+											data-th-selected="${item == currentYear}"
+											data-th-value="${item}" 
+											data-th-text="${item}">2024</option>
+									</select>
+								</div>
+								<div class="col-auto">
+									<select id="searchMonth" class="form-select">
+										<option data-th-each="item : ${months}" 
+											data-th-selected="${item == currentMonth}"
+											data-th-value="${item}" 
+											data-th-text="${item}" >JAN</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Bar Chart -->
+						<canvas id="postChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
 
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script data-th-src="@{/js/admin-home.js}"></script>
 	</main>
 
 </body>
