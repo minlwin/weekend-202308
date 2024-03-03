@@ -1,0 +1,52 @@
+<h4>
+  <i class="bi-building-add"></i> Create Depertment
+</h4>
+
+<div class="row">
+  <div class="col-8">
+    <form [formGroup]="form">
+      <!-- Code -->
+      <div class="row">
+        <div class="col-6">
+          <app-form-group label="Code">
+            <app-input-group [valid]="form.get('code')?.valid">
+              <input formControlName="code" type="text" class="form-control" placeholder="Enter Department Code">
+            </app-input-group>
+          </app-form-group>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="row">
+        <div class="col-6">
+          <app-form-group label="Name">
+            <app-input-group [valid]="form.get('name')?.valid">
+              <input formControlName="name" type="text" class="form-control" placeholder="Enter Department Name">
+            </app-input-group>
+          </app-form-group>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="row">
+        <div class="col-6">
+          <app-form-group label="Phone">
+            <app-input-group [valid]="form.get('phone')?.valid">
+              <input formControlName="phone" type="tel" class="form-control" placeholder="Enter Phone Number">
+            </app-input-group>
+          </app-form-group>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <app-form-group label="Description">
+        <textarea formControlName="description" class="form-control" cols="30" rows="4"></textarea>
+      </app-form-group>
+
+      <button [class.disabled]="!form.valid" class="btn btn-danger">
+        <i class="bi-save"></i> Save
+      </button>
+    </form>
+
+  </div>
+</div>

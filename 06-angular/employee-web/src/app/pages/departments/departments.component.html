@@ -1,0 +1,66 @@
+<!-- Title -->
+<h4>
+  <i class="bi-building"></i> Department Management
+</h4>
+
+<div class="row">
+  <!-- Result List -->
+  <div class="col">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Head</th>
+          <th>Phone</th>
+          <th>Employees</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of list(); track $index) {
+          <tr>
+            <td>{{item.code}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.hodName}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.employees}}</td>
+            <td class="text-center">
+              <a href="#">
+                <i class="bi-send"></i>
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="col-3">
+    <app-card>
+
+      <form [formGroup]="form">
+        <app-form-group label="Code">
+          <input formControlName="code" type="text" class="form-control" placeholder="Search Code">
+        </app-form-group>
+
+        <app-form-group label="Name">
+          <input formControlName="name" type="text" class="form-control" placeholder="Search Name">
+        </app-form-group>
+
+        <div>
+          <button type="button" (click)="search()" class="btn btn-primary d-inline-block w-100 mb-2">
+            <i class="bi-search"></i> Search
+          </button>
+          <a [routerLink]="['/departments', 'edit']" class="btn btn-danger d-inline-block w-100">
+            <i class="bi-plus-lg"></i> Add New
+          </a>
+        </div>
+      </form>
+
+    </app-card>
+
+  </div>
+</div>
+
