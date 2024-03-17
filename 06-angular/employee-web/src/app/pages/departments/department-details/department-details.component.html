@@ -1,1 +1,34 @@
-<p>department-details works!</p>
+<div class="mb-3">
+  <h4 class="d-flex justify-content-between">
+    <span>
+      <i class="bi-building"></i> {{data().code}} - {{data().name}}
+    </span>
+
+    <div>
+      <a href="#" class="btn btn-outline-info me-2">
+        <i class="bi-person-add"></i> Add Employee
+      </a>
+      <a [routerLink]="['/departments', 'edit']" [queryParams]="{code : data().code}" class="btn btn-outline-info">
+        <i class="bi-pencil"></i> Edit
+      </a>
+    </div>
+  </h4>
+  @if (data().description) {
+    <span class="text-wrap text-secondary">{{data().description}}</span>
+  }
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <app-card>
+      <!-- Department Info -->
+      <app-department-info [data]="data()"></app-department-info>
+    </app-card>
+  </div>
+
+  <div class="col">
+    <app-card>
+      <app-department-employee></app-department-employee>
+    </app-card>
+  </div>
+</div>

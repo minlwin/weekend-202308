@@ -26,7 +26,7 @@
             <td>{{item.phone}}</td>
             <td>{{item.employees}}</td>
             <td class="text-center">
-              <a href="#">
+              <a [routerLink]="['/departments', 'details']" [queryParams]="{code: item.code}">
                 <i class="bi-send"></i>
               </a>
             </td>
