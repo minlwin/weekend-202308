@@ -1,7 +1,8 @@
 package com.jdc.employee.service;
 
+import static com.jdc.employee.model.DataModificationResults.createResult;
+import static com.jdc.employee.model.DataModificationResults.updateResult;
 import static com.jdc.employee.model.NullSafeHelper.safeCalll;
-import static com.jdc.employee.model.DataModificationResult.*;
 
 import java.util.List;
 import java.util.function.Function;
@@ -50,7 +51,7 @@ public class DepartmentService {
 	@Transactional
 	public DataModificationResult<String> create(DepartmentCreateForm form) {
 		var entity = repo.save(form.entity());
-		return  createResult(entity.getCode(), DOMAIN_NAME, "code");
+		return createResult(entity.getCode(), DOMAIN_NAME, "code");
 	}
 
 	public DepartmentInfoDetails findById(String code) {

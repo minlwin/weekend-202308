@@ -21,6 +21,9 @@ public class Employee {
 	@ManyToOne
 	private Department department;
 	
+	@ManyToOne
+	private Position position;
+	
 	@Column(nullable = false)
 	private String phone;
 	@Column(nullable = false)

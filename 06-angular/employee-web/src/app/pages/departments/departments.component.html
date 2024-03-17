@@ -6,34 +6,38 @@
 <div class="row">
   <!-- Result List -->
   <div class="col">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Head</th>
-          <th>Phone</th>
-          <th>Employees</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of list(); track $index) {
+    @if (list().length) {
+      <table class="table table-bordered">
+        <thead>
           <tr>
-            <td>{{item.code}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.hodName}}</td>
-            <td>{{item.phone}}</td>
-            <td>{{item.employees}}</td>
-            <td class="text-center">
-              <a [routerLink]="['/departments', 'details']" [queryParams]="{code: item.code}">
-                <i class="bi-send"></i>
-              </a>
-            </td>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Head</th>
+            <th>Phone</th>
+            <th>Employees</th>
+            <th></th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (item of list(); track $index) {
+            <tr>
+              <td>{{item.code}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.hodName}}</td>
+              <td>{{item.phone}}</td>
+              <td>{{item.employees}}</td>
+              <td class="text-center">
+                <a [routerLink]="['/departments', 'details']" [queryParams]="{code: item.code}">
+                  <i class="bi-send"></i>
+                </a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <app-no-data domain="department"></app-no-data>
+    }
   </div>
 
   <!-- Search Bar -->

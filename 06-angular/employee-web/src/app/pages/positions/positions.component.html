@@ -1,1 +1,46 @@
-<p>positions works!</p>
+<h4>
+  <i class="bi-briefcase"></i> Positions
+</h4>
+
+<div class="row">
+  <div class="col">
+    @if (list().length) {
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Basic Salary</th>
+            <th>OT Per Hour</th>
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+    } @else {
+      <app-no-data domain="position"></app-no-data>
+    }
+  </div>
+  <div class="col-3">
+    <app-card>
+      <form>
+        <app-form-group label="Code">
+          <input placeholder="Search Code" type="text" class="form-control">
+        </app-form-group>
+
+        <app-form-group label="Name">
+          <input type="text" placeholder="Search Name" class="form-control">
+        </app-form-group>
+
+        <div class="div">
+          <button class="btn btn-primary d-inline-block w-100 mb-2">
+            <i class="bi-search"></i> Search
+          </button>
+
+          <a href="#" class="btn btn-danger d-inline-block w-100">
+            <i class="bi-plus-lg"></i> Add New
+          </a>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>
