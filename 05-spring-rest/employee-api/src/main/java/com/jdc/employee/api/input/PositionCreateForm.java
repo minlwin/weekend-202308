@@ -21,8 +21,13 @@ public record PositionCreateForm(
 		String remark) {
 
 	public Position entity() {
-		// TODO Auto-generated method stub
-		return null;
+		var entity = new Position();
+		entity.setCode(code);
+		entity.setName(name);
+		entity.setBasicSalary(basicSalary);
+		entity.setOtPerHour(otPerHour);
+		entity.setRemark(remark);
+		return entity;
 	}
 
 }

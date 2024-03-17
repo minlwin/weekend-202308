@@ -1,0 +1,52 @@
+<h4>
+  @if (edit()) {
+    <i class="bi-pencil"></i> Edit Position
+  } @else {
+    <i class="bi-plus-lg"></i> Add New Position
+  }
+</h4>
+
+<form [formGroup]="form">
+
+  <div class="row mb-3">
+    <div class="col">
+      <app-form-group label="Position Code">
+        <app-input-group [valid]="form.get('code')?.valid">
+          <input formControlName="code" type="text" placeholder="Enter Position Code" class="form-control">
+        </app-input-group>
+      </app-form-group>
+    </div>
+    <div class="col">
+      <app-form-group label="Position Name">
+        <app-input-group [valid]="form.get('name')?.valid">
+          <input formControlName="name" type="text" placeholder="Enter Position Name" class="form-control">
+        </app-input-group>
+      </app-form-group>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <app-form-group label="Basic Salary">
+        <app-input-group [valid]="form.get('basicSalary')?.valid">
+          <input formControlName="basicSalary" type="number" class="form-control">
+        </app-input-group>
+      </app-form-group>
+    </div>
+    <div class="col">
+      <app-form-group label="OT Fees">
+        <app-input-group [valid]="form.get('otPerHour')?.valid">
+          <input formControlName="otPerHour" type="number" class="form-control">
+        </app-input-group>
+      </app-form-group>
+    </div>
+  </div>
+
+  <app-form-group label="Remark" class="mb-3">
+    <textarea placeholder="Enter Remark" class="form-control" formControlName="remark" cols="30" rows="3"></textarea>
+  </app-form-group>
+
+  <button (click)="save()" [class.disabled]="!form.valid" class="btn btn-primary">
+    <i class="bi-save"></i> Save
+  </button>
+</form>

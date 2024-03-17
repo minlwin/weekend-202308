@@ -12,9 +12,23 @@
             <th>Name</th>
             <th>Basic Salary</th>
             <th>OT Per Hour</th>
+            <th>Employees</th>
             <th></th>
           </tr>
         </thead>
+
+        <tbody>
+          @for (item of list(); track $index) {
+            <tr>
+              <td>{{item.code}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.basicSalary}}</td>
+              <td>{{item.otPerHour}}</td>
+              <td>{{item.employees}}</td>
+              <td></td>
+            </tr>
+          }
+        </tbody>
       </table>
     } @else {
       <app-no-data domain="position"></app-no-data>
@@ -32,11 +46,11 @@
         </app-form-group>
 
         <div class="div">
-          <button class="btn btn-primary d-inline-block w-100 mb-2">
+          <button (click)="search()" class="btn btn-primary d-inline-block w-100 mb-2">
             <i class="bi-search"></i> Search
           </button>
 
-          <a href="#" class="btn btn-danger d-inline-block w-100">
+          <a [routerLink]="['/positions', 'edit']" class="btn btn-danger d-inline-block w-100">
             <i class="bi-plus-lg"></i> Add New
           </a>
         </div>
