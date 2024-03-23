@@ -10,9 +10,9 @@
           <tr>
             <th>Code</th>
             <th>Name</th>
-            <th>Basic Salary</th>
-            <th>OT Per Hour</th>
-            <th>Employees</th>
+            <th class="text-end">Basic Salary</th>
+            <th class="text-end">OT Per Hour</th>
+            <th class="text-end">Employees</th>
             <th></th>
           </tr>
         </thead>
@@ -22,10 +22,14 @@
             <tr>
               <td>{{item.code}}</td>
               <td>{{item.name}}</td>
-              <td>{{item.basicSalary}}</td>
-              <td>{{item.otPerHour}}</td>
-              <td>{{item.employees}}</td>
-              <td></td>
+              <td class="text-end">{{item.basicSalary | number}}</td>
+              <td class="text-end">{{item.otPerHour | number}}</td>
+              <td class="text-end">{{item.employees | number}}</td>
+              <td class="text-center">
+                <a [routerLink]="['/positions', 'details']" [queryParams]="{code : item.code}" class="icon-link">
+                  <i class="bi-send"></i>
+                </a>
+              </td>
             </tr>
           }
         </tbody>

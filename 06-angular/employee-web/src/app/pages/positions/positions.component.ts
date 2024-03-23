@@ -3,11 +3,12 @@ import { WidgetsModule } from '../../widgets/widgets.module';
 import { PositionService } from '../../service/position.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-positions',
   standalone: true,
-  imports: [WidgetsModule, RouterLink],
+  imports: [WidgetsModule, RouterLink, CommonModule],
   templateUrl: './positions.component.html',
   styles: ``
 })

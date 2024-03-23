@@ -1,5 +1,7 @@
 package com.jdc.employee.api.output;
 
+import java.util.List;
+
 import com.jdc.employee.model.entity.Department;
 
 public record DepartmentInfoDetails(
@@ -9,7 +11,8 @@ public record DepartmentInfoDetails(
 		String hodCode,
 		String hodName,
 		String hodPhone,
-		String description
+		String description,
+		List<EmployeeInfo> employees
 		) {
 
 	public static DepartmentInfoDetails from(Department entity) {
@@ -21,6 +24,7 @@ public record DepartmentInfoDetails(
 				null == hod ? null : hod.getCode(), 
 				null == hod ? null : hod.getName(), 
 				null == hod ? null : hod.getPhone(), 
-				entity.getDescription());
+				entity.getDescription(),
+				entity.getEmployees().stream().map(EmployeeInfo::from).toList());
 	}
 }

@@ -2,3 +2,7 @@ $bootstrap-icons-font-src: url(../node_modules/bootstrap-icons/font/fonts/bootst
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons";
+
+.sub-title {
+  font-size: small;
+}

@@ -1,0 +1,23 @@
+<h6>
+  <i class="bi-info-lg"></i> Information
+</h6>
+
+<!-- Code -->
+<app-form-group label="Position Code">
+  <span class="form-control">{{data().code}}</span>
+</app-form-group>
+
+<!-- Name -->
+<app-form-group label="Position Name">
+  <span class="form-control">{{data().name}}</span>
+</app-form-group>
+
+<!-- Basic Salary -->
+<app-form-group label="Basic Salary">
+  <span class="form-control">{{data().basicSalary | number}}</span>
+</app-form-group>
+
+<!-- Ot PerHour -->
+<app-form-group label="OT Fees / Hour">
+  <span class="form-control">{{data().otPerHour | number}}</span>
+</app-form-group>

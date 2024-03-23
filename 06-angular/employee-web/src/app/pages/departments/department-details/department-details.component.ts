@@ -2,7 +2,6 @@ import { Component, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DepartmentService } from '../../../service/department.service';
 import { DepartmentInfoComponent } from './department-info/department-info.component';
-import { DepartmentEmployeeComponent } from './department-employee/department-employee.component';
 import { WidgetsModule } from '../../../widgets/widgets.module';
 
 @Component({
@@ -11,7 +10,6 @@ import { WidgetsModule } from '../../../widgets/widgets.module';
   imports: [
     WidgetsModule,
     DepartmentInfoComponent,
-    DepartmentEmployeeComponent,
     RouterLink],
   templateUrl: './department-details.component.html',
   styles: ``

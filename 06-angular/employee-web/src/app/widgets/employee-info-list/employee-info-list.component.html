@@ -1,0 +1,49 @@
+<h6 class="card-title">
+  <i class="bi-people"></i> Employees
+</h6>
+
+@if (employees().length) {
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+
+        @if (showDepartment()) {
+          <th>Department</th>
+        }
+
+        @if (showPosition()) {
+          <th>Position</th>
+        }
+
+        <th>Phone</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (item of employees(); track $index) {
+        <tr>
+          <td>{{item.code}}</td>
+          <td>{{item.name}}</td>
+
+          @if (showDepartment()) {
+            <td>{{item.department}}</td>
+          }
+
+          @if (showPosition()) {
+            <td>{{item.position}}</td>
+          }
+          <td>{{item.phone}}</td>
+          <td>{{item.email}}</td>
+
+        </tr>
+      }
+
+    </tbody>
+  </table>
+} @else {
+  <app-no-data domain="Employee"></app-no-data>
+}

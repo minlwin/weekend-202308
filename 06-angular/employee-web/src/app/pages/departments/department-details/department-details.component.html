@@ -1,21 +1,14 @@
-<div class="mb-3">
-  <h4 class="d-flex justify-content-between">
-    <span>
-      <i class="bi-building"></i> {{data().code}} - {{data().name}}
-    </span>
+<div class="d-flex justify-content-between mb-3">
+  <app-details-title icon="bi-building" [code]="data().code" [name]="data().name" [description]="data().description"></app-details-title>
 
-    <div>
-      <a href="#" class="btn btn-outline-info me-2">
-        <i class="bi-person-add"></i> Add Employee
-      </a>
-      <a [routerLink]="['/departments', 'edit']" [queryParams]="{code : data().code}" class="btn btn-outline-info">
-        <i class="bi-pencil"></i> Edit
-      </a>
-    </div>
-  </h4>
-  @if (data().description) {
-    <span class="text-wrap text-secondary">{{data().description}}</span>
-  }
+  <div>
+    <a href="#" class="btn btn-outline-info me-2">
+      <i class="bi-person-add"></i> Add Employee
+    </a>
+    <a [routerLink]="['/departments', 'edit']" [queryParams]="{code : data().code}" class="btn btn-outline-info">
+      <i class="bi-pencil"></i> Edit
+    </a>
+  </div>
 </div>
 
 <div class="row">
@@ -28,7 +21,7 @@
 
   <div class="col">
     <app-card>
-      <app-department-employee></app-department-employee>
+      <app-employee-info-list [employees]="data().employees" [showDepartment]="false"></app-employee-info-list>
     </app-card>
   </div>
 </div>

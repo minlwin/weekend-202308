@@ -1,1 +1,26 @@
-<p>position-details works!</p>
+@if (data()) {
+  <div class="d-flex justify-content-between mb-3">
+    <app-details-title icon="bi-briefcase" [code]="data().code" [name]="data().name" [description]="data().remark"></app-details-title>
+
+    <div>
+      <a href="#" class="btn btn-outline-info">
+        <i class="bi-pencil"></i> Edit Position
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <app-card>
+        <app-position-info [data]="data()"></app-position-info>
+      </app-card>
+    </div>
+
+    <div class="col">
+      <app-card>
+        <app-employee-info-list [employees]="data().employees"></app-employee-info-list>
+      </app-card>
+    </div>
+  </div>
+
+}
