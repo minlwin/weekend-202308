@@ -9,7 +9,7 @@ export class NavLinkComponent {
 
   icon = input.required<string>()
   title = input.required<string>()
-  path = input.required<string[]>()
+  path = input<string[]>()
   show = input.required<boolean>()
 
 }

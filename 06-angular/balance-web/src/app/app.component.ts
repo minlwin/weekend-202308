@@ -15,4 +15,8 @@ export class AppComponent {
   toggleSideBar() {
     this.show.update(state => !state)
   }
+
+  signOut() {
+    console.log("Sign Out")
+  }
 }

@@ -1,0 +1,58 @@
+<app-page-title icon="bi-tags" title="Category Management"></app-page-title>
+
+<app-list-view>
+
+  <form search [formGroup]="form" class="row">
+    <app-search-form-group class="col-auto" label="Type">
+      <select formControlName="type" class="form-select">
+        <option value="">Search Type</option>
+        @for (item of types(); track $index) {
+          <option [value]="item">{{item}}</option>
+        }
+      </select>
+    </app-search-form-group>
+
+    <app-search-form-group class="col-auto" label="Search Name">
+      <input formControlName="name" type="text" class="form-control" placeholder="Search Name">
+    </app-search-form-group>
+
+    <div class="col btn-wrapper">
+      <button (click)="search()" type="button" class="btn btn-outline-primary">
+        <i class="bi-search"></i> Search
+      </button>
+
+      <a [routerLink]="['/category-edit']" class="btn btn-outline-danger ms-2">
+        <i class="bi-plus-lg"></i> Add New
+      </a>
+    </div>
+  </form>
+
+  <table list class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (item of list(); track $index) {
+        <tr>
+          <td>{{item.id}}</td>
+          <td>{{item.type}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.description}}</td>
+          <td>
+            <a [routerLink]="['/category-edit']" [queryParams]="{id: item.id}" class="icon-link">
+              <i class="bi-pencil"></i>
+            </a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+</app-list-view>
