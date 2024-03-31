@@ -24,6 +24,11 @@
       <a [routerLink]="['/category-edit']" class="btn btn-outline-danger ms-2">
         <i class="bi-plus-lg"></i> Add New
       </a>
+
+      <button (click)="fileInput.click()" type="button" class="btn btn-outline-success ms-2">
+        <i class="bi-file-arrow-up"></i> Upload
+      </button>
+
     </div>
   </form>
 
@@ -56,3 +61,7 @@
   </table>
 
 </app-list-view>
+
+<form class="d-none">
+  <input type="file" #fileInput (change)="upload(fileInput.files)">
+</form>

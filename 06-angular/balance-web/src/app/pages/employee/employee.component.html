@@ -1,0 +1,69 @@
+<app-page-title icon="bi-people" title="Employee Management"></app-page-title>
+
+<app-list-view>
+
+  <form search [formGroup]="form" class="row">
+    <div class="col-auto">
+      <app-search-form-group label="Role">
+        <select class="form-select">
+          <option value="">Search Role</option>
+          @for (item of roles(); track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </app-search-form-group>
+    </div>
+
+    <div class="col-auto">
+      <app-search-form-group label="Keyword">
+        <input type="text" class="form-control" placeholder="Search Keyword">
+      </app-search-form-group>
+    </div>
+
+    <div class="col btn-wrapper">
+      <button (click)="search()" type="button" class="btn btn-outline-primary">
+        <i class="bi-search"></i> Search
+      </button>
+
+      <a [routerLink]="['/employee-edit']" class="btn btn-outline-danger ms-2">
+        <i class="bi-plus-lg"></i> Add Employee
+      </a>
+    </div>
+  </form>
+
+  <section list>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of list(); track $index) {
+          <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.role}}</td>
+            <td>{{item.status}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.email}}</td>
+            <td>
+              <a [routerLink]="['/employee-edit']" [queryParams]="{id: item.id}" class="icon-link"></a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-pagination></app-pagination>
+
+  </section>
+</app-list-view>

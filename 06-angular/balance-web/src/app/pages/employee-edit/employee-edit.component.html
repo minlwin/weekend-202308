@@ -1,0 +1,33 @@
+<app-page-title [icon]="icon()" [title]="title()"></app-page-title>
+
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-sm-12">
+    <form [formGroup]="form">
+      <app-validated-form-group [valid]="form.get('name')?.valid" label="Name">
+        <input type="text" class="form-control" placeholder="Enter Employee Name">
+      </app-validated-form-group>
+
+      <app-validated-form-group [valid]="form.get('role')?.valid" label="Role">
+        <select name="" id="" class="form-select">
+          <option value="">Select Role</option>
+
+          @for (item of roles(); track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </app-validated-form-group>
+
+      <app-validated-form-group [valid]="form.get('phone')?.valid" label="Phone">
+        <input type="tel" class="form-control" placeholder="Enter Phone Number">
+      </app-validated-form-group>
+
+      <app-validated-form-group [valid]="form.get('email')?.valid" label="Email">
+        <input type="email" class="form-control" placeholder="Enter Email Address">
+      </app-validated-form-group>
+
+      <button type="button" class="btn btn-outline-danger">
+        <i class="bi-save"></i> Save Employee
+      </button>
+    </form>
+  </div>
+</div>

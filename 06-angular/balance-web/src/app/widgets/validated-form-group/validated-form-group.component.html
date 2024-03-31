@@ -1,0 +1,9 @@
+<div class="mb-3">
+  <label class="form-label">{{label()}}</label>
+  <div class="input-group">
+    <ng-content></ng-content>
+    <span class="input-group-text">
+      <i [class.bi-x]="!valid()" [class.bi-check]="valid()"></i>
+    </span>
+  </div>
+</div>

@@ -5,6 +5,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PageTitleComponent } from './page-title/page-title.component';
 import { ListViewComponent } from './list-view/list-view.component';
 import { SearchFormGroupComponent } from './search-form-group/search-form-group.component';
+import { ValidatedFormGroupComponent } from './validated-form-group/validated-form-group.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { InputGroupComponent } from './input-group/input-group.component';
 
 
 
@@ -13,7 +16,10 @@ import { SearchFormGroupComponent } from './search-form-group/search-form-group.
     NavLinkComponent,
     PageTitleComponent,
     ListViewComponent,
-    SearchFormGroupComponent
+    SearchFormGroupComponent,
+    ValidatedFormGroupComponent,
+    PaginationComponent,
+    InputGroupComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +30,10 @@ import { SearchFormGroupComponent } from './search-form-group/search-form-group.
     NavLinkComponent,
     PageTitleComponent,
     ListViewComponent,
-    SearchFormGroupComponent
+    SearchFormGroupComponent,
+    ValidatedFormGroupComponent,
+    PaginationComponent,
+    InputGroupComponent
   ]
 })
 export class WidgetsModule { }

@@ -1,35 +1,31 @@
 import { Component, signal } from '@angular/core';
 import { WidgetsModule } from '../../widgets/widgets.module';
-import { RouterLink } from '@angular/router';
-import { BALANCE_TYPES } from '../../model/balance-model';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { ROLES } from '../../model/balance-model';
 
 @Component({
-  selector: 'app-category',
+  selector: 'app-employee',
   standalone: true,
-  imports: [WidgetsModule, RouterLink, ReactiveFormsModule],
-  templateUrl: './category.component.html',
+  imports: [WidgetsModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './employee.component.html',
   styles: ``
 })
-export class CategoryComponent {
+export class EmployeeComponent {
 
   form:FormGroup
 
-  types = signal(BALANCE_TYPES)
   list = signal<any[]>([])
+  roles = signal<string[]>(ROLES)
 
   constructor(builder:FormBuilder) {
     this.form = builder.group({
-      type: '',
-      name: ''
+      role: '',
+      keyword: ''
     })
   }
 
   search() {
 
-  }
-
-  upload(file:any) {
-    console.log(file)
   }
 }

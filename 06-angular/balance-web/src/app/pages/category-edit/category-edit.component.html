@@ -1,1 +1,36 @@
-<p>category-edit works!</p>
+<app-page-title [icon]="icon()" [title]="title()"></app-page-title>
+
+<form [formGroup]="form">
+
+  <div class="row">
+    <div class="col-4">
+      <!-- Types -->
+      <app-validated-form-group [valid]="form.get('type')?.valid" label="Type">
+        <select formControlName="type" class="form-select">
+          <option value="">Select One</option>
+          @for (item of types(); track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </app-validated-form-group>
+    </div>
+
+    <div class="col">
+      <!-- Name -->
+      <app-validated-form-group [valid]="form.get('name')?.valid" label="Name">
+        <input formControlName="name" type="text" class="form-control" placeholder="Enter Name">
+      </app-validated-form-group>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <app-search-form-group label="Description">
+      <textarea formControlName="description" cols="30" rows="4" class="form-control"></textarea>
+    </app-search-form-group>
+  </div>
+
+  <button (click)="save()" type="button" class="btn btn-outline-danger">
+    <i class="bi-save"></i> Save
+  </button>
+</form>

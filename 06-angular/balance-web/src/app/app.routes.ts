@@ -6,11 +6,15 @@ import { BalanceReportComponent } from './pages/balance-report/balance-report.co
 import { BalanceEditComponent } from './pages/balance-edit/balance-edit.component';
 import { BalanceDetailsComponent } from './pages/balance-details/balance-details.component';
 import { CategoryEditComponent } from './pages/category-edit/category-edit.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
+import { EmployeeEditComponent } from './pages/employee-edit/employee-edit.component';
 
 export const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'category', component: CategoryComponent},
   {path: 'category-edit', component: CategoryEditComponent},
+  {path: 'employee', component: EmployeeComponent},
+  {path: 'employee-edit', component: EmployeeEditComponent},
   {path: 'incomes', component: BalanceListComponent, data: {type: 'Income'}},
   {path: 'expenses', component: BalanceListComponent, data: {type: 'Expense'}},
   {path: 'report', component: BalanceReportComponent},
