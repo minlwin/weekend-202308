@@ -39,6 +39,18 @@ export class BalanceEditComponent {
     return this.form.get('items') as FormArray
   }
 
+  get totalQuantity() {
+    return this.items.controls.map(form => form.get('quantity')?.value || 0).reduce((a, b) => a + b)
+  }
+
+  get totalAmount() {
+    return this.items.controls.map(form => {
+      const count = form.get('quantity')?.value || 0
+      const unitPrice = form.get('unitPrice')?.value || 0
+      return count * unitPrice
+    }).reduce((a, b) => a + b)
+  }
+
   addItem() {
     this.items.push(this.builder.group({
       id: 0,
@@ -61,6 +73,6 @@ export class BalanceEditComponent {
     const quantity = item.get('quantity')?.value || 0
     const unitPrice = item.get('unitPrice')?.value || 0
 
-    return quantity + unitPrice
+    return quantity * unitPrice
   }
 }

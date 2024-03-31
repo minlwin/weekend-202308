@@ -3,14 +3,14 @@
 <form [formGroup]="form">
   <div class="row">
     <!-- Issue At -->
-    <div class="col-auto">
+    <div class="col-3">
       <app-validated-form-group [valid]="form.get('issueAt')?.valid" label="Issue Date">
         <input formControlName="issueAt" type="date" class="form-control">
       </app-validated-form-group>
     </div>
 
     <!-- Category -->
-    <div class="col-auto">
+    <div class="col-3">
       <app-validated-form-group [valid]="form.get('category')?.valid" label="Category">
         <select formControlName="category" class="form-select">
           <option value="">Select Category</option>
@@ -33,7 +33,7 @@
     @for (item of items.controls; track $index) {
       @if ($index == 0) {
         <div class="row">
-          <div class="col-5">
+          <div class="col-6">
             <label class="form-label">Item Name</label>
           </div>
           <div class="col">
@@ -48,7 +48,7 @@
         </div>
       }
       <div [formGroupName]="$index" class="row mb-2">
-        <div class="col-5">
+        <div class="col-6">
           <app-input-group [valid]="items.controls[$index].get('name')?.valid">
             <input formControlName="name" type="text" class="form-control" placeholder="Item Name">
           </app-input-group>
@@ -82,13 +82,33 @@
     }
   </section>
 
-  <div>
-    <button (click)="addItem()" type="button" class="btn btn-outline-primary">
-      <i class="bi-plus-lg"></i> Add Item
-    </button>
+  <div class="row">
+    <div class="col offset-6">
+      <span class="form-control bg-info text-white">Total</span>
+    </div>
+    <div class="col">
+      <span class="form-control bg-info text-white">
+        {{totalQuantity}}
+      </span>
+    </div>
+    <div class="col">
+      <span class="form-control bg-info text-white">
+        {{totalAmount}}
+      </span>
+    </div>
 
-    <button type="button" class="btn btn-outline-danger ms-2">
-      <i class="bi-save"></i> Save Entry
-    </button>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col offset-8">
+      <button (click)="addItem()" type="button" class="btn btn-outline-primary d-block w-100">
+        <i class="bi-plus-lg"></i> Add Item
+      </button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger d-block w-100">
+        <i class="bi-save"></i> Save Entry
+      </button>
+    </div>
   </div>
 </form>
