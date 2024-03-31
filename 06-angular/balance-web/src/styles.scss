@@ -1,0 +1,43 @@
+$bootstrap-icons-font-src:url('../node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff');
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons';
+
+html, body, app-root > div {
+  height: 100vh;
+}
+
+app-root {
+  display: block;
+  height: 100vh;
+}
+
+#side-bar {
+  overflow: scroll;
+}
+
+#side-bar.show {
+  width: 280px;
+}
+
+#side-bar.hide {
+  width: 60px;
+}
+
+#side-bar > nav > ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+#side-bar a {
+  text-decoration: none;
+  color: crimson;
+  display: block;
+  padding: 0.3rem 1rem;
+}
+
+#side-bar a:hover {
+  background-color: crimson;
+  color: white;
+}

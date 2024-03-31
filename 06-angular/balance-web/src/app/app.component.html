@@ -1,0 +1,40 @@
+<div class="d-flex">
+
+  <div id="side-bar" [class.text-center]="!show()" [class.show]="show()" [class.hide]="!show()" class="shadow">
+    <h5 (click)="toggleSideBar()" class="m-3">
+      @if (show()) {
+        <i class="bi-arrow-left"></i> Balances
+      } @else {
+        <i class="bi-arrow-right"></i>
+      }
+    </h5>
+
+    <nav>
+      <ul>
+        <li>
+          <app-nav-link icon="bi-house" title="Home" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+        <li>
+          <app-nav-link icon="bi-tags" title="Category" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+        <li>
+          <app-nav-link icon="bi-cash-stack" title="Incomes" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+        <li>
+          <app-nav-link icon="bi-cart-dash" title="Expenses" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+        <li>
+          <app-nav-link icon="bi-bar-chart" title="Balance Report" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+        <li>
+          <app-nav-link icon="bi-lock" title="Sign Out" [show]="show()" [path]="[]"></app-nav-link>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <main class="container-fluid">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

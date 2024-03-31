@@ -1,0 +1,7 @@
+<a [routerLink]="path()">
+  @if (show()) {
+    <i [class]="icon()"></i> {{title()}}
+  } @else {
+    <i [class]="icon()"></i>
+  }
+</a>
