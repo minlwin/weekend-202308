@@ -15,6 +15,17 @@
     </div>
 
     <div class="col-auto">
+      <app-search-form-group label="Status">
+        <select class="form-select">
+          <option value="">Search Status</option>
+          @for (item of statuses(); track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </app-search-form-group>
+    </div>
+
+    <div class="col-auto">
       <app-search-form-group label="Keyword">
         <input type="text" class="form-control" placeholder="Search Keyword">
       </app-search-form-group>
