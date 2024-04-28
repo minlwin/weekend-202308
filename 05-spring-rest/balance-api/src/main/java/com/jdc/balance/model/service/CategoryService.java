@@ -48,8 +48,7 @@ public class CategoryService {
 
 	@Transactional(readOnly = true)
 	public List<CategoryInfo> search(CategorySearch search) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.search(queryFunc(search));
 	}
 	
 	private Function<CriteriaBuilder, CriteriaQuery<CategoryInfo>> queryFunc(CategorySearch search) {

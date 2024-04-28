@@ -14,6 +14,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 public interface BaseRepo<T, ID> extends JpaRepository<T, ID>{
 
 	<R> List<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc);
+	
 	<R> Page<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc, 
 			Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc, int page, int size);
 }
