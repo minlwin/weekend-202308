@@ -1,6 +1,5 @@
 package com.jdc.balance.model.entity;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.jdc.balance.model.AbstractEntity;
@@ -27,9 +26,6 @@ public class LedgerEntry extends AbstractEntity{
 	@ManyToOne(optional = false)
 	private Category category;
 	
-	@Column(nullable = false)
-	private LocalDate issueAt;
-
 	@Column(nullable = false)
 	private String remark;
 

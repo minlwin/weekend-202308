@@ -3,16 +3,23 @@ package com.jdc.balance.api.output;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.jdc.balance.model.entity.LedgerEntry;
+
 public record LedgerEntryInfoDetails(
 		LedgerEntryInfo info,
 		List<LedgerEntryInfoItem> items) {
+	
+	public static LedgerEntryInfoDetails from(LedgerEntry entity) {
+		return new LedgerEntryInfoDetails(
+				LedgerEntryInfo.from(entity), 
+				entity.getItems().stream().map(LedgerEntryInfoItem::from).toList());
+	}
 
 	public int getCount() {
-		return items.stream().mapToInt(a -> a.quantity()).sum();
+		return info.items();
 	}
 	
 	public BigDecimal getTotal() {
-		return items.stream().map(a -> a.getTotal())
-				.reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+		return info.amount();
 	}
 }
