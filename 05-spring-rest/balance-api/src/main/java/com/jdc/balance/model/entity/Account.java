@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,4 +28,7 @@ public class Account extends AbstractEntity{
 	private String name;
 	@Column(nullable = false)
 	private String password;
+	
+	@OneToOne(mappedBy = "account")
+	private Employee employee;
 }

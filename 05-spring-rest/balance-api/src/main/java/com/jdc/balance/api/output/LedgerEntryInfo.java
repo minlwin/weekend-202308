@@ -7,7 +7,6 @@ import com.jdc.balance.model.BalanceType;
 import com.jdc.balance.model.entity.Account_;
 import com.jdc.balance.model.entity.Category_;
 import com.jdc.balance.model.entity.LedgerEntry;
-import com.jdc.balance.model.entity.LedgerEntryItem;
 import com.jdc.balance.model.entity.LedgerEntryItem_;
 import com.jdc.balance.model.entity.LedgerEntryPk;
 import com.jdc.balance.model.entity.LedgerEntryPk_;
