@@ -2,6 +2,7 @@ package com.jdc.balance.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import com.jdc.balance.model.service.EmployeeService;
 
 @RestController
 @RequestMapping("employee")
+@PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
 public class EmployeeApi {
 	
 	@Autowired

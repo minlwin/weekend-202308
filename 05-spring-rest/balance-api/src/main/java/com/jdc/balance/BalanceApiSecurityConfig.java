@@ -37,7 +37,7 @@ public class BalanceApiSecurityConfig {
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		http.authorizeHttpRequests(request -> {
-			request.requestMatchers("/token/**").permitAll();
+			request.requestMatchers("/token/**", "/swagger-ui/**", "/api/v1/auth/**", "/v3/api-docs/**", "/fabicon.ico").permitAll();
 			request.anyRequest().fullyAuthenticated();
 		});
 		

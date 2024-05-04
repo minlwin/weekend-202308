@@ -1,4 +1,4 @@
-package com.jdc.balance.model;
+package com.jdc.balance.model.exceptions;
 
 public class ApiBusinessException extends RuntimeException {
 

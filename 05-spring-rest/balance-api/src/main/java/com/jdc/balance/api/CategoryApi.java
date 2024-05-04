@@ -3,6 +3,7 @@ package com.jdc.balance.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +34,13 @@ public class CategoryApi {
 	}
 	
 	@PostMapping("upload")
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
 	List<CategoryInfo> upload(@RequestParam MultipartFile file) {
 		return service.upload(file);
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
 	CategoryInfo create(
 			@Validated @RequestBody CategoryForm form, BindingResult result) {
 		return service.create(form);
@@ -49,6 +52,7 @@ public class CategoryApi {
 	}
 	
 	@PutMapping("{id}")
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
 	CategoryInfo update(@PathVariable int id,
 			@Validated @RequestBody CategoryForm form, BindingResult result) {
 		return service.update(id, form);

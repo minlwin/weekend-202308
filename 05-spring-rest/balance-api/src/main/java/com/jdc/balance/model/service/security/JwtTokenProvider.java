@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class JwtTokenProvider {
@@ -22,6 +23,7 @@ public class JwtTokenProvider {
 	
 	@Value("${app.token.prefix}")
 	private String prefix;
+	
 	@Value("${app.token.issuer}")
 	private String issuer;
 	@Value("${app.token.expiration.access}")
@@ -29,7 +31,15 @@ public class JwtTokenProvider {
 	@Value("${app.token.expiration.refresh}")
 	private int refreshExpiration;
 	
-	private SecretKey secretKey = Jwts.SIG.HS512.key().build();
+	@Value("${app.token.secret}")
+	private String secret;
+
+	private SecretKey secretKey;
+	
+	@PostConstruct
+	private void postConstruct() {
+		secretKey = SecretKeys.toKey(secret);
+	}
 
 	public String generateAccessToken(Authentication authentication) {
 		return generate(authentication, accessExpiration);
@@ -50,7 +60,7 @@ public class JwtTokenProvider {
 				.stream().map(a -> a.getAuthority())
 				.collect(Collectors.joining(","));
 		
-		return Jwts.builder()
+		var token = Jwts.builder()
 			.signWith(secretKey)
 			.issuer(issuer)
 			.issuedAt(issueAt)
@@ -58,6 +68,8 @@ public class JwtTokenProvider {
 			.subject(authentication.getName())
 			.claim(ROLE, authorities)
 			.compact();
+		
+		return "%s%s".formatted(prefix, token);
 	}
 
 	public Authentication parse(String token) {
@@ -65,7 +77,7 @@ public class JwtTokenProvider {
 		var payload = Jwts.parser()
 			.requireIssuer(issuer)
 			.verifyWith(secretKey)
-			.build().parseSignedClaims(token).getPayload();
+			.build().parseSignedClaims(token.substring(prefix.length())).getPayload();
 		
 		var username = payload.getSubject();
 		var roles = payload.get(ROLE, String.class);

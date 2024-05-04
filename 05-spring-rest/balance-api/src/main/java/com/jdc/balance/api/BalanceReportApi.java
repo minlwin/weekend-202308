@@ -1,6 +1,7 @@
 package com.jdc.balance.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ public class BalanceReportApi {
 	private BalanceService service;
 
 	@GetMapping
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
 	BalanceReport search(BalanceSearch search, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {

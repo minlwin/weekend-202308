@@ -13,12 +13,12 @@ import com.jdc.balance.api.input.LedgerEntryForm;
 import com.jdc.balance.api.input.LedgerEntrySearch;
 import com.jdc.balance.api.output.LedgerEntryInfo;
 import com.jdc.balance.api.output.LedgerEntryInfoDetails;
-import com.jdc.balance.model.ApiBusinessException;
 import com.jdc.balance.model.Role;
 import com.jdc.balance.model.entity.LedgerEntry;
 import com.jdc.balance.model.entity.LedgerEntryPk;
 import com.jdc.balance.model.entity.LedgerEntryPk_;
 import com.jdc.balance.model.entity.LedgerEntry_;
+import com.jdc.balance.model.exceptions.ApiBusinessException;
 import com.jdc.balance.model.repo.CategoryRepo;
 import com.jdc.balance.model.repo.LedgerEntryRepo;
 
