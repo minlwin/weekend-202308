@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.balance.api.input.TokenRequest;
 import com.jdc.balance.api.output.TokenResponse;
+import com.jdc.balance.model.Status;
 import com.jdc.balance.model.repo.AccountRepo;
 
 @Service
@@ -36,9 +37,15 @@ public class SecurityService {
 		var accessToken = tokenProvider.generateAccessToken(authentication);
 		var refreshToken = tokenProvider.generateRefreshToken(authentication);
 		
+		var role = account.getRole().name();
+		
+		if(null != account.getEmployee() && account.getEmployee().getStatus() == Status.Applied) {
+			role = account.getEmployee().getStatus().name();
+		}
+		
 		return new TokenResponse(account.getName(), 
 				account.getLoginId(), 
-				account.getRole(), accessToken, refreshToken);
+				role, accessToken, refreshToken);
 	}
 
 	public TokenResponse refresh(String token) {
@@ -50,9 +57,15 @@ public class SecurityService {
 		var accessToken = tokenProvider.generateAccessToken(authentication);
 		var refreshToken = tokenProvider.generateRefreshToken(authentication);
 		
+		var role = account.getRole().name();
+		
+		if(null != account.getEmployee() && account.getEmployee().getStatus() == Status.Applied) {
+			role = account.getEmployee().getStatus().name();
+		}
+
 		return new TokenResponse(account.getName(), 
 				account.getLoginId(), 
-				account.getRole(), accessToken, refreshToken);
+				role, accessToken, refreshToken);
 	}
 
 }

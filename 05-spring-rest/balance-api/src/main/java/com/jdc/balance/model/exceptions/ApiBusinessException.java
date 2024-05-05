@@ -1,11 +1,13 @@
 package com.jdc.balance.model.exceptions;
 
-public class ApiBusinessException extends RuntimeException {
+import java.util.List;
+
+public class ApiBusinessException extends ApiBaseException {
 
 	private static final long serialVersionUID = 1L;
 
 	public ApiBusinessException(String message) {
-		super(message);
+		super(List.of(message));
 	}
 
 }

@@ -29,6 +29,7 @@ public class CategoryApi {
 	private CategoryService service;
 
 	@GetMapping
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager', 'Employee')")
 	List<CategoryInfo> search(CategorySearch search) {
 		return service.search(search);
 	}
@@ -47,6 +48,7 @@ public class CategoryApi {
 	}
 	
 	@GetMapping("{id}")
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager', 'Employee')")
 	CategoryInfo findById(@PathVariable int id) {
 		return service.findById(id);
 	}

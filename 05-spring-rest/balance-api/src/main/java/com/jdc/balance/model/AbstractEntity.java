@@ -3,6 +3,7 @@ package com.jdc.balance.model;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,12 +24,12 @@ public abstract class AbstractEntity {
 	@CreatedBy
 	private String createBy;
 	
-	@CreatedBy
+	@CreatedDate
 	private LocalDateTime createAt;
 	
 	@LastModifiedBy
 	private String modifyBy;
 	
 	@LastModifiedDate
-	private String modifyAt;
+	private LocalDateTime modifyAt;
 }

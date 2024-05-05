@@ -29,7 +29,7 @@ public class LedgerEntryApi {
 	private LedgerEntryService service;
 
 	@GetMapping
-	@PreAuthorize("hasAnyAuthority('Admin', 'Manager') or (hasAuthority('Employee') and search.loginId == authentication.name)")
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager') or (hasAuthority('Employee') and #search.loginId == authentication.name)")
 	Page<LedgerEntryInfo> search(LedgerEntrySearch search,
 			@RequestParam(required = false, defaultValue = "0") int page,
 			@RequestParam(required = false, defaultValue = "10") int size) {
@@ -37,6 +37,7 @@ public class LedgerEntryApi {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAnyAuthority('Admin', 'Manager', 'Employee')")
 	LedgerEntryInfo create(
 			@Validated @RequestBody LedgerEntryForm form, BindingResult result) {
 		return service.create(form);

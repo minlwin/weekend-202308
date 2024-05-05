@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.jdc.balance.model.exceptions.SecurityExceptionHandler;
 import com.jdc.balance.model.service.security.JwtTokenFilter;
 
 @Configuration
@@ -43,11 +44,21 @@ public class BalanceApiSecurityConfig {
 		
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		
+		http.exceptionHandling(exceptions -> {
+			exceptions.accessDeniedHandler(securityExceptionHandler());
+			exceptions.authenticationEntryPoint(securityExceptionHandler());
+		});
+		
 		return http.build();
 	}
 	
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
+	}
+	
+	@Bean
+	SecurityExceptionHandler securityExceptionHandler() {
+		return new SecurityExceptionHandler();
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.jdc.balance.model.BaseRepoImpl;
@@ -22,5 +23,13 @@ public class BalanceApiWebConfig implements WebMvcConfigurer{
 	@Bean
 	ApplicationRunner applicationRunner() {
 		return args -> adminUserInitializer.initilizeAdmin();
+	}
+	
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**")
+			.allowedOrigins("*")
+			.allowedMethods("*")
+			.allowedHeaders("*");
 	}
 }

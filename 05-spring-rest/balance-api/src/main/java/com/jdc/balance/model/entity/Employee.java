@@ -30,6 +30,7 @@ public class Employee extends AbstractEntity{
 	
 	@Column(nullable = false)
 	private Status status;
+	
 	@Column(nullable = false)
 	private LocalDateTime statusChangeAt;
 	@Column(nullable = false)

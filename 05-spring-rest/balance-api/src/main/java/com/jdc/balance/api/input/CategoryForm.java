@@ -13,7 +13,7 @@ public record CategoryForm(
 		String name,
 		String description) {
 
-	public Category getEntity() {
+	public Category entity() {
 		var entity = new Category();
 		entity.setName(name);
 		entity.setType(type);

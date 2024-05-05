@@ -24,7 +24,7 @@ public class EmployeeHistory extends AbstractEntity{
 	private EmployeeHistoryPk id;
 	
 	@ManyToOne
-	@JoinColumn(insertable = false, updatable = false)
+	@JoinColumn(insertable = false, updatable = false, name = "employee_id", referencedColumnName = "account_id")
 	private Employee employee;
 	
 	@Column(nullable = false)

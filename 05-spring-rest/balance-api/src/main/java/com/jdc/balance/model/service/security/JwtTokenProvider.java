@@ -75,17 +75,17 @@ public class JwtTokenProvider {
 	public Authentication parse(String token) {
 		
 		var payload = Jwts.parser()
-			.requireIssuer(issuer)
-			.verifyWith(secretKey)
-			.build().parseSignedClaims(token.substring(prefix.length())).getPayload();
-		
-		var username = payload.getSubject();
-		var roles = payload.get(ROLE, String.class);
-		
-		var authorities = Arrays.stream(roles.split(","))
-				.map(a -> new SimpleGrantedAuthority(a)).toList();
-		
-		return UsernamePasswordAuthenticationToken.authenticated(username, null, authorities);
+				.requireIssuer(issuer)
+				.verifyWith(secretKey)
+				.build().parseSignedClaims(token.substring(prefix.length())).getPayload();
+			
+			var username = payload.getSubject();
+			var roles = payload.get(ROLE, String.class);
+			
+			var authorities = Arrays.stream(roles.split(","))
+					.map(a -> new SimpleGrantedAuthority(a)).toList();
+			
+			return UsernamePasswordAuthenticationToken.authenticated(username, null, authorities);
 	}
 
 }

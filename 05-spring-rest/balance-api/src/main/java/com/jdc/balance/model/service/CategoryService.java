@@ -29,7 +29,7 @@ public class CategoryService {
 	private CategoryRepo repo;
 
 	public CategoryInfo create(CategoryForm form) {
-		var entity = repo.save(form.getEntity());
+		var entity = repo.save(form.entity());
 		return CategoryInfo.from(entity);
 	}
 

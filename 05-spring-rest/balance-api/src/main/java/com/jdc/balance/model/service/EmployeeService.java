@@ -12,16 +12,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jdc.balance.api.input.ChangePasswordForm;
 import com.jdc.balance.api.input.EmployeeForm;
 import com.jdc.balance.api.input.EmployeeSearch;
 import com.jdc.balance.api.input.EmployeeStatusForm;
+import com.jdc.balance.api.input.ProfileForm;
 import com.jdc.balance.api.output.EmployeeInfo;
 import com.jdc.balance.api.output.EmployeeInfoDetails;
+import com.jdc.balance.api.output.ProfileInfo;
 import com.jdc.balance.model.EmployeeChanges;
+import com.jdc.balance.model.Status;
 import com.jdc.balance.model.entity.Account_;
 import com.jdc.balance.model.entity.Employee;
 import com.jdc.balance.model.entity.Employee_;
 import com.jdc.balance.model.events.EmployeeChangeEvent;
+import com.jdc.balance.model.exceptions.ApiBusinessException;
 import com.jdc.balance.model.repo.EmployeeRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -113,5 +118,40 @@ public class EmployeeService {
 			cq.where(search.where(cb, root));
 			return cq;
 		};
+	}
+
+	@Transactional
+	public String changePassword(ChangePasswordForm form) {
+		
+		var employee = getOne(repo.findOneByAccountLoginId(form.loginId()), DOMAIN_NAME, form.loginId());
+		
+		if(!passwordEncoder.matches(form.oldPassword(), employee.getAccount().getPassword())) {
+			throw new ApiBusinessException("Invalid old password.");
+		}
+		
+		employee.getAccount().setPassword(passwordEncoder.encode(form.newPassword()));
+		
+		if(employee.getStatus() == Status.Applied) {
+			employee.setStatus(Status.Activated);
+			eventPublisher.publishEvent(new EmployeeChangeEvent(EmployeeChanges.StatusChange, employee.getId()));
+		}
+		
+		return "Employee has been changed password successfully.";
+	}
+
+	public ProfileInfo findProfile(String loginId) {
+		return getOne(repo.findOneByAccountLoginId(loginId)
+				.map(ProfileInfo::from), DOMAIN_NAME, loginId);
+	}
+
+	@Transactional
+	public ProfileInfo updateProfile(ProfileForm form) {
+		var employee = getOne(repo.findOneByAccountLoginId(form.loginId()), DOMAIN_NAME, form.loginId());
+		employee.setPhone(form.phone());
+		employee.getAccount().setName(form.name());
+		
+		eventPublisher.publishEvent(new EmployeeChangeEvent(EmployeeChanges.InfoChange, employee.getId()));
+		
+		return ProfileInfo.from(employee);
 	}
 }
