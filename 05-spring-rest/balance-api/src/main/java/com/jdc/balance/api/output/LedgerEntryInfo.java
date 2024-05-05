@@ -14,6 +14,7 @@ import com.jdc.balance.model.entity.LedgerEntry_;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 
 public record LedgerEntryInfo(
@@ -41,23 +42,24 @@ public record LedgerEntryInfo(
 		BigDecimal amount) {
 		this(new LedgerEntryPk(issueDate, seqNum).getValue(), categoryId, category, type, issuerId, issuer, issueDate, items, amount, remark);
 	}
-	
+
 	public static void select(CriteriaBuilder cb, CriteriaQuery<LedgerEntryInfo> cq, Root<LedgerEntry> root) {
 		
 		var category = root.join(LedgerEntry_.category);
 		var account = root.join(LedgerEntry_.account);
-		var items = root.join(LedgerEntry_.items);
+		var items = root.join(LedgerEntry_.items, JoinType.LEFT);
 		
 		cq.multiselect(
 			root.get(LedgerEntry_.id).get(LedgerEntryPk_.issueDate),
 			root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber),
 			category.get(Category_.id),
 			category.get(Category_.name),
+			category.get(Category_.type),
 			account.get(Account_.loginId),
 			account.get(Account_.name),
 			root.get(LedgerEntry_.remark),
-			cb.sum(items.get(LedgerEntryItem_.quantity),
-			cb.sum(cb.prod(items.get(LedgerEntryItem_.quantity), items.get(LedgerEntryItem_.unitPrice))))
+			cb.sum(items.get(LedgerEntryItem_.quantity)),
+			cb.sum(cb.prod(items.get(LedgerEntryItem_.quantity), items.get(LedgerEntryItem_.unitPrice)))
 		);
 		
 		cq.groupBy(
@@ -65,6 +67,7 @@ public record LedgerEntryInfo(
 			root.get(LedgerEntry_.id).get(LedgerEntryPk_.seqNumber),
 			category.get(Category_.id),
 			category.get(Category_.name),
+			category.get(Category_.type),
 			account.get(Account_.loginId),
 			account.get(Account_.name),
 			root.get(LedgerEntry_.remark)

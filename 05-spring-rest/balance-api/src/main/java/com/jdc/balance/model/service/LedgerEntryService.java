@@ -79,7 +79,7 @@ public class LedgerEntryService {
 		
 		entity.setCategory(category);
 		entity.setRemark(form.remark());
-		entity.setItems(form.getItemsForDb());
+		entity.setItems(form.itemsForDb());
 		
 		return LedgerEntryInfo.from(entity);
 	}

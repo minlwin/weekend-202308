@@ -22,11 +22,11 @@ public record LedgerEntryForm(
 	public LedgerEntry entity() {
 		var entity = new LedgerEntry();
 		entity.setRemark(remark);
-		entity.setItems(getItemsForDb());
+		entity.setItems(itemsForDb());
 		return entity;
 	}
 	
-	public List<LedgerEntryItem> getItemsForDb() {
+	public List<LedgerEntryItem> itemsForDb() {
 		return items.stream().map(a -> a.embddable()).toList();
 	}
 

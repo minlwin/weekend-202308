@@ -22,6 +22,6 @@ public class LedgerEntrySeq {
 	private int seqNumber;
 	
 	public LedgerEntryPk next() {
-		return new LedgerEntryPk(issueDate, seqNumber ++);
+		return new LedgerEntryPk(issueDate, ++ seqNumber);
 	}	
 }
