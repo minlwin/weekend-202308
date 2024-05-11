@@ -1,7 +1,9 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { WidgetsModule } from '../../widgets/widgets.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BALANCE_TYPES } from '../../model/balance-model';
+import { CategoryService } from '../../model/services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-edit',
@@ -12,7 +14,8 @@ import { BALANCE_TYPES } from '../../model/balance-model';
 })
 export class CategoryEditComponent {
 
-  edit = input<boolean>(false)
+  id = input<number>()
+  edit = computed<boolean>(() => this.id() != undefined)
   icon = computed(() => this.edit() ? 'bi-pencil' : 'bi-plus-lg')
   title = computed(() => this.edit() ? 'Edit Category' : 'Add New Category')
 
@@ -20,16 +23,32 @@ export class CategoryEditComponent {
 
   form:FormGroup
 
-  constructor(builder:FormBuilder) {
+  constructor(builder:FormBuilder, private service:CategoryService, private router:Router) {
     this.form = builder.group({
-      id: 0,
       name: ['', Validators.required],
       type: ['', Validators.required],
       description: ''
     })
+
+    effect(() => {
+      const idValue = this.id()
+      if(idValue) {
+        service.findById(idValue).subscribe(result => {
+          const {id, ...formValue} = result
+          this.form.patchValue(formValue)
+        })
+      }
+    })
   }
 
   save() {
+    if(this.form.valid) {
+      const request = this.edit() ? this.service.update(this.id()!, this.form.value) :
+        this.service.create(this.form.value)
 
+      request.subscribe(_ => {
+        this.router.navigate(['/category', 'list'])
+      })
+    }
   }
 }

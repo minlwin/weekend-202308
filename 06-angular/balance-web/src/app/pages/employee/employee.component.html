@@ -5,7 +5,7 @@
   <form search [formGroup]="form" class="row">
     <div class="col-auto">
       <app-search-form-group label="Role">
-        <select class="form-select">
+        <select formControlName="role" class="form-select">
           <option value="">Search Role</option>
           @for (item of roles(); track $index) {
             <option [value]="item">{{item}}</option>
@@ -16,7 +16,7 @@
 
     <div class="col-auto">
       <app-search-form-group label="Status">
-        <select class="form-select">
+        <select formControlName="status" class="form-select">
           <option value="">Search Status</option>
           @for (item of statuses(); track $index) {
             <option [value]="item">{{item}}</option>
@@ -27,7 +27,7 @@
 
     <div class="col-auto">
       <app-search-form-group label="Keyword">
-        <input type="text" class="form-control" placeholder="Search Keyword">
+        <input formControlName="keyword" type="text" class="form-control" placeholder="Search Keyword">
       </app-search-form-group>
     </div>
 
@@ -36,7 +36,7 @@
         <i class="bi-search"></i> Search
       </button>
 
-      <a [routerLink]="['/employee-edit']" class="btn btn-outline-danger ms-2">
+      <a [routerLink]="['/employee', 'edit']" class="btn btn-outline-danger ms-2">
         <i class="bi-plus-lg"></i> Add Employee
       </a>
     </div>
@@ -66,8 +66,10 @@
             <td>{{item.status}}</td>
             <td>{{item.phone}}</td>
             <td>{{item.email}}</td>
-            <td>
-              <a [routerLink]="['/employee-edit']" [queryParams]="{id: item.id}" class="icon-link"></a>
+            <td class="text-center">
+              <a [routerLink]="['/employee', 'details']" [queryParams]="{id: item.id}" class="icon-link">
+                <i class="bi-send"></i>
+              </a>
             </td>
           </tr>
         }

@@ -1,0 +1,19 @@
+<div class="w-50">
+  <app-page-title icon="bi-unlock" title="Employee Login"></app-page-title>
+
+  <form [formGroup]="form">
+    <app-validated-form-group [valid]="form.get('loginId')?.valid" label="Login ID">
+      <input formControlName="loginId" type="text" class="form-control" placeholder="Enter Login Id">
+    </app-validated-form-group>
+
+    <app-validated-form-group [valid]="form.get('password')?.valid" label="Password">
+      <input formControlName="password" type="password" class="form-control" placeholder="Enter Password">
+    </app-validated-form-group>
+
+    <div>
+      <button (click)="login()" [class.disabled]="!form.valid" type="button" class="btn btn-outline-primary">
+        <i class="bi-unlock"></i> Login
+      </button>
+    </div>
+  </form>
+</div>

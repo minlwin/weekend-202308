@@ -3,6 +3,7 @@ import { WidgetsModule } from '../../widgets/widgets.module';
 import { RouterLink } from '@angular/router';
 import { BALANCE_TYPES } from '../../model/balance-model';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CategoryService } from '../../model/services/category.service';
 
 @Component({
   selector: 'app-category',
@@ -18,15 +19,19 @@ export class CategoryComponent {
   types = signal(BALANCE_TYPES)
   list = signal<any[]>([])
 
-  constructor(builder:FormBuilder) {
+  constructor(builder:FormBuilder, private service:CategoryService) {
     this.form = builder.group({
       type: '',
       name: ''
     })
+
+    this.search()
   }
 
   search() {
-
+    this.service.search(this.form.value).subscribe(result => {
+      this.list.set(result)
+    })
   }
 
   upload(file:any) {

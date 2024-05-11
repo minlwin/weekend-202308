@@ -8,17 +8,27 @@ import { BalanceDetailsComponent } from './pages/balance-details/balance-details
 import { CategoryEditComponent } from './pages/category-edit/category-edit.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { EmployeeEditComponent } from './pages/employee-edit/employee-edit.component';
+import { LoginComponent } from './pages/login/login.component';
+import { EmployeeDetailsComponent } from './pages/employee-details/employee-details.component';
 
 export const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'category', component: CategoryComponent},
-  {path: 'category-edit', component: CategoryEditComponent},
-  {path: 'employee', component: EmployeeComponent},
-  {path: 'employee-edit', component: EmployeeEditComponent},
+  {path: 'category', children: [
+    {path: 'list', component: CategoryComponent},
+    {path: 'edit', component: CategoryEditComponent},
+    {path: '', redirectTo: '/category/list', pathMatch: 'full'}
+  ]},
+  {path: 'employee', children: [
+    {path: 'list', component: EmployeeComponent},
+    {path: 'edit', component: EmployeeEditComponent},
+    {path: 'details', component: EmployeeDetailsComponent},
+    {path: '', redirectTo: '/employee/list', pathMatch: 'full'}
+  ]},
   {path: 'incomes', component: BalanceListComponent, data: {type: 'Income'}},
   {path: 'expenses', component: BalanceListComponent, data: {type: 'Expense'}},
-  {path: 'report', component: BalanceReportComponent},
   {path: 'edit', component: BalanceEditComponent},
   {path: 'details', component: BalanceDetailsComponent},
+  {path: 'report', component: BalanceReportComponent},
+  {path: 'login', component: LoginComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];

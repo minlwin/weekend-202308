@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { WidgetsModule } from './widgets/widgets.module';
+import { LoginUserService } from './model/security/login-user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,26 @@ import { WidgetsModule } from './widgets/widgets.module';
   styles: [],
 })
 export class AppComponent {
+
   show = signal<boolean>(true)
+  isLogin = computed(() => this.loginUserService.loginUser() != undefined)
+
+  constructor(private router:Router, private loginUserService:LoginUserService) {
+    router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        if(event.url != '/login' && loginUserService.loginUser() == undefined) {
+          router.navigate(['/login'])
+        }
+      }
+    })
+  }
 
   toggleSideBar() {
     this.show.update(state => !state)
   }
 
   signOut() {
-    console.log("Sign Out")
+    this.loginUserService.logout()
+    this.router.navigate(['/login'])
   }
 }

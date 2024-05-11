@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Change Type</th>
+      <th>Change By</th>
+      <th>Change At</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of list(); track $index) {
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.role}}</td>
+        <td>{{item.status}}</td>
+        <td>{{item.phone}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.changes}}</td>
+        <td>{{item.changeBy}}</td>
+        <td>{{item.changeAt}}</td>
+      </tr>
+    }
+  </tbody>
+</table>

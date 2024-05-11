@@ -1,0 +1,33 @@
+<app-page-title icon="bi-person" title="Employee Details"></app-page-title>
+
+<div class="d-flex justify-content-between align-items-baseline">
+
+  <ul class="nav nav-underline">
+    <li class="nav-item">
+      <a data-bs-toggle="tab" data-bs-target="#personalInfo" class="nav-link active">
+        <i class="bi-info-circle"></i> Personal Information
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a data-bs-toggle="tab" data-bs-target="#changeHistory" class="nav-link">
+        <i class="bi-clock-history"></i> Change History
+      </a>
+    </li>
+  </ul>
+
+  <a [routerLink]="['/employee', 'edit']" [queryParams]="{id: personalInfo()?.id}" type="button" class="btn btn-outline-primary">
+    <i class="bi-pencil"></i> Edit Employee
+  </a>
+</div>
+
+<div class="tab-content pt-3">
+
+  <div class="tab-pane fade active show" id="personalInfo">
+    <app-personal-info [data]="personalInfo()"></app-personal-info>
+  </div>
+
+  <div class="tab-pane fade" id="changeHistory">
+    <app-change-history [list]="changeHistory()"></app-change-history>
+  </div>
+</div>

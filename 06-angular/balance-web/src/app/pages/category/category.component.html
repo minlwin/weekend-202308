@@ -21,7 +21,7 @@
         <i class="bi-search"></i> Search
       </button>
 
-      <a [routerLink]="['/category-edit']" class="btn btn-outline-danger ms-2">
+      <a [routerLink]="['/category', 'edit']" class="btn btn-outline-danger ms-2">
         <i class="bi-plus-lg"></i> Add New
       </a>
 
@@ -50,8 +50,8 @@
           <td>{{item.type}}</td>
           <td>{{item.name}}</td>
           <td>{{item.description}}</td>
-          <td>
-            <a [routerLink]="['/category-edit']" [queryParams]="{id: item.id}" class="icon-link">
+          <td class="text-center">
+            <a [routerLink]="['/category', 'edit']" [queryParams]="{id: item.id}" class="icon-link">
               <i class="bi-pencil"></i>
             </a>
           </td>
