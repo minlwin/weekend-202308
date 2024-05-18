@@ -3,10 +3,9 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ng serve",
+      "name": "ng serve --host 127.0.0.1",
       "type": "chrome",
       "request": "launch",
-      "preLaunchTask": "npm: start",
       "url": "http://localhost:4200/"
     },
     {

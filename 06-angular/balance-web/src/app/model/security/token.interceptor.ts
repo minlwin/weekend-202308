@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LoginUserService } from './login-user.service';
-import { catchError, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { TokenService } from '../services/token.service';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
@@ -22,13 +22,17 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     catchError(error => {
       if(error.status == 401 ) {
         if(loginUser && !req.url.includes('/token')) {
-          tokenService.refresh({refreshToken: loginUser.refreshToken}).subscribe(result => {
-            loginUserService.loginUser.set(result)
-
-            return next(request)
-          })
+          tokenService.refresh({refreshToken: loginUser.refreshToken}).pipe(
+            switchMap(result => {
+              loginUserService.loginUser.set(result)
+              return next(req.clone({headers: req.headers.append('Authorization', result.accessToken)}))
+            }),
+            catchError(error => {
+              loginUserService.loginUser.set(undefined)
+              return throwError(() => error)
+            })
+          ).subscribe()
         }
-
         loginUserService.loginUser.set(undefined)
       }
       return throwError(() => error)

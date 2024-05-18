@@ -2,18 +2,23 @@ package com.jdc.balance.model.service;
 
 import static com.jdc.balance.model.Commons.getOne;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.balance.api.input.CategoryForm;
 import com.jdc.balance.api.input.CategorySearch;
 import com.jdc.balance.api.output.CategoryInfo;
+import com.jdc.balance.model.BalanceType;
 import com.jdc.balance.model.entity.Category;
+import com.jdc.balance.model.exceptions.ApiBusinessException;
 import com.jdc.balance.model.repo.CategoryRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -27,6 +32,9 @@ public class CategoryService {
 	
 	@Autowired
 	private CategoryRepo repo;
+	
+	@Autowired
+	private TextFileReadService fileReadService;
 
 	public CategoryInfo create(CategoryForm form) {
 		var entity = repo.save(form.entity());
@@ -60,9 +68,49 @@ public class CategoryService {
 			return cq;
 		};
 	}
+	
 	public List<CategoryInfo> upload(MultipartFile file) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		var list = fileReadService.read(file, "\t");
+		
+		validate(list);
+		
+		var entities = list.stream().map(Category::new).toList();
+		
+		return repo.saveAll(entities).stream()
+				.map(CategoryInfo::from)
+				.toList();
+	}
+
+	private void validate(List<String[]> list) {
+		
+		if(null == list || list.isEmpty()) {
+			throw new ApiBusinessException("There is no data to upload.");
+		}
+		
+		var messages = new ArrayList<String>();
+		var balanceTypes = Stream.of(BalanceType.values())
+				.map(a -> a.name()).toList();
+		
+		for(var i = 0; i < list.size(); i ++) {
+			var array = list.get(i);
+			
+			if(array.length != 3) {
+				messages.add("Invalid data format at line %d.".formatted(i + 1));
+			}
+			
+			if(array.length >= 1 && !balanceTypes.contains(array[0])) {
+				messages.add("Invalid balance type at line %d.".formatted(i + 1));
+			}
+			
+			if(array.length >= 2 && !StringUtils.hasLength(array[1])) {
+				messages.add("There is no category name at line %d.".formatted(i + 1));
+			}
+		}
+		
+		if(!messages.isEmpty()) {
+			throw new ApiBusinessException(messages);
+		}
 	}
 
 }

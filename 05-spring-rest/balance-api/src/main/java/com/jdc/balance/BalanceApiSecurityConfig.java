@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.jdc.balance.model.exceptions.SecurityExceptionHandler;
 import com.jdc.balance.model.service.security.JwtTokenFilter;
@@ -42,7 +42,7 @@ public class BalanceApiSecurityConfig {
 			request.anyRequest().fullyAuthenticated();
 		});
 		
-		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtTokenFilter, AuthorizationFilter.class);
 		
 		http.exceptionHandling(exceptions -> {
 			exceptions.accessDeniedHandler(securityExceptionHandler());

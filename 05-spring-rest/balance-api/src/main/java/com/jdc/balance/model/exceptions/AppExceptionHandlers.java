@@ -27,6 +27,12 @@ public class AppExceptionHandlers {
 		return List.of(e.getMessage());
 	}
 	
+	@ExceptionHandler
+	@ResponseStatus(value = HttpStatus.PAYMENT_REQUIRED)
+	List<String> handle(ApiTokenInvalidException e) {
+		return List.of(e.getMessage());
+	}
+
 	@ExceptionHandler({
 		AccessDeniedException.class,
 		DisabledException.class

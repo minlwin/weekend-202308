@@ -24,4 +24,10 @@ export class CategoryService {
   update(id:number, form:any) {
     return this.http.put<any>(`${BASE_URL}/${id}`, form)
   }
+
+  upload(file:File) {
+    var form = new FormData
+    form.append("file", file, file.name)
+    return this.http.post(`${BASE_URL}/upload`, form)
+  }
 }

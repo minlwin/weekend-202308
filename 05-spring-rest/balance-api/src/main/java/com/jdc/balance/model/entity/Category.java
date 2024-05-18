@@ -10,9 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Category extends AbstractEntity{
 
@@ -24,4 +26,13 @@ public class Category extends AbstractEntity{
 	@Column(nullable = false)
 	private String name;
 	private String description;
+	
+	public Category(String ... data) {
+		super();
+		this.type = BalanceType.valueOf(data[0]);
+		this.name = data[1];
+		this.description = data[2];
+	}
+	
+	
 }
