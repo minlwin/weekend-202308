@@ -18,6 +18,7 @@ import com.jdc.balance.api.input.CategorySearch;
 import com.jdc.balance.api.output.CategoryInfo;
 import com.jdc.balance.model.BalanceType;
 import com.jdc.balance.model.entity.Category;
+import com.jdc.balance.model.entity.Category_;
 import com.jdc.balance.model.exceptions.ApiBusinessException;
 import com.jdc.balance.model.repo.CategoryRepo;
 
@@ -96,21 +97,42 @@ public class CategoryService {
 			var array = list.get(i);
 			
 			if(array.length != 3) {
-				messages.add("Invalid data format at line %d.".formatted(i + 1));
+				messages.add("Line No. %d : Invalid data format.".formatted(i + 1));
 			}
 			
 			if(array.length >= 1 && !balanceTypes.contains(array[0])) {
-				messages.add("Invalid balance type at line %d.".formatted(i + 1));
+				messages.add("Line No. %d : Invalid balance type.".formatted(i + 1));
 			}
 			
 			if(array.length >= 2 && !StringUtils.hasLength(array[1])) {
-				messages.add("There is no category name at line %d.".formatted(i + 1));
+				messages.add("Line No. %d : There is no category name.".formatted(i + 1));
+			}
+			
+			if(array.length >= 2 && balanceTypes.contains(array[0]) && isDuplicateEntry(array[0], array[1])) {
+				messages.add("Line No. %d : %s is already registered.".formatted(i + 1, array[1]));
 			}
 		}
 		
 		if(!messages.isEmpty()) {
 			throw new ApiBusinessException(messages);
 		}
+	}
+
+	private boolean isDuplicateEntry(String type, String name) {
+		
+		Function<CriteriaBuilder, CriteriaQuery<Long>> queryFunc = cb -> {
+			var cq = cb.createQuery(Long.class);
+			var root = cq.from(Category.class);
+			cq.select(cb.count(root.get(Category_.id)));
+			cq.where(
+				cb.equal(root.get(Category_.type), BalanceType.valueOf(type)),
+				cb.equal(cb.lower(root.get(Category_.name)), name.toLowerCase()),
+				cb.isFalse(root.get(Category_.deleted))
+			);
+			return cq;
+		};
+		
+		return repo.count(queryFunc) > 0;
 	}
 
 }

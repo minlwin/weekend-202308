@@ -70,7 +70,7 @@ public class SecurityService {
 					role, accessToken, refreshToken);
 			
 		} catch (Exception e) {
-			throw new ApiTokenInvalidException("Refresh token expiration.", e);
+			throw new ApiTokenInvalidException("Your session has been timeout. Please login again.", e);
 		}
 
 	}

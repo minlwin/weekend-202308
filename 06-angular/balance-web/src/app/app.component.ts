@@ -4,6 +4,7 @@ import { WidgetsModule } from './widgets/widgets.module';
 import { LoginUserService } from './model/security/login-user.service';
 import { ErrorDialogComponent } from './widgets/error-dialog/error-dialog.component';
 import { GlobalErrorHandler } from './model/errors/global-error-handler';
+import { title } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -53,9 +54,10 @@ export class AppComponent implements AfterViewInit{
     this.router.navigate(['/login'])
   }
 
-  onError(logout:boolean) {
-    if(logout) {
+  onError(error:any) {
+    if(error.logout) {
       this.signOut()
+      this.errorDialog?.displayMessage(error.title, error.messages)
     }
   }
 }

@@ -10,11 +10,9 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const loginUserService = inject(LoginUserService)
   const tokenService = inject(TokenService)
 
-  const loginUser = loginUserService.loginUser()
-
-  if(loginUser) {
+  if(loginUserService.isLogin()) {
     if(!req.url.includes('/token')) {
-      request = req.clone({headers: req.headers.append('Authorization', loginUser.accessToken)})
+      request = req.clone({headers: req.headers.append('Authorization', loginUserService.loginUser()!.accessToken)})
     }
   }
 
@@ -25,13 +23,10 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
         && !request.url.includes('token')
         && loginUserService.isLogin()
       ) {
-        return tokenService.refresh({refreshToken: loginUser?.refreshToken}).pipe(
+        return tokenService.refresh({refreshToken: loginUserService.loginUser()?.refreshToken}).pipe(
           switchMap(result => {
             loginUserService.loginUser.set(result)
             return next(req.clone({headers: req.headers.append('Authorization', result.accessToken)}))
-          }),
-          catchError(error => {
-            return throwError(() => error)
           })
         )
       }

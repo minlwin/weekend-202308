@@ -1,13 +1,15 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { WidgetsModule } from '../../widgets/widgets.module';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LedgerEntryService } from '../../model/services/ledger-entry.service';
 import { Router } from '@angular/router';
+import { CategoryService } from '../../model/services/category.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-balance-edit',
   standalone: true,
-  imports: [WidgetsModule, ReactiveFormsModule],
+  imports: [WidgetsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './balance-edit.component.html',
   styles: ``
 })
@@ -15,6 +17,8 @@ export class BalanceEditComponent {
 
   type = input<string>()
   id = input<number | undefined>()
+
+  categories = signal<any[]>([])
 
   edit = computed<boolean>(() => this.id() != undefined)
   icon = computed<string>(() => this.edit() ? 'bi-pencil' : 'bi-plus-lg')
@@ -24,7 +28,9 @@ export class BalanceEditComponent {
 
   constructor(private builder:FormBuilder,
     private router:Router,
+    categoryService:CategoryService,
     private service:LedgerEntryService) {
+
     this.form = builder.group({
       type: ['', Validators.required],
       issueAt: ['', Validators.required],
@@ -36,6 +42,21 @@ export class BalanceEditComponent {
     if(this.items.length == 0) {
       this.addItem()
     }
+
+    effect(() => {
+      if(this.type()) {
+        this.form.patchValue({type: this.type()})
+        categoryService.search({type: this.type()}).subscribe(result => {
+          this.categories.set(result)
+        })
+      }
+
+      if(this.id()) {
+        service.findById(this.id()!).subscribe(result => {
+          console.log(result)
+        })
+      }
+    }, {allowSignalWrites: true})
   }
 
   save() {
@@ -67,8 +88,7 @@ export class BalanceEditComponent {
 
   addItem() {
     this.items.push(this.builder.group({
-      id: 0,
-      name: ['', Validators.required],
+      item: ['', Validators.required],
       unitPrice: [0, [Validators.required, Validators.min(1000)]],
       quantity: [0, [Validators.required, Validators.min(1)]]
     }))

@@ -19,8 +19,9 @@ export class GlobalErrorHandler implements ErrorHandler {
       errors = error.error
       title = "Error Message"
       login = false
-
-      if(error.status == 401) {
+      if(error.status == 400) {
+        title = "Message"
+      } else if(error.status == 401) {
         title = 'Authentication Error'
         login = true
       } else if(error.status == 403) {
@@ -33,7 +34,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       }
 
     }
-    console.log("Error Handler", error)
+
     this.zone.run(() => {
       this.errorDialog?.showDialog(title, errors, login)
     })

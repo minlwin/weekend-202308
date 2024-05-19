@@ -17,4 +17,6 @@ public interface BaseRepo<T, ID> extends JpaRepository<T, ID>{
 	
 	<R> Page<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc, 
 			Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc, int page, int size);
+	
+	Long count(Function<CriteriaBuilder, CriteriaQuery<Long>> queryFunc);
 }

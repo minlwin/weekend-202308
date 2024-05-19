@@ -1,1 +1,75 @@
-<p>balance-details works!</p>
+<app-page-title icon="bi-folder2-open" title="Balance Details"></app-page-title>
+
+<div class="row mb-3">
+  <div class="col">
+    <app-search-form-group label="Entry No.">
+      <span class="form-control">{{dto()?.info.id}}</span>
+    </app-search-form-group>
+  </div>
+  <div class="col">
+    <app-search-form-group label="Type">
+      <span class="form-control">{{dto()?.info.type}}</span>
+    </app-search-form-group>
+  </div>
+  <div class="col">
+    <app-search-form-group label="Category">
+      <span class="form-control">{{dto()?.info.category}}</span>
+    </app-search-form-group>
+  </div>
+  <div class="col">
+    <app-search-form-group label="Total Amount">
+      <span class="form-control">{{dto()?.info.amount | number}} MMK</span>
+    </app-search-form-group>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <app-search-form-group label="Issuer">
+      <span class="form-control">{{dto()?.info.issuer}}</span>
+    </app-search-form-group>
+  </div>
+  <div class="col">
+    <app-search-form-group label="Issue At">
+      <span class="form-control">{{dto()?.info.issueAt}}</span>
+    </app-search-form-group>
+  </div>
+  <div class="col-6">
+    <app-search-form-group label="Remark">
+      <span class="form-control">{{dto()?.info.remark || 'No Remark'}}</span>
+    </app-search-form-group>
+  </div>
+
+</div>
+
+<h5><i class="bi-list"></i> Entry Items</h5>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Item Name</th>
+      <th class="text-end">Unit Price</th>
+      <th class="text-end">Quantity</th>
+      <th class="text-end">Total</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of dto()?.items || []; track $index) {
+      <tr>
+        <td>{{$index + 1}}</td>
+        <td>{{item.item}}</td>
+        <td class="text-end">{{item.unitPrice | number}} MMK</td>
+        <td class="text-end">{{item.quantity}}</td>
+        <td class="text-end">{{item.total | number}} MMK</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="mt-4 text-end">
+  <a [routerLink]="['/edit']" [queryParams]="{id: dto()?.info.id, type: dto()?.info.type}" class="btn btn-outline-danger">
+    <i class="bi-pencil"></i> Edit Ledger
+  </a>
+</div>

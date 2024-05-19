@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LedgerEntryService } from '../../model/services/ledger-entry.service';
 import { LoginUserService } from '../../model/security/login-user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-balance-list',
   standalone: true,
-  imports: [WidgetsModule, ReactiveFormsModule, RouterLink],
+  imports: [WidgetsModule, ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './balance-list.component.html',
   styles: ``
 })
@@ -42,8 +43,10 @@ export class BalanceListComponent {
   }
 
   search() {
+    console.log('Ledger Entry Search', this.form.value)
     this.service.search(this.form.value).subscribe(result => {
-      this.list.set(result)
+      const {content, ... pageInfo} = result
+      this.list.set(content)
     })
   }
 }

@@ -46,4 +46,11 @@ public class BaseRepoImpl<T, ID> extends SimpleJpaRepository<T, ID> implements B
 		return new PageImpl<R>(list, PageRequest.of(page, size), count);
 	}
 
+	@Override
+	public Long count(Function<CriteriaBuilder, CriteriaQuery<Long>> queryFunc) {
+		var criteriaQuery = queryFunc.apply(em.getCriteriaBuilder());
+		var query = em.createQuery(criteriaQuery);
+		return query.getSingleResult();
+	}
+
 }

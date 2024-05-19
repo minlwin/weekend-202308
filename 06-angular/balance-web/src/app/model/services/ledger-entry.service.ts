@@ -10,7 +10,7 @@ export class LedgerEntryService {
   constructor(private http:HttpClient) {}
 
   search(form:any) {
-    return this.http.get<any[]>(API, {params: form})
+    return this.http.get<any>(API, {params: form})
   }
 
   findById(id:number) {

@@ -45,9 +45,9 @@
             <td>{{item.issueAt}}</td>
             <td>{{item.issuer}}</td>
             <td>{{item.items}}</td>
-            <td>{{item.ammount}}</td>
+            <td>{{item.amount}}</td>
             <td>{{item.remark}}</td>
-            <td>
+            <td class="text-center">
               <a [routerLink]="['/details']" [queryParams]="{id: item.id, type: item.type}" class="icon-link">
                 <i class="bi-folder2-open"></i>
               </a>

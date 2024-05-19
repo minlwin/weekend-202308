@@ -14,10 +14,18 @@ export class ErrorDialogComponent {
   show:boolean = false
 
   showDialog(title:string, messages:string[], login:boolean) {
+    if(login) {
+      this.login.emit({title: title, messages: messages, logout: login})
+      return
+    }
+
+    this.displayMessage(title, messages)
+  }
+
+  displayMessage(title:string, messages:string[]) {
     this.title = title
     this.messages = messages
     this.show = true
-    this.login.emit(login)
   }
 
   hideDialog() {
