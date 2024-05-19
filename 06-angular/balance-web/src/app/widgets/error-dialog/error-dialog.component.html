@@ -1,0 +1,17 @@
+@if (show) {
+  <div class="fixed-bottom">
+    <div id="errorMessages">
+      <h6 class="d-flex justify-content-between">
+        <span><i class="bi-info-circle"></i> {{title}}</span>
+        <a (click)="hideDialog()" class="icon-link">
+          <i class="bi-x-lg"></i>
+        </a>
+      </h6>
+      <ul>
+        @for (item of messages; track $index) {
+          <li>{{item}}</li>
+        }
+      </ul>
+    </div>
+  </div>
+}

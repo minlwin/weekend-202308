@@ -45,3 +45,25 @@ app-root {
 .btn-wrapper {
   padding-top: 2rem;
 }
+
+#errorMessages {
+  padding: 2rem 2rem;
+  background-color: blue;
+  color: white;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+}
+
+#errorMessages li{
+  list-style: none;
+}
+
+#errorMessages ul{
+  padding: 0px;
+  margin: 0px;
+  font-size: 0.8rem;
+}
+
+#errorMessages .icon-link {
+  color: white;
+}

@@ -8,6 +8,7 @@ import { SearchFormGroupComponent } from './search-form-group/search-form-group.
 import { ValidatedFormGroupComponent } from './validated-form-group/validated-form-group.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { InputGroupComponent } from './input-group/input-group.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 
 
@@ -19,7 +20,8 @@ import { InputGroupComponent } from './input-group/input-group.component';
     SearchFormGroupComponent,
     ValidatedFormGroupComponent,
     PaginationComponent,
-    InputGroupComponent
+    InputGroupComponent,
+    ErrorDialogComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { InputGroupComponent } from './input-group/input-group.component';
     SearchFormGroupComponent,
     ValidatedFormGroupComponent,
     PaginationComponent,
-    InputGroupComponent
+    InputGroupComponent,
+    ErrorDialogComponent
   ]
 })
 export class WidgetsModule { }

@@ -1,4 +1,4 @@
-import { Injectable, effect, signal } from '@angular/core';
+import { Injectable, computed, effect, signal } from '@angular/core';
 import { LoginUser } from '../login-user';
 
 const LOGIN_USER = 'com.jdc.balance.login.user'
@@ -9,6 +9,8 @@ const LOGIN_USER = 'com.jdc.balance.login.user'
 export class LoginUserService {
 
   loginUser = signal<LoginUser | undefined>(undefined)
+  isLogin = computed(() => this.loginUser() != undefined)
+  isActivated = computed(() => this.isLogin() && this.loginUser()?.role != "Applied")
 
   constructor() {
     effect(() => {

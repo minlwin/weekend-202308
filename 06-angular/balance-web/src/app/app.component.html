@@ -12,24 +12,30 @@
     @if (isLogin()) {
       <nav>
         <ul>
-          <li>
-            <app-nav-link icon="bi-house" title="Home" [show]="show()" [path]="['/home']"></app-nav-link>
-          </li>
-          <li>
-            <app-nav-link icon="bi-bar-chart" title="Balance Report" [show]="show()" [path]="['/report']"></app-nav-link>
-          </li>
-          <li>
-            <app-nav-link icon="bi-cash-stack" title="Incomes" [show]="show()" [path]="['/incomes']"></app-nav-link>
-          </li>
-          <li>
-            <app-nav-link icon="bi-cart-dash" title="Expenses" [show]="show()" [path]="['/expenses']"></app-nav-link>
-          </li>
-          <li>
-            <app-nav-link icon="bi-people" title="Employees" [show]="show()" [path]="['/employee']"></app-nav-link>
-          </li>
-          <li>
-            <app-nav-link icon="bi-tags" title="Category" [show]="show()" [path]="['/category']"></app-nav-link>
-          </li>
+          @if (isActivated()) {
+            <li>
+              <app-nav-link icon="bi-house" title="Home" [show]="show()" [path]="['/home']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-bar-chart" title="Balance Report" [show]="show()" [path]="['/report']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-cash-stack" title="Incomes" [show]="show()" [path]="['/incomes']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-cart-dash" title="Expenses" [show]="show()" [path]="['/expenses']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-people" title="Employees" [show]="show()" [path]="['/employee']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-tags" title="Category" [show]="show()" [path]="['/category']"></app-nav-link>
+            </li>
+            <li>
+              <app-nav-link icon="bi-gear" title="Change Password" [show]="show()" [path]="['/change-pass']"></app-nav-link>
+            </li>
+          }
+
           <li>
             <app-nav-link (click)="signOut()" icon="bi-lock" title="Sign Out" [show]="show()" ></app-nav-link>
           </li>
@@ -45,7 +51,10 @@
   </div>
 
   <main class="container-fluid m-3">
+
     <router-outlet></router-outlet>
+
+    <app-error-dialog (login)="onError($event)" ></app-error-dialog>
   </main>
 
 </div>

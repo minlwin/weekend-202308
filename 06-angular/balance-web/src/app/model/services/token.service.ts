@@ -11,10 +11,14 @@ export class TokenService {
   constructor(private http:HttpClient) {}
 
   generate(form:any) {
-    return this.http.post<LoginUser>(`${BASE_URL}/generate`, null, {params: form})
+    const postForm = new FormData
+    Object.keys(form).forEach(key => postForm.append(key, form[key]))
+    return this.http.post<LoginUser>(`${BASE_URL}/generate`, postForm)
   }
 
   refresh(form:any) {
-    return this.http.post<LoginUser>(`${BASE_URL}/refresh`, null, {params: form})
+    const postForm = new FormData
+    Object.keys(form).forEach(key => postForm.append(key, form[key]))
+    return this.http.post<LoginUser>(`${BASE_URL}/refresh`, postForm)
   }
 }

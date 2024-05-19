@@ -36,7 +36,8 @@ export class CategoryComponent {
 
   upload(file:FileList | null) {
     if(file && file.length > 0) {
-      this.service.upload(file[0]).subscribe(_ => this.search())
+      this.service.upload(file[0])
+        .subscribe(_ => this.search())
     }
   }
 }

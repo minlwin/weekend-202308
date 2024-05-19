@@ -1,7 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, ErrorHandler, Inject, ViewChild, computed, signal, viewChild } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { WidgetsModule } from './widgets/widgets.module';
 import { LoginUserService } from './model/security/login-user.service';
+import { ErrorDialogComponent } from './widgets/error-dialog/error-dialog.component';
+import { GlobalErrorHandler } from './model/errors/global-error-handler';
 
 @Component({
   selector: 'app-root',
@@ -10,19 +12,37 @@ import { LoginUserService } from './model/security/login-user.service';
   templateUrl: './app.component.html',
   styles: [],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit{
 
   show = signal<boolean>(true)
-  isLogin = computed(() => this.loginUserService.loginUser() != undefined)
+  isLogin = computed(() => this.loginUserService.isLogin())
+  isActivated = computed(() => this.loginUserService.isActivated())
 
-  constructor(private router:Router, private loginUserService:LoginUserService) {
+  @ViewChild(ErrorDialogComponent)
+  errorDialog?:ErrorDialogComponent
+
+  constructor(private router:Router,
+    private loginUserService:LoginUserService,
+    @Inject(ErrorHandler) private errorHandler:GlobalErrorHandler
+  ) {
     router.events.subscribe(event => {
+
+      if(event instanceof NavigationStart) {
+        this.errorDialog?.hideDialog()
+      }
+
       if(event instanceof NavigationEnd) {
-        if(event.url != '/login' && loginUserService.loginUser() == undefined) {
+        if(event.url != '/login' && !loginUserService.isLogin()) {
           router.navigate(['/login'])
         }
+
+
       }
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.errorHandler.errorDialog = this.errorDialog
   }
 
   toggleSideBar() {
@@ -32,5 +52,11 @@ export class AppComponent {
   signOut() {
     this.loginUserService.logout()
     this.router.navigate(['/login'])
+  }
+
+  onError(logout:boolean) {
+    if(logout) {
+      this.signOut()
+    }
   }
 }

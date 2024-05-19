@@ -10,6 +10,7 @@ import { EmployeeComponent } from './pages/employee/employee.component';
 import { EmployeeEditComponent } from './pages/employee-edit/employee-edit.component';
 import { LoginComponent } from './pages/login/login.component';
 import { EmployeeDetailsComponent } from './pages/employee-details/employee-details.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 export const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {path: 'edit', component: BalanceEditComponent},
   {path: 'details', component: BalanceDetailsComponent},
   {path: 'report', component: BalanceReportComponent},
+  {path: 'change-pass', component: ChangePasswordComponent},
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
