@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.balance.api.input.ChangePasswordForm;
+import com.jdc.balance.api.output.ChangePassResult;
 import com.jdc.balance.model.service.EmployeeService;
 
 @RestController
@@ -21,7 +22,7 @@ public class ChangePasswordApi {
 
 	@PostMapping
 	@PreAuthorize("isFullyAuthenticated() && authentication.name == #form.loginId")
-	String change(@Validated @RequestBody ChangePasswordForm form, BindingResult result) {
+	ChangePassResult change(@Validated @RequestBody ChangePasswordForm form, BindingResult result) {
 		return service.changePassword(form);
 	}
 }

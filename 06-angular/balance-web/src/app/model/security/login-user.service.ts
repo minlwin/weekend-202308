@@ -11,6 +11,7 @@ export class LoginUserService {
   loginUser = signal<LoginUser | undefined>(undefined)
   isLogin = computed(() => this.loginUser() != undefined)
   isActivated = computed(() => this.isLogin() && this.loginUser()?.role != "Applied")
+  isManagementUser = computed(() => this.isLogin() && (this.loginUser()?.role == 'Admin' || this.loginUser()?.role == 'Manager'))
 
   constructor() {
     effect(() => {
@@ -30,6 +31,14 @@ export class LoginUserService {
         this.loginUser.set(JSON.parse(loginUserData))
       }
     } catch(e) {}
+  }
+
+  setRole(newRole:string) {
+    if(this.loginUser()) {
+      const {role, ... others} = this.loginUser()!
+      const newUser = {role: newRole, ... others}
+      this.loginUser.set(newUser)
+    }
   }
 
   logout() {

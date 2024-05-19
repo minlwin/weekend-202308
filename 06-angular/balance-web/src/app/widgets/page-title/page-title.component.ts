@@ -10,7 +10,7 @@ export class PageTitleComponent {
 
   icon = input.required<string>()
   title = input.required<string>()
-  username = computed(() => this.loginUser.loginUser()?.name || 'User Name')
+  username = computed(() => this.loginUser.loginUser()?.name)
 
   constructor(private loginUser:LoginUserService) {}
 }

@@ -1,4 +1,6 @@
 <div class="d-flex justify-content-between">
   <h5><i [classList]="icon()"></i> {{title()}}</h5>
-  <span><i class="bi-person"></i> {{username()}}</span>
+  @if (username()) {
+    <span><i class="bi-person"></i> {{username()}}</span>
+  }
 </div>

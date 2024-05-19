@@ -1,7 +1,7 @@
-<div class="w-50">
-  <app-page-title icon="bi-unlock" title="Employee Login"></app-page-title>
+<app-page-title icon="bi-unlock" title="Employee Login"></app-page-title>
 
-  <form [formGroup]="form">
+<div class="w-50">
+  <form [formGroup]="form" class="mt-3">
     <app-validated-form-group [valid]="form.get('loginId')?.valid" label="Login ID">
       <input formControlName="loginId" type="text" class="form-control" placeholder="Enter Login Id">
     </app-validated-form-group>

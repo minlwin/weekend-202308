@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewInit{
   show = signal<boolean>(true)
   isLogin = computed(() => this.loginUserService.isLogin())
   isActivated = computed(() => this.loginUserService.isActivated())
+  isManagementUser = computed(() => this.loginUserService.isManagementUser())
 
   @ViewChild(ErrorDialogComponent)
   errorDialog?:ErrorDialogComponent
@@ -35,8 +36,6 @@ export class AppComponent implements AfterViewInit{
         if(event.url != '/login' && !loginUserService.isLogin()) {
           router.navigate(['/login'])
         }
-
-
       }
     })
   }

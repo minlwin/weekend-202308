@@ -17,6 +17,7 @@ import com.jdc.balance.api.input.EmployeeForm;
 import com.jdc.balance.api.input.EmployeeSearch;
 import com.jdc.balance.api.input.EmployeeStatusForm;
 import com.jdc.balance.api.input.ProfileForm;
+import com.jdc.balance.api.output.ChangePassResult;
 import com.jdc.balance.api.output.EmployeeInfo;
 import com.jdc.balance.api.output.EmployeeInfoDetails;
 import com.jdc.balance.api.output.ProfileInfo;
@@ -121,7 +122,7 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public String changePassword(ChangePasswordForm form) {
+	public ChangePassResult changePassword(ChangePasswordForm form) {
 		
 		var employee = getOne(repo.findOneByAccountLoginId(form.loginId()), DOMAIN_NAME, form.loginId());
 		
@@ -136,7 +137,7 @@ public class EmployeeService {
 			eventPublisher.publishEvent(new EmployeeChangeEvent(EmployeeChanges.StatusChange, employee.getId()));
 		}
 		
-		return "Employee has been changed password successfully.";
+		return new ChangePassResult(employee.getAccount().getRole().name());
 	}
 
 	public ProfileInfo findProfile(String loginId) {

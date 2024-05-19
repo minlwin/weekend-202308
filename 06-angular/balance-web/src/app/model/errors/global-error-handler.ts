@@ -17,7 +17,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     if(error instanceof HttpErrorResponse) {
       errors = error.error
-      title = "Server Error"
+      title = "Error Message"
       login = false
 
       if(error.status == 401) {
@@ -25,6 +25,8 @@ export class GlobalErrorHandler implements ErrorHandler {
         login = true
       } else if(error.status == 403) {
         title = 'Authorization Error'
+      } else if(error.status == 500) {
+        title = 'Server Error'
       }
 
     }
