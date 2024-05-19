@@ -27,6 +27,9 @@ export class GlobalErrorHandler implements ErrorHandler {
         title = 'Authorization Error'
       } else if(error.status == 500) {
         title = 'Server Error'
+      } else {
+        title = 'Connection Error'
+        errors = ['Please check internet connection or server liveness.']
       }
 
     }

@@ -1,6 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { WidgetsModule } from '../../widgets/widgets.module';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LedgerEntryService } from '../../model/services/ledger-entry.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balance-edit',
@@ -12,17 +14,18 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 export class BalanceEditComponent {
 
   type = input<string>()
-  id = input<number>(0)
+  id = input<number | undefined>()
 
-  edit = computed<boolean>(() => this.id() > 0)
+  edit = computed<boolean>(() => this.id() != undefined)
   icon = computed<string>(() => this.edit() ? 'bi-pencil' : 'bi-plus-lg')
   title = computed<string>(() => `${this.edit() ? 'Edit' : 'Add New'} ${this.type()}`)
 
   form:FormGroup
 
-  constructor(private builder:FormBuilder) {
+  constructor(private builder:FormBuilder,
+    private router:Router,
+    private service:LedgerEntryService) {
     this.form = builder.group({
-      id: 0,
       type: ['', Validators.required],
       issueAt: ['', Validators.required],
       category: ['', Validators.required],
@@ -32,6 +35,17 @@ export class BalanceEditComponent {
 
     if(this.items.length == 0) {
       this.addItem()
+    }
+  }
+
+  save() {
+    if(this.form.valid) {
+      const request = this.id() ? this.service.update(this.id()!, this.form.value)
+        : this.service.create(this.form.value)
+
+      request.subscribe(result => {
+        this.router.navigate(['/details'], {queryParams: {type: this.type(), id: result.id}})
+      })
     }
   }
 

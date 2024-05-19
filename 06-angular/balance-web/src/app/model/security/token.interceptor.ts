@@ -1,4 +1,4 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LoginUserService } from './login-user.service';
 import { catchError, switchMap, throwError } from 'rxjs';
@@ -20,18 +20,20 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(request).pipe(
     catchError(error => {
-      if(error.status == 408) {
-        if(loginUserService.isLogin() && !request.url.includes('/token')) {
-          return tokenService.refresh({refreshToken: loginUserService.loginUser()?.refreshToken}).pipe(
-            switchMap(result => {
-              loginUserService.loginUser.set(result)
-              return next(req.clone({headers: req.headers.append('Authorization', result.accessToken)}))
-            }),
-            catchError(error => {
-              return throwError(() => error)
-            })
-          )
-        }
+      if(error instanceof HttpErrorResponse
+        && error.status == 408
+        && !request.url.includes('token')
+        && loginUserService.isLogin()
+      ) {
+        return tokenService.refresh({refreshToken: loginUser?.refreshToken}).pipe(
+          switchMap(result => {
+            loginUserService.loginUser.set(result)
+            return next(req.clone({headers: req.headers.append('Authorization', result.accessToken)}))
+          }),
+          catchError(error => {
+            return throwError(() => error)
+          })
+        )
       }
       return throwError(() => error)
     })

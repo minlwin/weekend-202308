@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jdc.balance.api.input.TokenRequest;
 import com.jdc.balance.api.output.TokenResponse;
 import com.jdc.balance.model.Status;
+import com.jdc.balance.model.exceptions.ApiTokenInvalidException;
 import com.jdc.balance.model.repo.AccountRepo;
 
 @Service
@@ -50,22 +51,28 @@ public class SecurityService {
 
 	public TokenResponse refresh(String token) {
 		
-		var authentication = tokenProvider.parse(token);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		var account = getOne(accountRepo.findOneByLoginId(authentication.getName()), ACCOUNT_DOMAIN, authentication.getName());
-		var accessToken = tokenProvider.generateAccessToken(authentication);
-		var refreshToken = tokenProvider.generateRefreshToken(authentication);
-		
-		var role = account.getRole().name();
-		
-		if(null != account.getEmployee() && account.getEmployee().getStatus() == Status.Applied) {
-			role = account.getEmployee().getStatus().name();
+		try {
+			var authentication = tokenProvider.parse(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			
+			var account = getOne(accountRepo.findOneByLoginId(authentication.getName()), ACCOUNT_DOMAIN, authentication.getName());
+			var accessToken = tokenProvider.generateAccessToken(authentication);
+			var refreshToken = tokenProvider.generateRefreshToken(authentication);
+			
+			var role = account.getRole().name();
+			
+			if(null != account.getEmployee() && account.getEmployee().getStatus() == Status.Applied) {
+				role = account.getEmployee().getStatus().name();
+			}
+
+			return new TokenResponse(account.getName(), 
+					account.getLoginId(), 
+					role, accessToken, refreshToken);
+			
+		} catch (Exception e) {
+			throw new ApiTokenInvalidException("Refresh token expiration.", e);
 		}
 
-		return new TokenResponse(account.getName(), 
-				account.getLoginId(), 
-				role, accessToken, refreshToken);
 	}
 
 }

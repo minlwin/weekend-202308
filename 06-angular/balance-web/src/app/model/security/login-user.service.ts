@@ -12,11 +12,13 @@ export class LoginUserService {
   isLogin = computed(() => this.loginUser() != undefined)
   isActivated = computed(() => this.isLogin() && this.loginUser()?.role != "Applied")
   isManagementUser = computed(() => this.isLogin() && (this.loginUser()?.role == 'Admin' || this.loginUser()?.role == 'Manager'))
+  isEmployee = computed(() => this.isLogin() && this.loginUser()?.role == 'Employee')
 
   constructor() {
     effect(() => {
       try {
         const loginUserData = this.loginUser()
+        console.log("Login User Service", loginUserData)
         if(loginUserData) {
           localStorage.setItem(LOGIN_USER, JSON.stringify(loginUserData))
         } else {
