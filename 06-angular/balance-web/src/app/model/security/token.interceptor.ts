@@ -3,7 +3,6 @@ import { inject } from '@angular/core';
 import { LoginUserService } from './login-user.service';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { TokenService } from '../services/token.service';
-import { url } from 'inspector';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 

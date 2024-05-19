@@ -10,10 +10,15 @@ export class GlobalErrorHandler implements ErrorHandler {
   constructor(private zone:NgZone) {}
 
   handleError(error: any): void {
+
+    let errors = ['Error from UI, Please contact to development team.']
+    let title = "Application Error"
+    let login = false
+
     if(error instanceof HttpErrorResponse) {
-      let errors = error.error
-      let title = "Error Message"
-      let login = false
+      errors = error.error
+      title = "Server Error"
+      login = false
 
       if(error.status == 401) {
         title = 'Authentication Error'
@@ -22,11 +27,10 @@ export class GlobalErrorHandler implements ErrorHandler {
         title = 'Authorization Error'
       }
 
-      this.zone.run(() => {
-        this.errorDialog?.showDialog(title, errors, login)
-      })
     }
-
-    console.log(error)
+    console.log("Error Handler", error)
+    this.zone.run(() => {
+      this.errorDialog?.showDialog(title, errors, login)
+    })
   }
 }
