@@ -1,6 +1,9 @@
 package com.jdc.students.service;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,27 +31,48 @@ public class AppUserDetailsService implements UserDetailsService{
 				case Teacher user -> getUserDetails(user);
 				case Student user -> getUserDetails(user);
 				case null -> getUserDetails(a);
-				default -> throw new IllegalArgumentException();
+				default -> null;
 			}).orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 
 	private UserDetails getUserDetails(Account a) {
-		// TODO Auto-generated method stub
-		return null;
+		return User.builder()
+				.username(a.getCode())
+				.password(a.getPassword())
+				.authorities(a.getRole().name())
+				.build();
 	}
 
 	private UserDetails getUserDetails(OfficeStaff user) {
-		// TODO Auto-generated method stub
-		return null;
+		var a = user.getAccount();
+		return User.builder()
+				.username(a.getCode())
+				.password(a.getPassword())
+				.authorities(a.getRole().name())
+				.disabled(user.getAssignAt().compareTo(LocalDate.now()) > 0)
+				.accountExpired(user.getResignAt() != null 
+					&& user.getResignAt().compareTo(LocalDate.now()) < 0)
+				.build();
 	}
 
 	private UserDetails getUserDetails(Student user) {
-		// TODO Auto-generated method stub
-		return null;
+		var a = user.getAccount();
+		return User.builder()
+				.username(a.getCode())
+				.password(a.getPassword())
+				.authorities(a.getRole().name())
+				.build();
 	}
 	
 	private UserDetails getUserDetails(Teacher user) {
-		// TODO Auto-generated method stub
-		return null;
+		var a = user.getAccount();
+		return User.builder()
+				.username(a.getCode())
+				.password(a.getPassword())
+				.authorities(a.getRole().name())
+				.disabled(user.getAssignAt().compareTo(LocalDate.now()) > 0)
+				.accountExpired(user.getResignAt() != null 
+					&& user.getResignAt().compareTo(LocalDate.now()) < 0)
+				.build();
 	}	
 }
