@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@PropertySource("/security-messages.properties")
+@PropertySource("classpath:/security-messages.properties")
 public class ApiWebConfig implements WebMvcConfigurer{
 
 	@Override

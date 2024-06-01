@@ -9,5 +9,9 @@ public class AppTokenInvalidationException extends AuthenticationException{
 	public AppTokenInvalidationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
+	
+	public AppTokenInvalidationException(String message) {
+		super(message);
+	}
 
 }

@@ -21,8 +21,8 @@ public abstract class LoginUser extends AbstractEntity{
 	@Id
 	private String code;
 	
-	@MapsId
 	@OneToOne
+	@MapsId("code")
 	private Account account;
 	
 	@Column(nullable = false)

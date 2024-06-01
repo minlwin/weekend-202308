@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jdc.students.auth.model.AppUserDetails;
 import com.jdc.students.domain.account.entity.Account;
 import com.jdc.students.domain.account.entity.OfficeStaff;
 import com.jdc.students.domain.account.entity.Student;
@@ -26,20 +27,25 @@ public class AppUserDetailsService implements UserDetailsService{
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return repo.findById(username)
-			.map(a -> switch(a.getLoginUser()) {
-				case OfficeStaff user -> getUserDetails(user);
-				case Teacher user -> getUserDetails(user);
-				case Student user -> getUserDetails(user);
-				case null -> getUserDetails(a);
-				default -> null;
-			}).orElseThrow(() -> new UsernameNotFoundException(username));
+			.map(a -> {
+				var userDetails = switch(a.getLoginUser()) {
+					case OfficeStaff user -> getUserDetails(user);
+					case Teacher user -> getUserDetails(user);
+					case Student user -> getUserDetails(user);
+					case null -> getUserDetails(a);
+					default -> null;
+				};
+				
+				return new AppUserDetails(userDetails, a.getFullName());
+			})
+			.orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 
 	private UserDetails getUserDetails(Account a) {
 		return User.builder()
 				.username(a.getCode())
 				.password(a.getPassword())
-				.authorities(a.getRole().name())
+				.authorities(authority(a))
 				.build();
 	}
 
@@ -48,7 +54,7 @@ public class AppUserDetailsService implements UserDetailsService{
 		return User.builder()
 				.username(a.getCode())
 				.password(a.getPassword())
-				.authorities(a.getRole().name())
+				.authorities(authority(a))
 				.disabled(user.getAssignAt().compareTo(LocalDate.now()) > 0)
 				.accountExpired(user.getResignAt() != null 
 					&& user.getResignAt().compareTo(LocalDate.now()) < 0)
@@ -60,7 +66,7 @@ public class AppUserDetailsService implements UserDetailsService{
 		return User.builder()
 				.username(a.getCode())
 				.password(a.getPassword())
-				.authorities(a.getRole().name())
+				.authorities(authority(a))
 				.build();
 	}
 	
@@ -69,10 +75,14 @@ public class AppUserDetailsService implements UserDetailsService{
 		return User.builder()
 				.username(a.getCode())
 				.password(a.getPassword())
-				.authorities(a.getRole().name())
+				.authorities(authority(a))
 				.disabled(user.getAssignAt().compareTo(LocalDate.now()) > 0)
 				.accountExpired(user.getResignAt() != null 
 					&& user.getResignAt().compareTo(LocalDate.now()) < 0)
 				.build();
-	}	
+	}
+	
+	private String authority(Account account) {
+		return account.isActivated() ? account.getRole().name() : "Member";
+	}
 }
