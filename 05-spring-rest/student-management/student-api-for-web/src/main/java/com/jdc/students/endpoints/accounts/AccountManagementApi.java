@@ -1,4 +1,4 @@
-package com.jdc.students.endpoints;
+package com.jdc.students.endpoints.accounts;
 
 import java.util.List;
 
@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.students.input.AccountSearch;
-import com.jdc.students.output.AccountInfo;
-import com.jdc.students.service.AccountService;
+import com.jdc.students.endpoints.accounts.input.AccountSearch;
+import com.jdc.students.endpoints.accounts.output.AccountInfo;
+import com.jdc.students.endpoints.accounts.service.AccountService;
 
 @RestController
-@RequestMapping("accounts")
-public class AccountApi {
+@RequestMapping("admin/accounts")
+public class AccountManagementApi {
 	
 	@Autowired
 	private AccountService service;

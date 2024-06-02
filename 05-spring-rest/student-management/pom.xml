@@ -54,11 +54,6 @@
 			</dependency>
 			<dependency>
 				<groupId>com.jdc.weekend</groupId>
-				<artifactId>student-api-for-admin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.jdc.weekend</groupId>
 				<artifactId>student-api-for-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -78,6 +73,5 @@
 		<module>student-auth-server</module>
 		<module>student-api-for-web</module>
 		<module>student-api-for-mobile</module>
-		<module>student-api-for-admin</module>
 	</modules>
 </project>

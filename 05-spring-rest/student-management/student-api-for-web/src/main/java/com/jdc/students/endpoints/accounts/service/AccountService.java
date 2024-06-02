@@ -1,4 +1,4 @@
-package com.jdc.students.service;
+package com.jdc.students.endpoints.accounts.service;
 
 import java.util.List;
 import java.util.function.Function;
@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.students.domain.account.entity.Account;
 import com.jdc.students.domain.account.repo.AccountRepo;
-import com.jdc.students.input.AccountSearch;
-import com.jdc.students.output.AccountInfo;
+import com.jdc.students.endpoints.accounts.input.AccountSearch;
+import com.jdc.students.endpoints.accounts.output.AccountInfo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

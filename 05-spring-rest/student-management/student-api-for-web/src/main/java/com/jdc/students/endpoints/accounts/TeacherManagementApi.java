@@ -1,4 +1,4 @@
-package com.jdc.students.endpoints;
+package com.jdc.students.endpoints.accounts;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

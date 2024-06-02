@@ -1,4 +1,4 @@
-package com.jdc.students.output;
+package com.jdc.students.endpoints.accounts.output;
 
 import com.jdc.students.domain.account.entity.Account;
 import com.jdc.students.domain.account.entity.Account.Role;

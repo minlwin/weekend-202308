@@ -1,4 +1,4 @@
-package com.jdc.students.endpoints;
+package com.jdc.students.endpoints.accounts;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.students.input.OfficeStaffForm;
-import com.jdc.students.input.OfficeStaffSearch;
-import com.jdc.students.output.OfficeStaffInfo;
-import com.jdc.students.service.OfficeStaffService;
+import com.jdc.students.endpoints.accounts.input.OfficeStaffForm;
+import com.jdc.students.endpoints.accounts.input.OfficeStaffSearch;
+import com.jdc.students.endpoints.accounts.output.OfficeStaffInfo;
+import com.jdc.students.endpoints.accounts.service.OfficeStaffService;
 
 @RestController
-@RequestMapping("office")
+@RequestMapping("admin/office")
 public class OfficeStaffManagementApi {
 	
 	@Autowired

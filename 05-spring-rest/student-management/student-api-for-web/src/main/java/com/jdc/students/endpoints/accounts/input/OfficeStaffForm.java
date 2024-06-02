@@ -1,4 +1,4 @@
-package com.jdc.students.input;
+package com.jdc.students.endpoints.accounts.input;
 
 import java.time.LocalDate;
 
