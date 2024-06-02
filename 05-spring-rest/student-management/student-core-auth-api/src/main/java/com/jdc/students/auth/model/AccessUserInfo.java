@@ -1,9 +1,13 @@
 package com.jdc.students.auth.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 public record AccessUserInfo(
@@ -12,12 +16,24 @@ public record AccessUserInfo(
 		String authority,
 		LocalDateTime accessAt
 ) {
+	
+	public List<GrantedAuthority> authorities() {
+		return Arrays.stream(authority.split(","))
+				.map(AccessUserInfo::convert)
+				.toList();
+	}
+	
+	private static GrantedAuthority convert(String str) {
+		return new SimpleGrantedAuthority(str);
+	}
 
 	public static AccessUserInfo from(Authentication auth) {
 		if(auth.isAuthenticated() && auth.getPrincipal() instanceof AppUserDetails user) {
-			return new AccessUserInfo(auth.getName(), 
-					auth.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.joining(","))
-					, user.getFullName(), LocalDateTime.now());
+			return new AccessUserInfo(
+					auth.getName(), 
+					user.getFullName(), 
+					auth.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.joining(",")),
+					LocalDateTime.now());
 		}
 		
 		return null;

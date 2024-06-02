@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.jdc.students.auth.model.AccessUserInfo;
+import com.jdc.students.exceptions.AppTokenExpirationException;
 import com.jdc.students.exceptions.AppTokenInvalidationException;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
 
@@ -54,22 +57,29 @@ public class JwtTokenProvider {
 	}
 
 	public AccessUserInfo validate(String token, TokenType type) {
-		var payload = Jwts.parser()
-				.requireIssuer(issuer)
-				.verifyWith(secretKey)
-				.build().parseSignedClaims(token.substring(prefix.length())).getPayload();
 		
-		var tokenType = payload.get(TYPE, TokenType.class);
-		
-		if(type != tokenType) {
-			throw new AppTokenInvalidationException("Invalid token type.");
+		try {
+			var payload = Jwts.parser()
+					.requireIssuer(issuer)
+					.verifyWith(secretKey)
+					.build().parseSignedClaims(token.substring(prefix.length())).getPayload();
+			
+			var tokenType = payload.get(TYPE, String.class);
+			
+			if(type != TokenType.valueOf(tokenType)) {
+				throw new AppTokenInvalidationException("Invalid token type.");
+			}
+			
+			return AccessUserInfo.builder()
+					.code(payload.getSubject())
+					.fullName(payload.get(FULL_NAME, String.class))
+					.authority(payload.get(ROLE, String.class))
+					.build();
+		} catch (ExpiredJwtException e) {
+			throw new AppTokenExpirationException(e);
+		} catch (JwtException e) {
+			throw new AppTokenInvalidationException(e.getMessage(), e);
 		}
-		
-		return AccessUserInfo.builder()
-				.code(payload.getSubject())
-				.fullName(payload.get(FULL_NAME, String.class))
-				.authority(payload.get(ROLE, String.class))
-				.build();
 	}
 	
 	private String generate(AccessUserInfo user, int expiration, TokenType type) {

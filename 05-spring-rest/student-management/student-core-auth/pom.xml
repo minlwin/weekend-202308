@@ -27,5 +27,11 @@
 			<artifactId>student-core-auth-api</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jdc.weekend</groupId>
+			<artifactId>student-core-service</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 </project>
