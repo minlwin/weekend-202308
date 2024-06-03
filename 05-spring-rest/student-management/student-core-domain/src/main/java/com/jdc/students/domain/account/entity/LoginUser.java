@@ -31,4 +31,8 @@ public abstract class LoginUser extends AbstractEntity{
 	@Column(nullable = false)
 	private String email;
 
+	public void setAccount(Account account) {
+		this.account = account;
+		this.account.setLoginUser(this);
+	}
 }

@@ -1,6 +1,5 @@
 package com.jdc.students.endpoints.accounts.service;
 
-import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.students.domain.account.entity.Account;
+import com.jdc.students.domain.account.entity.Account_;
 import com.jdc.students.domain.account.repo.AccountRepo;
 import com.jdc.students.endpoints.accounts.input.AccountSearch;
 import com.jdc.students.endpoints.accounts.output.AccountInfo;
+import com.jdc.students.utils.dto.PageInfo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -22,8 +23,8 @@ public class AccountService {
 	private AccountRepo repo;
 
 	@Transactional(readOnly = true)
-	public List<AccountInfo> search(AccountSearch form) {
-		return repo.search(queryFunc(form));
+	public PageInfo<AccountInfo> search(AccountSearch form, int page, int size) {
+		return repo.search(queryFunc(form), countFunc(form), page, size);
 	}
 	
 	private Function<CriteriaBuilder, CriteriaQuery<AccountInfo>> queryFunc(AccountSearch form) {
@@ -38,4 +39,14 @@ public class AccountService {
 		};
 	}
 
+	private Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc(AccountSearch form) {
+		return cb -> {
+			var cq = cb.createQuery(Long.class);
+			var root = cq.from(Account.class);
+			cq.select(cb.count(root.get(Account_.code)));
+			cq.where(form.where(cb, root));
+			
+			return cq;
+		};
+	}
 }

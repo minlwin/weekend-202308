@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+
+import com.jdc.students.utils.dto.PageInfo;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,7 +29,7 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 	}
 
 	@Override
-	public <R> Page<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc,
+	public <R> PageInfo<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc,
 			Function<CriteriaBuilder, CriteriaQuery<Long>> countFunc, int page, int size) {
 		var countQuery = em.createQuery(countFunc.apply(em.getCriteriaBuilder()));
 		var count = countQuery.getSingleResult();
@@ -39,7 +38,7 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 		contentQuery.setFirstResult(size * page);
 		contentQuery.setMaxResults(size);
 		
-		return new PageImpl<R>(contentQuery.getResultList(), PageRequest.of(page, size), count);
+		return new PageInfo<R>(contentQuery.getResultList(), page, size, count);
 	}
 
 	@Override
