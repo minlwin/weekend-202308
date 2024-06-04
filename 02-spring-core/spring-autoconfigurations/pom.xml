@@ -22,6 +22,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.10.2</version>
@@ -43,5 +49,8 @@
 	</build>
 	<modules>
 		<module>ep-01-conditional-bean</module>
+		<module>ep-02-spring-boots-conditional</module>
+		<module>ep-02-spring-boots-conditional-dependency</module>
+		<module>ep-02-spring-boots-conditional-api</module>
 	</modules>
 </project>
